@@ -11,7 +11,7 @@ mkdir build
 cd build
 
 cmake ..
-sudo make -j8 install
+sudo make -j$(nproc) install
 
 cd ../..
 else
