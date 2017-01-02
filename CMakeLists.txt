@@ -3,7 +3,8 @@ cmake_minimum_required(VERSION 2.8)
 option(GEN_TESTS "Should we build the test suite?" ON)
 option(GEN_COVERAGE "Should we build with coverage?" OFF)
 
-set(CMAKE_CXX_STANDARD 11)
+
+set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}") #Use STL 11
 
 
 if(GEN_COVERAGE) #If the coverage flag is true
@@ -20,5 +21,4 @@ if(GEN_TESTS) #If the test flag is true
     add_subdirectory(tests) #Include the tests
 endif()
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11") #Use STL 11
 message(STATUS "CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")

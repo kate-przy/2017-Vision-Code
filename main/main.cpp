@@ -18,19 +18,21 @@ int main() {
     cv::VideoCapture cap;
     cap.open(0);
 
-    cap.set(CV_CAP_PROP_FPS, 60);
+    //cap.set(CV_CAP_PROP_FPS, 60);
 
 
     boost::thread frameSenderThread(boost::bind(&FrameSender::run, frameSender));
 
     cv::Mat currentFrame;
+    cv::namedWindow("Frame", CV_WINDOW_AUTOSIZE);
 
     while (true) {
-        cap >> currentFrame;
-        FrameSender::addToQueue(currentFrame);
         if (cv::waitKey(1) == 27) {
             break;
         }
+        cap >> currentFrame;
+        FrameSender::addToQueue(currentFrame);
+        cv::imshow("Frame", currentFrame);
     }
 
     ThreadFlags::setAll(false);
