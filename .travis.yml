@@ -1,0 +1,27 @@
+sudo: required
+dist: trusty
+addons:
+    apt:
+      packages:
+        - cmake
+        - lcov
+        - curl
+      sources:
+        - kalakris-cmake
+language: cpp
+compiler:
+  - gcc
+before_install:
+  - npm install codecov.io --save
+  - pip install --user cpp-coveralls
+script:
+  - ./setup.sh && mkdir build && cd build && cmake -DGEN_TESTS=ON -DGEN_COVERAGE=ON .. && make && make test
+after_success:
+  - echo ${TRAVIS_BUILD_DIR}
+  - cd ${TRAVIS_BUILD_DIR}/build
+  - ../script/GenCoverage.sh #Generate coverage
+  - cat act_coverage.info | ../node_modules/.bin/codecov #Push to codecov
+notifications:
+    slack: team-401:onrGUBYH0HkkphR3GEkPjdaT
+    webhooks:
+      - https://discordapp.com/api/webhooks/267858745273352192/fE51en2TO8F7yY3rJQ5TC6Tk2IgVwB_prhQ2jJHvGY1e7FTOJiTWxueQg0LukY5yPbR8

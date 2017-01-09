@@ -6,7 +6,7 @@ cd installDeps
 if [ ! -f /usr/local/lib/libopencv_core.so.3.1 ]; then #If the opencv >3.1< core module isn't there
 wget https://github.com/Itseez/opencv/archive/3.1.0.zip
 
-unzip 3.1.0.zip
+unzip -qq 3.1.0.zip
 cd opencv-3.1.0
 
 mkdir build
