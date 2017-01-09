@@ -12,7 +12,7 @@ if(GEN_COVERAGE) #If the coverage flag is true
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage") #Enable coverage
 endif()
 
-add_subdirectory(main)
+add_subdirectory(processor)
 
 
 if(GEN_TESTS) #If the test flag is true
