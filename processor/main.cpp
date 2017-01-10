@@ -13,6 +13,7 @@
 #include "src/networking/Streamer.hpp"
 #include "src/utility/OutWindows.hpp"
 #include "src/utility/ConfigParser.hpp"
+#include "src/networking/ControlUpdate.hpp"
 #include <vector>
 #include <iostream>
 
@@ -67,16 +68,20 @@ int main(int argc, char *argv[]) {
 
     boost::thread_group tgroup; //Create a group to hold our threads
 
-    tgroup.create_thread(boost::bind(&MatProvider::run, processingProvider)); //Create a thread for the processing provider
+    tgroup.create_thread(boost::bind(&MatProvider::run, &processingProvider)); //Create a thread for the processing provider
     //tgroup.create_thread(boost::bind(&MatProvider::run, streamProvider)); //Create a thread for the stream provider
 
     Processor processor(config, processingProvider);
 
-    tgroup.create_thread(boost::bind(&Processor::run, processor));
+    tgroup.create_thread(boost::bind(&Processor::run, &processor));
 
     Streamer streamer(5800, processingProvider);
 
-    tgroup.create_thread(boost::bind(&Streamer::run, streamer));
+    tgroup.create_thread(boost::bind(&Streamer::run, &streamer));
+
+    ControlUpdate controlUpdate(&streamer, 5801);
+
+    tgroup.create_thread(boost::bind(&ControlUpdate::run, &controlUpdate));
 
 
     //AT THIS POINT IT IS ASSUMED THAT ALL THREADS ARE STARTED OR IN THE PROCESS OF STARTING

@@ -7,18 +7,20 @@
 
 
 #include "../abstraction/MatProvider.hpp"
-#include <mutex>
+#include <atomic>
 
 class Streamer {
 public:
+    Streamer();
     Streamer(int port_, MatProvider provider_);
     void setCompression(int compression_);
+    int getCompression();
     void run();
 private:
     int port;
     MatProvider provider;
-    Mutex compressionModifyMutex;
-    int compression = 30;
+    std::atomic<int> compression;
+    bool usable = false;
 };
 
 
