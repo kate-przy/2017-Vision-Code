@@ -9,6 +9,11 @@
 #include <boost/thread/thread.hpp>
 #include <opencv2/opencv.hpp>
 
+/**
+ * Setus up a usable streamer
+ * @param port_ The port to bind to
+ * @param provider_ The MatProvider to grab frames from
+ */
 Streamer::Streamer(int port_, MatProvider provider_) {
     port = port_;
     provider = provider_;
@@ -16,10 +21,17 @@ Streamer::Streamer(int port_, MatProvider provider_) {
     compression = 30;
 }
 
+/**
+ * Sets up a non-usable streamer, for null init
+ */
 Streamer::Streamer() {
     usable = false;
 }
 
+/**
+ * Sets the compression of the image encoding
+ * @param compression_ The new compression value
+ */
 void Streamer::setCompression(int compression_) {
     if (compression_ < 0 || compression_ > 100) { //If the compression is out of bounds
         std::cout << "not changing" << std::endl;
@@ -29,12 +41,19 @@ void Streamer::setCompression(int compression_) {
     std::cout << "new compression: " << compression << std::endl;
 }
 
+/**
+ * Gets the current compression value
+ * @return The current compression value
+ */
 int Streamer::getCompression() {
     return compression;
 }
 
+/**
+ * Method to be run in a thread, streams frames over the port specified in the constructor
+ */
 void Streamer::run() {
-    if (usable) {
+    if (usable) { //If this instance is usable
         zmq::context_t context(1); //Create a context to hold our sockets
         zmq::socket_t socket(context, ZMQ_PUB); //Initialize the socket
 

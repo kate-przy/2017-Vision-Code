@@ -9,11 +9,10 @@
 #include "Camera.hpp"
 #include "../utility/Log.hpp"
 
-/* Method: Camera
- * Parameter: Configuration config_: The config data to use during setup
- * Parameter: CameraType type_: The type of camera being set up (STREAM or PROCESSING)
- * Description: Set up the Camera object for a "complex" setup (from a config)
- * Returns: void
+/**
+ * Sets up a camera from a config file, given a type
+ * @param config_ The config object to read from
+ * @param type_ The type of camera to use
  */
 Camera::Camera(Configuration config_, CameraType type_) {
     assert(type_ != VIRTUAL); //Some checks to ensure that we don't use the wrong constructor
@@ -33,31 +32,29 @@ Camera::Camera(Configuration config_, CameraType type_) {
     }
 }
 
-/* Method: Camera
- * Parameter: int deviceNumber_: The id number of the capture device to open
- * Description: Set up the Camera object for a "simple" setup, given a camera device number
- * Returns: void
+/**
+ * Setus up a camera from a device number
+ * @param deviceNumber_ The device number to use
  */
 Camera::Camera(int deviceNumber_) {
     deviceNumber = deviceNumber_;
     type = SIMPLE;
 }
 
-/* Method: Camera
- * Parameter: std::string deviceId_: The location of the resource to use as a "virtual camera"
- * Description: Set up the Camera object with a resource location, ex. a video file
- * Returns: void
+/**
+ * Sets up a virtual camera from a video file
+ * @param deviceId_ The file path to read the video file from
  */
 Camera::Camera(std::string deviceId_)  {
     deviceId = deviceId_;
     type = VIRTUAL;
 }
 
-/* Method: setProperty
- * Parameter: int property: The V4L property ID for the property we want to change
- * Parameter: int value: The value (usually boolean) for the property we want to change
- * Description: Sets a V4L property on a VALID capture device
- * Returns: bool: Did the operation succeed?
+/**
+ * Sets a V4L property on a supported capture device
+ * @param property The property that should be set
+ * @param value The value to set the property to
+ * @return true if the operation succeded, false if the device is not supported or the operation failed
  */
 bool Camera::setProperty(int property, int value) {
     if (type != VIRTUAL) { //If the camera is not virtual (video file)
@@ -81,10 +78,9 @@ bool Camera::setProperty(int property, int value) {
     }
 }
 
-/* Method: setup
- * Parameter: void
- * Description: Set up the camera object completely based on instructions from one of the constructors
- * Returns: bool: Did the setup succeed?
+/**
+ * Sets up the camera based on its type and, if applicable, properties from a config
+ * @return true if the setup succeeded, false if the operation failed
  */
 bool Camera::setup() {
     bool validity = true;
@@ -124,10 +120,9 @@ bool Camera::setup() {
     return validity; //Tell the caller what happened
 }
 
-/* Method: getCapture
- * Parameter: void
- * Description: Gets the CV VideoCapture instance linked to this Camera if setup, or returns a blank instance
- * Returns: cv::VideoCapture: The capture instance
+/**
+ * Gets an OpenCV VideoCapture instance from this camera
+ * @return The CV capture instance
  */
 cv::VideoCapture Camera::getCapture() {
     if (isSetup) { //If this camera was properly set up
@@ -138,10 +133,9 @@ cv::VideoCapture Camera::getCapture() {
     }
 }
 
-/* Method: getProvider
- * Parameter: void
- * Description: Gets the MatProvider instance linked to this Camera if setup, or returns a blank instance
- * Returns: MatProvider: The provider instance
+/**
+ * Gets the MatProvider instance associated with this camera, which should be started in a thread before use
+ * @return The MatProvider instance
  */
 MatProvider Camera::getProvider() {
     if (isSetup) {
