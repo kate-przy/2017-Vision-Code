@@ -13,10 +13,11 @@
 using namespace std;
 
 
-/* splitElements
- * Takes in a string and a delimiter character,
- * and returns a vector containing the split
- * parts.  Returns an empty vector if nothing is found
+/**
+ * Splits a string on a delimeter
+ * @param str The string to split
+ * @param delimiter The delimiter to split on, default '='
+ * @return A vector of split elements
  */
 vector<string> ConfigParser::splitElements(string str, char delimiter) {
     vector<string> internal;
@@ -30,9 +31,10 @@ vector<string> ConfigParser::splitElements(string str, char delimiter) {
     return internal;
 }
 
-/* ConfigParser()
- * Constructor for a parser object.  Reads config file,
- * command line args, and writes them to a map.
+/**
+ * Parses the config based on the passed override arguments and the file path provided
+ * @param clargs The override arguments to override config file data
+ * @param filePath_ The path to the config file, default relative "config.txt"
  */
 ConfigParser::ConfigParser(vector<string> clargs, string filePath_) {
     vector<string> splitArgs; //Variable to hold the split elements from each command line arg
@@ -72,11 +74,11 @@ ConfigParser::ConfigParser(vector<string> clargs, string filePath_) {
     Log::d(ld, "Config read successfully");
 }
 
-/* configFind()
- * Function to find elements from the map,
- * substitute defaults if elements are not found,
- * and convert elements to the correct type
- * as set by the template
+/**
+ * Finds an option from the config map, or substitutes a default if none is found
+ * @tparam T The type to cast the found data to
+ * @param key_ The key for the data
+ * @return The value for the data
  */
 template <class T>
 T ConfigParser::configFind(string key_) {
@@ -108,11 +110,9 @@ T ConfigParser::configFind(string key_) {
     }
 }
 
-/* getSettings()
- * Returns a fully set up ConfigSettings object
- * for reading by other parts of the program.
- * When adding new config values, we must
- * put them here as well
+/**
+ * Gets a fully set up Configuration object from the config map
+ * @return The Configuration object
  */
 Configuration ConfigParser::getSettings() { //GET SETTINGS
     //This is all pretty self explanatory

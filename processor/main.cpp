@@ -19,6 +19,7 @@
 
 #include <unistd.h>
 #include <termios.h>
+#include <linux/v4l2-controls.h>
 
 char getch() { //A function copied from StackOverflow to grab keypresses
     char buf=0;
