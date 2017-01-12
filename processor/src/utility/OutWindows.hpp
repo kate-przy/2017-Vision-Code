@@ -15,10 +15,9 @@
 
 class OutWindows {
 public:
-    static void init(bool showWindows_, std::vector<std::string> windowsList_ = {});
+    static void init(bool showWindows_);
     static bool update(std::string windowName, cv::Mat mat);
 private:
-    static std::vector<std::string> windowsList;
     static bool showWindows;
 
     static std::string ld;

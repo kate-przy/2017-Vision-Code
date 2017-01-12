@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
     ConfigParser parser(vector<string>(argv+1, argv + argc)); //Initialize a configuration parser
     Configuration config = parser.getSettings(); //Get the settings from the config parser
 
-    OutWindows::init(config.showDebugWindows, vector<string>{"Frame"}); //Initialize the debug window manager
+    OutWindows::init(config.showDebugWindows); //Initialize the debug window manager
 
 
     Camera processingCamera(0); //Initialize the processing camera
