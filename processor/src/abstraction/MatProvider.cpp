@@ -9,11 +9,10 @@
 #include "../utility/Log.hpp"
 
 
-/* Method: MatProvider
- * Parameter: VideoCapture cap_: The CV capture instance to use to provide the images
- * Parameter: int open: The fallback device number to use if the given cap isn't open
- * Description: Constructs a usable MatProvider that can stream images
- * Returns: void
+/**
+ * Sets up a usable MatProvider from a CV capture instance
+ * @param cap_ The CV capture instance to use when creating the MatProvider
+ * @param open The fallback address to use should the CV capture device not be open already
  */
 MatProvider::MatProvider(VideoCapture cap_, int open) {
     cap = cap_;
@@ -31,18 +30,15 @@ MatProvider::MatProvider(VideoCapture cap_, int open) {
     usable = true;
 }
 
-/* Method: MatProvider
- * Parameter: void
- * Description: Constructs a blank MatProvider that can't be used, used for doing initial construction in camera classes
- * Returns: void
+/**
+ * Sets up a non-usable MatProvider, for initialization purposes only.  This constructor should never be directly run.
  */
 MatProvider::MatProvider() {
     usable = false;
 }
 
-/* Method: run
- * Parameter: void
- * Description: Method to be run by boost in a thread.  Reads the device and stores the frame in the "volatile" frame
+/**
+ * Method to be run in a thread, reads frames into the volatile frame
  */
 void MatProvider::run() {
     Log::d(ld, "Starting!");
@@ -56,10 +52,9 @@ void MatProvider::run() {
 
 }
 
-/* Method: getLatestFrame
- * Parameter: void
- * Description: Grabs the latest available frame from the device, copies it (for thread safety), and returns it
- * Returns: Mat: The grabbed frame
+/**
+ * Gets the latest frame from this MatProvider, assuming it is usable and running
+ * @return The Mat from the capture device
  */
 Mat MatProvider::getLatestFrame() {
     readLock.lock();
@@ -73,10 +68,9 @@ Mat MatProvider::getLatestFrame() {
     return toReturn;
 }
 
-/* Method: setName
- * Parameter: std::string name_: The name to set
- * Description: Modifies the log descriptor to show which MatProvider this is
- * Returns: void
+/**
+ * Sets the name of this MatProvider, for logging purposes
+ * @param name_ The name to set
  */
 void MatProvider::setName(std::string name_) {
     ld = "MatProvider-" + name_; //Update the log descriptor with the name

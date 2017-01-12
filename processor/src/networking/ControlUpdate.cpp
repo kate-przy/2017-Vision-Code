@@ -10,11 +10,19 @@
 #include <boost/thread/thread.hpp>
 #include <zhelpers.hpp>
 
+/**
+ * Sets up a ControlUpdate instance to update properties on an imagestreamer
+ * @param streamer_ The reference to the streamer to use
+ * @param port_ The port to run on
+ */
 ControlUpdate::ControlUpdate(Streamer *streamer_, int port_) {
     streamer = streamer_;
     port = port_;
 }
 
+/**
+ * Method to be run in a thread, looks for updates and updates the given Streamer
+ */
 void ControlUpdate::run() {
     zmq::context_t context(1);
     zmq::socket_t socket(context, ZMQ_REP);
@@ -34,6 +42,5 @@ void ControlUpdate::run() {
             s_send(socket, std::to_string(streamer->getCompression())); //Return the current compression
         }
     }
-    std::cout << "ctrlupdate stopping" << std::endl;
     socket.close(); //Close the socket
 }
