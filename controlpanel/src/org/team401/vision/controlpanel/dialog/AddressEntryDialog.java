@@ -10,7 +10,7 @@ public class AddressEntryDialog extends JDialog {
     private JLabel addressLabel;
     private JTextField addressField;
 
-    public AddressEntryDialog() {
+    public AddressEntryDialog(String address) {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -41,6 +41,8 @@ public class AddressEntryDialog extends JDialog {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
+        addressLabel.setText(address); //Set the address label with the address they are trying
     }
 
     private void onOK() {
@@ -51,5 +53,16 @@ public class AddressEntryDialog extends JDialog {
     private void onCancel() {
 // add your code here if necessary
         dispose();
+        System.exit(0xDEADDEAD); //Rip Control Panel :(
+    }
+
+    public void build() {
+        //We don't use invokeLater here because we want this to hold the calling thread
+        pack();
+        setVisible(true);
+    }
+
+    public String getAddress() {
+        return addressField.getText();
     }
 }

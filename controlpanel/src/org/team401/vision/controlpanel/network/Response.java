@@ -9,4 +9,7 @@ package org.team401.vision.controlpanel.network;
  * released by myself (came20), and should be used with caution
  */
 public class Response {
+    public int width;
+    public int height;
+    public int exposure;
 }

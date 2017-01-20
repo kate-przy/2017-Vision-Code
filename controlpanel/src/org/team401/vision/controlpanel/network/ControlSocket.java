@@ -1,5 +1,6 @@
 package org.team401.vision.controlpanel.network;
 
+import org.team401.vision.controlpanel.dialog.ResponseHook;
 import org.zeromq.ZMQ;
 
 import java.util.ArrayList;
@@ -19,10 +20,12 @@ public class ControlSocket implements Runnable {
     private ZMQ.Context context = ZMQ.context(1); //Initialize the zeromq context
     private ZMQ.Socket socket;
     private List<NetworkJob> jobQueue = new ArrayList<>();
+    private ResponseHook dialogUpdateHook;
 
-    public ControlSocket(String address, int port) {
+    public ControlSocket(String address, int port, ResponseHook dialogUpdateHook) {
         this.address = address;
         this.port = port;
+        this.dialogUpdateHook = dialogUpdateHook;
     }
 
     public Response sendRequest(Request request, String[] params) {
@@ -31,7 +34,12 @@ public class ControlSocket implements Runnable {
             currentJob.jobLatch.await(); //Wait for the job to finish
         } catch (InterruptedException ignored) {}
         String[] responseData = currentJob.respData.split(","); //Get the response data
-
+        Response returnResponse = new Response();
+        returnResponse.exposure = Integer.parseInt(responseData[0]);
+        if (dialogUpdateHook != null) {
+            dialogUpdateHook.swingUpdate(returnResponse);
+        }
+        return returnResponse;
     }
 
     @Override
