@@ -123,6 +123,7 @@ Configuration ConfigParser::getSettings() { //GET SETTINGS
     configuration.procDeviceNumber = configFind<int>("procDeviceNumber");
     configuration.streamDeviceNumber = configFind<int>("streamDeviceNumber");
     configuration.showDebugWindows = configFind<bool>("showDebugWindows");
+    configuration.showDebugText = configFind<bool>("showDebugText");
 
     return configuration;
 }

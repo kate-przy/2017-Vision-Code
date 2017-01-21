@@ -22,6 +22,7 @@ void OutWindows::init(bool showWindows_) {
 bool OutWindows::update(string windowName, cv::Mat mat) {
     if (showWindows) {
         cv::imshow(windowName, mat);
+        cv::waitKey(1);
     }
 }
 

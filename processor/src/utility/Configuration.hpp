@@ -9,6 +9,7 @@ struct Configuration {
     int procDeviceNumber;
     int streamDeviceNumber;
     bool showDebugWindows;
+    bool showDebugText;
 };
 
 #endif //PROJECT_CONFIGURATION_HPP
