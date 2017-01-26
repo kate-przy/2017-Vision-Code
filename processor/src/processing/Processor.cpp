@@ -124,9 +124,9 @@ void Processor::run() {
                 cout << endl << "YAW: " << yaw << " | PITCH: " << pitch << endl;
                 cout << "DISTANCE: " << distance << " inches" << endl;
             }
-            streamer->addToQueue(DataBlob(distance, pitch, yaw)); //Pushed a valid data blob
+            streamer->addToQueue(StreamData(distance, pitch, yaw)); //Pushed a valid data blob
         } else {
-            streamer->addToQueue(DataBlob()); //Push an invalid data blob
+            streamer->addToQueue(StreamData()); //Push an invalid data blob
         }
 
 
@@ -134,5 +134,4 @@ void Processor::run() {
         OutWindows::update("latestFrame", imageUndistorted);
         OutWindows::update("blank", blankFrame);
     }
-    streamer->addToQueue(DataBlob()); //Send a final invalid blob to tell the robot to stop looking for a goal
 }

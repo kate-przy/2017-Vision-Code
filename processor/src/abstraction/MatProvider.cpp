@@ -48,6 +48,7 @@ void MatProvider::run() {
             //NOTE: This is a blocking function, so we have a delay between iterations depending on the framerate
         }
     }
+    cap.release(); //Release the capture device so other system resources can use it
     Log::d(ld, "Stopping!");
 
 }
