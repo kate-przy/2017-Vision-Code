@@ -6,13 +6,13 @@
 #include <cv.hpp>
 
 #include "boost/thread/thread.hpp"
-#include "src/abstraction/MatProvider.hpp"
 #include "src/utility/Log.hpp"
-#include "src/abstraction/Camera.hpp"
-#include "src/processing/Processor.hpp"
-#include "src/networking/Streamer.hpp"
-#include "src/utility/OutWindows.hpp"
 #include "src/utility/ConfigParser.hpp"
+#include "src/utility/OutWindows.hpp"
+#include "src/abstraction/Camera.hpp"
+#include "src/networking/DataStreamer.hpp"
+#include "src/networking/Streamer.hpp"
+#include "src/processing/Processor.hpp"
 
 #include <unistd.h>
 #include <termios.h>

@@ -17,23 +17,37 @@ StreamData::StreamData() {
  * @param type The type of command, must not be DATA or INVALID
  */
 StreamData::StreamData(Type type) {
-    assert(type != Type::DATA); //Ensure we get the correct type
+    assert(type != Type::GOAL_DATA); //Ensure we get the correct type
+    assert(type != Type::GEAR_DATA);
     assert(type != Type::INVALID);
 
     thisType = type;
 }
 
 /**
- * Constructor for setting up a data container
+ * Constructor for setting up a goal data container
  * @param distance The distance to set
  * @param pitch The pitch to set
  * @param yaw The yaw to set
  */
 StreamData::StreamData(double distance, double pitch, double yaw) {
-    thisType = Type::DATA;
+    thisType = Type::GOAL_DATA;
     thisDistance = distance;
     thisPitch = pitch;
     thisYaw = yaw;
+}
+
+/**
+ * Constructor for setting up a gear data container
+ * @param distance The distance to set
+ * @param yaw The yaw to set
+ * @param strafe The strafe enum to set
+ */
+StreamData::StreamData(double distance, double yaw, Strafe strafe) {
+    thisType = Type::GEAR_DATA;
+    thisDistance = distance;
+    thisYaw = yaw;
+    thisStrafe = strafe;
 }
 
 /**
@@ -51,13 +65,19 @@ std::string StreamData::hash() {
         case SHUTDOWN:
             returnString = "SHUTDOWN#";
             break;
-        case DATA:
-            returnString = "DATA#"
+        case GOAL_DATA:
+            returnString = "GOAL_DATA#"
                     + ("distance:" + std::to_string(thisDistance)) + ","
                     + ("pitch:" + std::to_string(thisPitch)) + ","
                     + ("yaw:" + std::to_string(thisYaw))
                     ;
             break;
+        case GEAR_DATA:
+            returnString = "GEAR_DATA#"
+                    + ("distance" + std::to_string(thisDistance)) + ","
+                    + ("yaw:" + std::to_string(thisYaw)) + ","
+                    + ("strafe:" + std::to_string(thisStrafe));
+
     }
     return returnString;
 }
