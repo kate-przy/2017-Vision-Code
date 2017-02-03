@@ -9,14 +9,15 @@
 
 #include "../utility/Configuration.hpp"
 #include "../abstraction/Camera.hpp"
+#include "../networking/DataStreamer.hpp"
 
 class Processor {
 public:
-    Processor(Configuration config_, MatProvider provider_); //Constructor for passing needed data
+    Processor(Configuration config_, MatProvider provider_, DataStreamer *streamer_); //Constructor for passing needed data
     void run(); //Method to run the thread
 private:
     Configuration config;
-
     MatProvider provider;
+    DataStreamer *streamer;
 };
 #endif //PROJECT_PROCESSOR_HPP

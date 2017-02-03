@@ -6,22 +6,25 @@
 #include <cv.hpp>
 
 #include "boost/thread/thread.hpp"
-#include "src/abstraction/MatProvider.hpp"
 #include "src/utility/Log.hpp"
-#include "src/abstraction/Camera.hpp"
-#include "src/processing/Processor.hpp"
-#include "src/networking/Streamer.hpp"
-#include "src/utility/OutWindows.hpp"
 #include "src/utility/ConfigParser.hpp"
-#include "src/networking/ControlUpdate.hpp"
-#include <vector>
-#include <iostream>
+#include "src/utility/OutWindows.hpp"
+#include "src/abstraction/Camera.hpp"
+#include "src/networking/DataStreamer.hpp"
+#include "src/networking/Streamer.hpp"
+#include "src/processing/Processor.hpp"
 
 #include <unistd.h>
 #include <termios.h>
 #include <linux/v4l2-controls.h>
 
-char getch() { //A function copied from StackOverflow to grab keypresses
+
+/**
+ * A linux port of the windows method getch, which captures a single character from cin, and returns automatically.
+ * Characters stack as more are input
+ * @return The character gotten
+ */
+char getch() {
     char buf=0;
     struct termios old={0};
     fflush(stdout);
@@ -42,8 +45,14 @@ char getch() { //A function copied from StackOverflow to grab keypresses
     return buf;
 }
 
+/**
+ * Main method, entry and exit point for this program
+ * @param argc Number of command line arguments present
+ * @param argv List of command line arguments
+ * @return Exit code
+ */
 int main(int argc, char *argv[]) {
-    //INITIALIZATION
+    //BASIC INIT
     Log::init(Log::Level::DEBUG, true); //Initialize the logger to record debug messages and use a file
 
     ConfigParser parser(vector<string>(argv+1, argv + argc)); //Initialize a configuration parser
@@ -52,38 +61,29 @@ int main(int argc, char *argv[]) {
     OutWindows::init(config.showDebugWindows); //Initialize the debug window manager
 
 
-    Camera processingCamera(0); //Initialize the processing camera
-    //Camera processingCamera(config); //Initialize the processing camera
+    //THREADING INIT
+    boost::thread_group providerGroup;   //Thread group for provider threads
+    boost::thread_group networkingGroup; //Thread group for networking threads
+    boost::thread_group processingGroup; //Thread group for processing threads
 
-    //Camera streamCamera(config, Camera::CameraType::STREAM); //Initialize the stream camera
-
-    processingCamera.setup(); //Set up the processing camera
-    //streamCamera.setup(); //Set up the stream camera
-
-
+    //OBJECT INIT
+    Camera processingCamera(config); //Set up the processing camera from the config
+    processingCamera.setup(); //Set up the camera
     MatProvider processingProvider = processingCamera.getProvider(); //Get a MatProvider for the processing camera
-    //MatProvider streamProvider = streamCamera.getProvider(); //Get a MatProvider for the stream camera
-
     processingProvider.setName("Processing"); //Set the names of the MatProviders for logging purposes
-    //streamProvider.setName("Stream");
 
-    boost::thread_group tgroup; //Create a group to hold our threads
+    DataStreamer dataStreamer(5801); //Creates a data streamer to send processing data to the RIO
+    Streamer streamer(5802, processingProvider); //Creates a frame streamer to send the images from the camera to the driver station
 
-    tgroup.create_thread(boost::bind(&MatProvider::run, &processingProvider)); //Create a thread for the processing provider
-    //tgroup.create_thread(boost::bind(&MatProvider::run, streamProvider)); //Create a thread for the stream provider
+    Processor processor(config, processingProvider, &dataStreamer); //Creates a processor to be run in a thread that processes images and sends output to the dataStreamer
 
-    Processor processor(config, processingProvider);
+    //THREADING START
+    providerGroup.create_thread(boost::bind(&MatProvider::run, &processingProvider)); //Start the thread for the processing matprovider
 
-    tgroup.create_thread(boost::bind(&Processor::run, &processor));
+    networkingGroup.create_thread(boost::bind(&DataStreamer::run, &dataStreamer)); //Start the thread for the network data streamer
+    networkingGroup.create_thread(boost::bind(&Streamer::run, &streamer)); //Start the thread for the network frame streamer
 
-    Streamer streamer(5800, processingProvider);
-
-    tgroup.create_thread(boost::bind(&Streamer::run, &streamer));
-
-    ControlUpdate controlUpdate(&streamer, 5801);
-
-    tgroup.create_thread(boost::bind(&ControlUpdate::run, &controlUpdate));
-
+    processingGroup.create_thread(boost::bind(&Processor::run, &processor)); //Start the main processing thread
 
     //AT THIS POINT IT IS ASSUMED THAT ALL THREADS ARE STARTED OR IN THE PROCESS OF STARTING
 
@@ -96,7 +96,18 @@ int main(int argc, char *argv[]) {
 
     //AT THIS POINT IT IS ASSUMED THAT ALL THREADS SHOULD BE SIGNALED TO STOP
 
-    tgroup.interrupt_all(); //Tell all threads it's time to stop
-    tgroup.join_all(); //Wait for the threads to stop
+    processingGroup.interrupt_all(); //Signal all processing threads to stop
+    processingGroup.join_all(); //Wait for all processing threads to stop
+
+    dataStreamer.addToQueue(StreamData::Type::SHUTDOWN);
+
+    //It is now safe to stop networking, since all processing has stopped
+    networkingGroup.interrupt_all(); //Signal all networking threads to stop
+    networkingGroup.join_all(); //Wait for all networking threads to stop
+
+    //Finally, it is now safe to stop provider threads, since all streaming has stopped
+    providerGroup.interrupt_all(); //Signal all provider threads to stop
+    providerGroup.join_all(); //Wait for all provider threads to stop
+
 
 }

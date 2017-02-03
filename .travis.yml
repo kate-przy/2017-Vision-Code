@@ -15,7 +15,7 @@ before_install:
   - npm install codecov.io --save
   - pip install --user cpp-coveralls
 script:
-  - ./setup.sh && mkdir build && cd build && cmake -DGEN_TESTS=ON -DGEN_COVERAGE=ON .. && make && make test
+  - ./setup.sh && mkdir build && cd build && cmake -DGEN_TESTS=ON -DGEN_COVERAGE=ON .. && make && make test #Processing Tests
 after_success:
   - echo ${TRAVIS_BUILD_DIR}
   - cd ${TRAVIS_BUILD_DIR}/build

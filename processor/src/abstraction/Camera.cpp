@@ -87,6 +87,18 @@ bool Camera::setup() {
     switch (type) {
         case PROCESSING:
             //TODO INSERT SET PROPERTIES FROM CONFIG HERE
+            setProperty(V4L2_CID_EXPOSURE_AUTO, V4L2_EXPOSURE_MANUAL);
+            setProperty(V4L2_CID_AUTOGAIN, 0);
+            setProperty(V4L2_CID_AUTO_WHITE_BALANCE, 0);
+            setProperty(V4L2_CID_VFLIP, 1);
+
+            setProperty(V4L2_CID_BRIGHTNESS, 0);
+            setProperty(V4L2_CID_CONTRAST, 0);
+            setProperty(V4L2_CID_SATURATION, 255);
+            setProperty(V4L2_CID_HUE, 0);
+            setProperty(V4L2_CID_EXPOSURE, 20);
+            setProperty(V4L2_CID_GAIN, 15);
+            setProperty(V4L2_CID_SHARPNESS, 0);
             break;
         case STREAM:
             //TODO INSERT SET PROPERTIES FROM CONFIG HERE
