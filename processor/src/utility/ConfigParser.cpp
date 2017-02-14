@@ -120,7 +120,8 @@ Configuration ConfigParser::getSettings() { //GET SETTINGS
     //And set the appropriate value in the config object
     Configuration configuration;
 
-    configuration.procDeviceNumber = configFind<int>("procDeviceNumber");
+    configuration.goalProcDeviceNumber = configFind<int>("goalProcDeviceNumber");
+    configuration.gearProcDeviceNumber = configFind<int>("gearProcDeviceNumber");
     configuration.streamDeviceNumber = configFind<int>("streamDeviceNumber");
     configuration.showDebugWindows = configFind<bool>("showDebugWindows");
     configuration.showDebugText = configFind<bool>("showDebugText");

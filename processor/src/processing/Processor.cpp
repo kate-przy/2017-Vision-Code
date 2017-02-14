@@ -126,7 +126,7 @@ void Processor::run() {
             }
             streamer->addToQueue(StreamData(distance, pitch, yaw)); //Pushed a valid data blob
         } else {
-            streamer->addToQueue(StreamData()); //Push an invalid data blob
+            streamer->addToQueue(StreamData(StreamData::Type::GOAL_DATA_INVALID)); //Push an invalid data blob
         }
 
 

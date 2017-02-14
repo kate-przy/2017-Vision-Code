@@ -1,13 +1,7 @@
+
 project(2017-Vision-processor)
 
 add_subdirectory(src)
-
-include(../cmake/FindZMQ.cmake)
-include(../cmake/FindOpenCV.cmake)
-include(../cmake/FindBoost.cmake)
-include(../cmake/FindV4L.cmake)
-
-file(COPY res DESTINATION ./) #Copy the resources to the build folder
 
 set(2017_VISION_PROCESSOR_SRC main.cpp)
 

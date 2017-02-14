@@ -6,7 +6,8 @@
 #define PROJECT_CONFIGURATION_HPP
 
 struct Configuration {
-    int procDeviceNumber;
+    int goalProcDeviceNumber;
+    int gearProcDeviceNumber;
     int streamDeviceNumber;
     bool showDebugWindows;
     bool showDebugText;

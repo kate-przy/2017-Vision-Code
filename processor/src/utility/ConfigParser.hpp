@@ -24,8 +24,9 @@ private:
     vector<string> splitElements(string str, char delimiter='=');
     ifstream file;
     map<string, string> defaults = { //DEFAULTS LIST
-            make_pair("procDeviceNumber", "0"),
-            make_pair("streamDeviceNumber", "1"),
+            make_pair("goalProcDeviceNumber", "0"),
+            make_pair("gearProcDeviceNumber", "1"),
+            make_pair("streamDeviceNumber", "2"),
             make_pair("showDebugWindows", "1"),
             make_pair("showDebugText", "1")
     };

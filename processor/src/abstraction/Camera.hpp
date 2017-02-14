@@ -15,18 +15,20 @@
 class Camera {
 public:
     enum CameraType {
-        PROCESSING,
+        GOAL_PROCESSING,
+        GEAR_PROCESSING,
         STREAM,
         SIMPLE,
         VIRTUAL
     };
-    Camera(Configuration config_, CameraType type_=PROCESSING); //Constructor for setting up a camera from the config
+    Camera(Configuration config_, CameraType type_); //Constructor for setting up a camera from the config
     Camera(int deviceNumber_); //Constructor for setting up a camera given a device identifier
     Camera(std::string deviceId_); //Constructor for setting up a "Camera" from a video file
     bool setup();
     cv::VideoCapture getCapture(); //Method to get an OpenCV capture device
     MatProvider getProvider(); //Method to get a MatProvider
     bool setProperty(int property, int value); //Method to set V4L properties on a supported camera
+    void close(); //Method to close the camera when done
 private:
     cv::VideoCapture cap; //The capture device for use behind the scenes
     MatProvider provider; //The MatProvider that is linked to our camera

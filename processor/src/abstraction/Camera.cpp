@@ -20,8 +20,11 @@ Camera::Camera(Configuration config_, CameraType type_) {
     config = config_;
     type = type_;
     switch (type_) {
-        case PROCESSING:
-            deviceNumber = config.procDeviceNumber;
+        case GOAL_PROCESSING:
+            deviceNumber = config.goalProcDeviceNumber;
+            break;
+        case GEAR_PROCESSING:
+            deviceNumber = config.gearProcDeviceNumber;
             break;
         case STREAM:
             deviceNumber = config.streamDeviceNumber;
@@ -85,7 +88,22 @@ bool Camera::setProperty(int property, int value) {
 bool Camera::setup() {
     bool validity = true;
     switch (type) {
-        case PROCESSING:
+        case GOAL_PROCESSING:
+            //TODO INSERT SET PROPERTIES FROM CONFIG HERE
+            setProperty(V4L2_CID_EXPOSURE_AUTO, V4L2_EXPOSURE_MANUAL);
+            setProperty(V4L2_CID_AUTOGAIN, 0);
+            setProperty(V4L2_CID_AUTO_WHITE_BALANCE, 0);
+            setProperty(V4L2_CID_VFLIP, 1);
+
+            setProperty(V4L2_CID_BRIGHTNESS, 0);
+            setProperty(V4L2_CID_CONTRAST, 0);
+            setProperty(V4L2_CID_SATURATION, 255);
+            setProperty(V4L2_CID_HUE, 0);
+            setProperty(V4L2_CID_EXPOSURE, 20);
+            setProperty(V4L2_CID_GAIN, 15);
+            setProperty(V4L2_CID_SHARPNESS, 0);
+            break;
+        case GEAR_PROCESSING:
             //TODO INSERT SET PROPERTIES FROM CONFIG HERE
             setProperty(V4L2_CID_EXPOSURE_AUTO, V4L2_EXPOSURE_MANUAL);
             setProperty(V4L2_CID_AUTOGAIN, 0);
@@ -107,6 +125,7 @@ bool Camera::setup() {
     if (type == VIRTUAL) {
         if (!cap.open(deviceId)) { //Try to open the capture device, if it fails:
             Log::x(ld, "Can't open the VIRTUAL capture resource [" + deviceId + "].  Operation can't continue!");
+            validity = false;
             exit(1); //If the resource can't be opened, kill the program now to prevent problems later
         }
         if (validity) { //If nothing has failed up to this point
@@ -118,6 +137,7 @@ bool Camera::setup() {
     } else {
         if (!cap.open(deviceNumber)) { //Try to open the capture device, it it fails:
             Log::x(ld, "Can't open the capture device [" + std::to_string(deviceNumber) + "].  Operation can't continue!");
+            validity = false;
             exit(1); //If the resource can't be opened, kill the program now to prevent problems later
         }
         if (validity) { //If nothing has failed up to this point
@@ -156,4 +176,11 @@ MatProvider Camera::getProvider() {
         Log::w(ld, "Can't get a valid MatProvider from an unconfigured Camera!  This WILL cause problems!");
         return MatProvider(); //Return a blank matprovider instance
     }
+}
+
+/**
+ * Closes the CV capture instance associated with this camera
+ */
+void Camera::close() {
+    cap.release();
 }

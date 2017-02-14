@@ -77,7 +77,13 @@ std::string StreamData::hash() {
                     + ("distance" + std::to_string(thisDistance)) + ","
                     + ("yaw:" + std::to_string(thisYaw)) + ","
                     + ("strafe:" + std::to_string(thisStrafe));
-
+            break;
+        case GOAL_DATA_INVALID:
+            returnString = "GOAL_DATA_INVALID#";
+            break;
+        case GEAR_DATA_INVALID:
+            returnString = "GEAR_DATA_INVALID#";
+            break;
     }
     return returnString;
 }

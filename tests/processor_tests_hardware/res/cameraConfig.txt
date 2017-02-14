@@ -1,0 +1,5 @@
+showDebugWindows=1
+streamDeviceNumber=2
+goalProcDeviceNumber=0
+gearProcDeviceNumber=1
+showDebugText=1
