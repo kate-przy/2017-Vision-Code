@@ -8,18 +8,23 @@
 #ifndef PROJECT_OUTWINDOWS_HPP
 #define PROJECT_OUTWINDOWS_HPP
 
+#include "Configuration.hpp"
 #include <opencv2/core/mat.hpp>
 #include <string>
 #include <queue>
 #include <mutex>
+#include <functional>
 
-class OutWindows {
+class Debug {
 public:
-    static void init(bool showWindows_);
-    static bool update(std::string windowName, cv::Mat mat);
+    static void init(Configuration config);
+    static bool updateWindow(std::string windowName, cv::Mat mat);
+    static void printDebugText(std::string text);
+    static void runDebugOperation(std::function<void()> lambda);
 private:
     static bool showWindows;
-
+    static bool showText;
+    static bool runFunctions;
     static std::string ld;
 };
 

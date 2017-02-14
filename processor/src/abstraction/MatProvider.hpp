@@ -19,9 +19,14 @@ public:
     MatProvider(); //"null" constructor
     void run(); //Method to run the thread
     Mat getLatestFrame(); //Method to get the latest frame from the device using a "deep copy"
+    Size getSize(); //Method to get the size of the frames from the camera
+    int getType(); //Method to get the type of the frames from the camera
+
     void setName(std::string name_);
 private:
     VideoCapture cap; //The capture device to use
+    Size size; //The size of the camera
+    int type; //The type of the camera
     Mat frame; //The volatile frame that will contain data pulled from the capture device
     bool usable; //Has the MatProvider been constructed properly?
     Mutex readLock; //Lock for reading frames so we don't run multiple copies at a time

@@ -1,6 +1,6 @@
-//
-// Created by cameronearle on 1/8/17.
-//
+/**
+ * @deprecated
+ */
 
 #include "Streamer.hpp"
 
@@ -14,6 +14,7 @@
  * @param port_ The port to bind to
  * @param provider_ The MatProvider to grab frames from
  */
+
 Streamer::Streamer(int port_, MatProvider provider_) {
     port = port_;
     provider = provider_;
@@ -34,11 +35,9 @@ Streamer::Streamer() {
  */
 void Streamer::setCompression(int compression_) {
     if (compression_ < 0 || compression_ > 100) { //If the compression is out of bounds
-        std::cout << "not changing" << std::endl;
         return; //Don't change anything
     }
     compression = compression_;
-    std::cout << "new compression: " << compression << std::endl;
 }
 
 /**
@@ -66,7 +65,6 @@ void Streamer::run() {
         while (!boost::this_thread::interruption_requested()) {
             latestFrame = provider.getLatestFrame();
             if (!latestFrame.empty()) { //If the frame isn't empty
-                std::cout << "current compression: " << getCompression() << std::endl;
                 cv::imencode(".jpg", latestFrame, buff, std::vector<int>{CV_IMWRITE_JPEG_QUALITY, getCompression()}); //Encode the image with compression
                 s_send(socket, std::string(buff.begin(), buff.end())); //Send the image
                 buff.clear(); //Clear the buffer

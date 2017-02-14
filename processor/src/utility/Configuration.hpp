@@ -9,8 +9,10 @@ struct Configuration {
     int goalProcDeviceNumber;
     int gearProcDeviceNumber;
     int streamDeviceNumber;
+    int networkBasePort;
     bool showDebugWindows;
     bool showDebugText;
+    bool runDebugFunctions;
 };
 
 #endif //PROJECT_CONFIGURATION_HPP

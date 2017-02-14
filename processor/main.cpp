@@ -8,11 +8,11 @@
 #include "boost/thread/thread.hpp"
 #include "src/utility/Log.hpp"
 #include "src/utility/ConfigParser.hpp"
-#include "src/utility/OutWindows.hpp"
+#include "src/utility/Debug.hpp"
 #include "src/abstraction/Camera.hpp"
 #include "src/networking/DataStreamer.hpp"
 #include "src/networking/Streamer.hpp"
-#include "src/processing/Processor.hpp"
+#include "src/processing/GoalProc.hpp"
 
 #include <unistd.h>
 #include <termios.h>
@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) {
     ConfigParser parser(vector<string>(argv+1, argv + argc)); //Initialize a configuration parser
     Configuration config = parser.getSettings(); //Get the settings from the config parser
 
-    OutWindows::init(config.showDebugWindows); //Initialize the debug window manager
+    Debug::init(config); //Initialize the debug window manager
 
 
     //THREADING INIT
@@ -73,18 +73,15 @@ int main(int argc, char *argv[]) {
     MatProvider processingProvider = processingCamera.getProvider(); //Get a MatProvider for the processing camera
     processingProvider.setName("Processing"); //Set the names of the MatProviders for logging purposes
 
-    DataStreamer dataStreamer(5801); //Creates a data streamer to send processing data to the RIO
-    Streamer streamer(5802, processingProvider); //Creates a frame streamer to send the images from the camera to the driver station
-
-    Processor processor(config, processingProvider, &dataStreamer); //Creates a processor to be run in a thread that processes images and sends output to the dataStreamer
+    DataStreamer dataStreamer(config.networkBasePort + 1); //Creates a data streamer to send processing data to the RIO
+    GoalProc goalProc(config, processingProvider, &dataStreamer); //Creates a processor to be run in a thread that processes images and sends output to the dataStreamer
 
     //THREADING START
     providerGroup.create_thread(boost::bind(&MatProvider::run, &processingProvider)); //Start the thread for the processing matprovider
 
     networkingGroup.create_thread(boost::bind(&DataStreamer::run, &dataStreamer)); //Start the thread for the network data streamer
-    networkingGroup.create_thread(boost::bind(&Streamer::run, &streamer)); //Start the thread for the network frame streamer
 
-    processingGroup.create_thread(boost::bind(&Processor::run, &processor)); //Start the main processing thread
+    processingGroup.create_thread(boost::bind(&GoalProc::run, &goalProc)); //Start the main processing thread
 
     //AT THIS POINT IT IS ASSUMED THAT ALL THREADS ARE STARTED OR IN THE PROCESS OF STARTING
 

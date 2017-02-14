@@ -1,6 +1,6 @@
-//
-// Created by cameronearle on 1/8/17.
-//
+/**
+ * @deprecated
+ */
 
 #ifndef PROJECT_STREAMER_HPP
 #define PROJECT_STREAMER_HPP

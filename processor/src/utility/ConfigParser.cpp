@@ -123,8 +123,10 @@ Configuration ConfigParser::getSettings() { //GET SETTINGS
     configuration.goalProcDeviceNumber = configFind<int>("goalProcDeviceNumber");
     configuration.gearProcDeviceNumber = configFind<int>("gearProcDeviceNumber");
     configuration.streamDeviceNumber = configFind<int>("streamDeviceNumber");
+    configuration.networkBasePort = configFind<int>("networkBasePort");
     configuration.showDebugWindows = configFind<bool>("showDebugWindows");
     configuration.showDebugText = configFind<bool>("showDebugText");
+    configuration.runDebugFunctions = configFind<bool>("runDebugFunctions");
 
     return configuration;
 }
