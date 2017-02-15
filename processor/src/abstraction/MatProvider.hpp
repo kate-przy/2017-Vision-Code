@@ -29,7 +29,6 @@ private:
     int type; //The type of the camera
     Mat frame; //The volatile frame that will contain data pulled from the capture device
     bool usable; //Has the MatProvider been constructed properly?
-    Mutex readLock; //Lock for reading frames so we don't run multiple copies at a time
 
     std::string ld = "MatProvider"; //The log descriptor
 };

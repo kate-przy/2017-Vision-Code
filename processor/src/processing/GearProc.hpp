@@ -2,17 +2,17 @@
 // Created by cameronearle on 2/14/17.
 //
 
-#ifndef PROJECT_GOALPROC_HPP
-#define PROJECT_GOALPROC_HPP
+#ifndef PROJECT_GEARPROC_HPP
+#define PROJECT_GEARPROC_HPP
 
 
 #include "../utility/Configuration.hpp"
 #include "../abstraction/MatProvider.hpp"
 #include "../networking/DataStreamer.hpp"
 
-class GoalProc {
+class GearProc {
 public:
-    GoalProc(Configuration config_, MatProvider *provider_, DataStreamer *streamer_);
+    GearProc(Configuration config_, MatProvider *provider_, DataStreamer *streamer_);
     void run();
 private:
     Configuration config;
@@ -21,4 +21,4 @@ private:
 };
 
 
-#endif //PROJECT_GOALPROC_HPP
+#endif //PROJECT_GEARPROC_HPP

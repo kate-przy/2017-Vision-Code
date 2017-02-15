@@ -13,6 +13,7 @@
 #include "src/networking/DataStreamer.hpp"
 #include "src/networking/Streamer.hpp"
 #include "src/processing/GoalProc.hpp"
+#include "src/processing/GearProc.hpp"
 
 #include <unistd.h>
 #include <termios.h>
@@ -58,7 +59,7 @@ int main(int argc, char *argv[]) {
     ConfigParser parser(vector<string>(argv+1, argv + argc)); //Initialize a configuration parser
     Configuration config = parser.getSettings(); //Get the settings from the config parser
 
-    Debug::init(config); //Initialize the debug window manager
+    Debug::init(config); //Initialize the debug manager
 
 
     //THREADING INIT
@@ -74,7 +75,8 @@ int main(int argc, char *argv[]) {
     processingProvider.setName("Processing"); //Set the names of the MatProviders for logging purposes
 
     DataStreamer dataStreamer(config.networkBasePort + 1); //Creates a data streamer to send processing data to the RIO
-    GoalProc goalProc(config, processingProvider, &dataStreamer); //Creates a processor to be run in a thread that processes images and sends output to the dataStreamer
+    GoalProc goalProc(config, &processingProvider, &dataStreamer); //Creates a processor to be run in a thread that processes images and sends output to the dataStreamer
+    GearProc gearProc(config, &processingProvider, &dataStreamer);
 
     //THREADING START
     providerGroup.create_thread(boost::bind(&MatProvider::run, &processingProvider)); //Start the thread for the processing matprovider
@@ -82,12 +84,18 @@ int main(int argc, char *argv[]) {
     networkingGroup.create_thread(boost::bind(&DataStreamer::run, &dataStreamer)); //Start the thread for the network data streamer
 
     processingGroup.create_thread(boost::bind(&GoalProc::run, &goalProc)); //Start the main processing thread
+    processingGroup.create_thread(boost::bind(&GearProc::run, &gearProc));
 
     //AT THIS POINT IT IS ASSUMED THAT ALL THREADS ARE STARTED OR IN THE PROCESS OF STARTING
 
-    while (true) { //Loop the main thread to keep it alive
-        if (getch() == 'q') { //If q is pressed
-            break; //Break this loop, at which point the program will begin shutting down
+    bool loop = true;
+    int exitCode = 1;
+    while (loop) { //Loop the main thread to keep it alive
+        switch (getch()) {
+            case 'q':
+                loop = false; //Break this loop
+                exitCode = 0; //Set the exit code to standard exit
+                break;
         }
         boost::this_thread::sleep(boost::posix_time::milliseconds(10)); //Keep the processor happy
     }
@@ -107,5 +115,6 @@ int main(int argc, char *argv[]) {
     providerGroup.interrupt_all(); //Signal all provider threads to stop
     providerGroup.join_all(); //Wait for all provider threads to stop
 
+    return exitCode; //Allow signaling to the loop script for auto restart
 
 }

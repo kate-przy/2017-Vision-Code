@@ -9,7 +9,7 @@
 #include <opencv2/opencv.hpp>
 
 
-GoalProc::GoalProc(Configuration config_, MatProvider provider_, DataStreamer *streamer_) {
+GoalProc::GoalProc(Configuration config_, MatProvider *provider_, DataStreamer *streamer_) {
     config = config_;
     provider = provider_;
     streamer = streamer_;
@@ -26,7 +26,7 @@ void GoalProc::run() {
     Mat inRangeFrame;
     Mat erosionMat;
     Mat imageUndistorted;
-    Mat blankFrame = Mat::zeros(provider.getSize(), provider.getType());
+    Mat blankFrame = Mat::zeros(provider->getSize(), provider->getType());
 
     // Initializes shapes
     Rect rect;
@@ -61,11 +61,11 @@ void GoalProc::run() {
 
         // Reset the blankFrame with an empty Mat if we have debug enabled
         Debug::runDebugOperation([this, &blankFrame]() {
-            blankFrame = Mat::zeros(provider.getSize(), provider.getType());
+            blankFrame = Mat::zeros(provider->getSize(), provider->getType());
         });
 
         // Reads in the latest frame and undistorts it
-        latestFrame = provider.getLatestFrame();
+        latestFrame = provider->getLatestFrame();
         undistort(latestFrame, imageUndistorted, cameraMatrix, dist);
 
         // Converts color from BGR to HSV, filters out unwanted colors, erodes out noise and then finds contours
@@ -74,7 +74,7 @@ void GoalProc::run() {
         inRange(hsvFrame, Scalar(H - 2, S - 2, V - 80), Scalar(H + 2, S + 2, V + 80), inRangeFrame);
         erode(inRangeFrame, erosionMat,  Mat(), Point(-1, -1), 1, 0, 1);
 
-        Mat preston = Mat::zeros(provider.getSize(), provider.getType());
+        Mat preston = Mat::zeros(provider->getSize(), provider->getType());
         imageUndistorted.copyTo(preston, erosionMat);
 
         findContours(erosionMat, contours, RETR_LIST, CHAIN_APPROX_SIMPLE );

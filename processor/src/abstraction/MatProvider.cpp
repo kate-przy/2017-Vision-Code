@@ -58,14 +58,12 @@ void MatProvider::run() {
  * @return The Mat from the capture device
  */
 Mat MatProvider::getLatestFrame() {
-    readLock.lock();
     Mat toReturn;
     if (usable) {
-        toReturn =  frame.clone();
+        toReturn = frame.clone();
     } else {
-        toReturn =  Mat();
+        toReturn = Mat();
     }
-    readLock.unlock();
     return toReturn;
 }
 

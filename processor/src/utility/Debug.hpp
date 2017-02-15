@@ -26,6 +26,7 @@ private:
     static bool showText;
     static bool runFunctions;
     static std::string ld;
+    static std::mutex windowLock;
 };
 
 
