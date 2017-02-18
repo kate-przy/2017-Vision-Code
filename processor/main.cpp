@@ -69,7 +69,7 @@ int main(int argc, char *argv[]) {
 
     //OBJECT INIT
     Camera processingCamera(0);
-    //Camera processingCamera(config); //Set up the processing camera from the config
+    //Camera processingCamera(config, Camera::CameraType::GOAL_PROCESSING); //Set up the processing camera from the config
     processingCamera.setup(); //Set up the camera
     MatProvider processingProvider = processingCamera.getProvider(); //Get a MatProvider for the processing camera
     processingProvider.setName("Processing"); //Set the names of the MatProviders for logging purposes

@@ -1,6 +1,8 @@
 
 project(2017-Vision-processor)
 
+file(COPY res DESTINATION ./)
+
 add_subdirectory(src)
 
 set(2017_VISION_PROCESSOR_SRC main.cpp)
