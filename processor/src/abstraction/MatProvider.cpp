@@ -26,7 +26,9 @@ MatProvider::MatProvider(VideoCapture cap_, int open) {
         }
     }
     cap.read(initFrame); //Capture a single frame from our capture device to get the properties
-    frame = Mat::zeros(initFrame.size(), initFrame.type()); //Initialize the volatile frame with the properties of our device
+    size = initFrame.size();
+    type = initFrame.type();
+    frame = Mat::zeros(size, type); //Initialize the volatile frame with the properties of our device
     usable = true;
 }
 

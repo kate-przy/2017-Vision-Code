@@ -53,6 +53,8 @@ char getch() {
  * @return Exit code
  */
 int main(int argc, char *argv[]) {
+    std::cerr << "lol pwned" << std::endl; //From: Preston
+
     //BASIC INIT
     Log::init(Log::Level::DEBUG, true); //Initialize the logger to record debug messages and use a file
 

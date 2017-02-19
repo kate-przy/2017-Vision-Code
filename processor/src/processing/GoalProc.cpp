@@ -20,29 +20,47 @@ using namespace cv;
 
 void GoalProc::run() {
     // Initializes frames
-    Mat latestFrame;
-    Mat grayFrame;
-    Mat hsvFrame;
-    Mat inRangeFrame;
-    Mat erosionMat;
-    Mat imageUndistorted;
-    Mat blankFrame = Mat::zeros(provider->getSize(), provider->getType());
+    Mat latestFrame,
+        grayFrame,
+        hsvFrame,
+        inRangeFrame,
+        erosionMat,
+        imageUndistorted,
+        blankFrame,
+        edges;
+
+    blankFrame = Mat::zeros(provider->getSize(), provider->getType());
+    edges = Mat::zeros(provider->getSize(), provider->getType());
 
     // Initializes shapes
-    Rect rect;
-    Rect rect2;
-    Point topLeft, bottomRight, center;
+    Rect rect,
+         rect2;
+
+    Point topLeft,
+          bottomRight,
+          center;
 
     // Initializes contours and a blank frame
-    vector<vector<Point> > contours;
+    vector<vector<Point>> contours;
     vector<Vec4i> hierarchy;
-    int idx = 0;
-    //Mat edges = Mat::zeros(480, 640, CV_8UC3);
+    int idx = 0; //The index of the largest contour
+
+    double pitchCalculation,
+    yawCalculation;
+
+    if ((provider->getSize().height / 2) % 2 == 0) {
+        pitchCalculation = (provider->getSize().height/2) * (config.goalProcFOV/provider->getSize().height);
+    } else {
+        pitchCalculation = ((provider->getSize().height/2) - 0.5) * (config.goalProcFOV/provider->getSize().height);
+    }
+
+    if ((provider->getSize().width / 2) % 2 == 0) {
+        yawCalculation = (provider->getSize().width/2) * (config.goalProcFOV/provider->getSize().width);
+    } else {
+        yawCalculation = ((provider->getSize().width/2) - 0.5) * (config.goalProcFOV/provider->getSize().width);
+    }
 
     // Initializes HSV values TODO Change these to what they should
-    const int H = 60;
-    const int S = 255;
-    const int V = 170;
 
     double yaw;
     double pitch;
@@ -57,7 +75,6 @@ void GoalProc::run() {
     while (!boost::this_thread::interruption_requested()) {
         // Resets the contours and max contours
         contours.clear();
-        idx = 0;
 
         // Reset the blankFrame with an empty Mat if we have debug enabled
         Debug::runDebugOperation([this, &blankFrame]() {
@@ -71,14 +88,14 @@ void GoalProc::run() {
         // Converts color from BGR to HSV, filters out unwanted colors, erodes out noise and then finds contours
         cvtColor(imageUndistorted, hsvFrame, CV_BGR2HSV);
 
-        inRange(hsvFrame, Scalar(H - 2, S - 2, V - 80), Scalar(H + 2, S + 2, V + 80), inRangeFrame);
+        inRange(hsvFrame, Scalar(config.goalProcHBase - config.goalProcHRange, config.goalProcSBase - config.goalProcSRange, config.goalProcVBase - config.goalProcVRange),
+                          Scalar(config.goalProcHBase + config.goalProcHRange, config.goalProcSBase + config.goalProcSRange, config.goalProcVBase + config.goalProcVRange), inRangeFrame);
+
         erode(inRangeFrame, erosionMat,  Mat(), Point(-1, -1), 1, 0, 1);
 
-        Mat preston = Mat::zeros(provider->getSize(), provider->getType());
-        imageUndistorted.copyTo(preston, erosionMat);
+        findContours(erosionMat, contours, RETR_LIST, CHAIN_APPROX_SIMPLE);
 
-        findContours(erosionMat, contours, RETR_LIST, CHAIN_APPROX_SIMPLE );
-        //findContours(inRangeFrame, contours, RETR_LIST, CHAIN_APPROX_SIMPLE );
+        //TODO LIAM WRITE ASPECT RATIO CODE RIGHT NOW YOU SCUM
 
         // If we have at least two contours, find points and do math on them
         if(contours.size() >= 2) {
@@ -102,16 +119,14 @@ void GoalProc::run() {
 
             // Calculates Yaw and Pitch in degrees
             // We decimal at the end is how many degrees/pixel we have
-            yaw = ((center.x - ((640/2) - 0.5)) * 0.1171875);
-            pitch = ((center.y - ((480/2) - 0.5)) * 0.15625);
+            yaw = (center.x - yawCalculation);
+            pitch = (center.y - pitchCalculation);
 
-            streamer->addToQueue(StreamData(0, pitch, yaw));
+            streamer->addToQueue(StreamData(0, pitch, yaw)); //Send our data to the RIO
 
             // Draw and print expensive operations if debug is enabled
             Debug::runDebugOperation([this, &imageUndistorted, &center]() {
                 circle(imageUndistorted, center, 2, Scalar(255, 204, 10), 2);
-
-                //TODO 203, 223
             });
             Debug::printDebugText("YAW: " + to_string(yaw) + " | PITCH: " + to_string(pitch));
         } else {
