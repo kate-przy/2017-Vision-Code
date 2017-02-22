@@ -34,6 +34,8 @@ private:
             make_pair("showDebugText", "1"),
             make_pair("runDebugFunctions", "1"),
 
+            make_pair("streamCompression", "30"),
+
             make_pair("goalProcHBase", "60"),
             make_pair("goalProcSBase", "255"),
             make_pair("goalProcVBase", "170"),
@@ -51,7 +53,55 @@ private:
             make_pair("goalProcAspect", "-1"),
             make_pair("gearProcAspect", "-1"),
             make_pair("goalProcAspectRange", "-1"),
-            make_pair("gearProcAspectRange", "-1")
+            make_pair("gearProcAspectRange", "-1"),
+
+            make_pair("goalProcCameraBrightness", "0"),
+            make_pair("goalProcCameraContrast", "0"),
+            make_pair("goalProcCameraSaturation", "255"),
+            make_pair("goalProcCameraHue", "0"),
+            make_pair("goalProcCameraAutoWB", "0"),
+            make_pair("goalProcCameraExposure", "20"),
+            make_pair("goalProcCameraAutoGain", "0"),
+            make_pair("goalProcCameraGain", "15"),
+            make_pair("goalProcCameraVFlip", "0"),
+            make_pair("goalProcCameraHFlip", "0"),
+            make_pair("goalProcCameraManualExposure", "1"),
+
+            make_pair("gearProcCameraBrightness", "0"),
+            make_pair("gearProcCameraContrast", "0"),
+            make_pair("gearProcCameraSaturation", "255"),
+            make_pair("gearProcCameraHue", "0"),
+            make_pair("gearProcCameraAutoWB", "0"),
+            make_pair("gearProcCameraExposure", "20"),
+            make_pair("gearProcCameraAutoGain", "0"),
+            make_pair("gearProcCameraGain", "15"),
+            make_pair("gearProcCameraVFlip", "1"),
+            make_pair("gearProcCameraHFlip", "0"),
+            make_pair("gearProcCameraManualExposure", "1"),
+
+            make_pair("goalStreamCameraBrightness", "0"),
+            make_pair("goalStreamCameraContrast", "32"),
+            make_pair("goalStreamCameraSaturation", "64"),
+            make_pair("goalStreamCameraHue", "0"),
+            make_pair("goalStreamCameraAutoWB", "1"),
+            make_pair("goalStreamCameraExposure", "120"),
+            make_pair("goalStreamCameraAutoGain", "1"),
+            make_pair("goalStreamCameraGain", "20"),
+            make_pair("goalStreamCameraVFlip", "0"),
+            make_pair("goalStreamCameraHFlip", "0"),
+            make_pair("goalStreamCameraManualExposure", "0"),
+
+            make_pair("gearStreamCameraBrightness", "0"),
+            make_pair("gearStreamCameraContrast", "32"),
+            make_pair("gearStreamCameraSaturation", "64"),
+            make_pair("gearStreamCameraHue", "0"),
+            make_pair("gearStreamCameraAutoWB", "1"),
+            make_pair("gearStreamCameraExposure", "120"),
+            make_pair("gearStreamCameraAutoGain", "1"),
+            make_pair("gearStreamCameraGain", "20"),
+            make_pair("gearStreamCameraVFlip", "0"),
+            make_pair("gearStreamCameraHFlip", "0"),
+            make_pair("gearStreamCameraManualExposure", "0")
     };
     map<string, string> finalSettings;
     template <class T>

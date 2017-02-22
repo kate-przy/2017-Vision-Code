@@ -11,9 +11,12 @@
 #include "src/utility/Debug.hpp"
 #include "src/abstraction/Camera.hpp"
 #include "src/networking/DataStreamer.hpp"
+#include "src/networking/Controller.hpp"
 #include "src/networking/Streamer.hpp"
 #include "src/processing/GoalProc.hpp"
 #include "src/processing/GearProc.hpp"
+
+#include <boost/algorithm/string.hpp>
 
 #include <unistd.h>
 #include <termios.h>
@@ -53,10 +56,10 @@ char getch() {
  * @return Exit code
  */
 int main(int argc, char *argv[]) {
-    std::cerr << "lol pwned" << std::endl; //From: Preston
+    std::cerr << "lol pwnd" << std::endl; //From: Preston
 
     //BASIC INIT
-    Log::init(Log::Level::DEBUG, true); //Initialize the logger to record debug messages and use a file
+    Log::init(Log::Level::INFO, true); //Initialize the logger to record info and higher messages and use a file
 
     ConfigParser parser(vector<string>(argv+1, argv + argc)); //Initialize a configuration parser
     Configuration config = parser.getSettings(); //Get the settings from the config parser
@@ -70,25 +73,42 @@ int main(int argc, char *argv[]) {
     boost::thread_group processingGroup; //Thread group for processing threads
 
     //OBJECT INIT
-    Camera processingCamera(0);
-    //Camera processingCamera(config, Camera::CameraType::GOAL_PROCESSING); //Set up the processing camera from the config
-    processingCamera.setup(); //Set up the camera
-    MatProvider processingProvider = processingCamera.getProvider(); //Get a MatProvider for the processing camera
-    processingProvider.setName("Processing"); //Set the names of the MatProviders for logging purposes
+    Camera goalProcCamera(1);
+    Camera gearProcCamera(2);
+    //Camera goalProcCamera(config, Camera::CameraType::GOAL_PROCESSING); //Set up the processing camera from the config
+    //Camera gearProcCamera(config, Camera::CameraType::GEAR_PROCESSING);
+    goalProcCamera.setup(); //Set up the camera
+    gearProcCamera.setup(); //Set up the gear camera
+    MatProvider goalProcProvider = goalProcCamera.getProvider(); //Get a MatProvider for the processing camera
+    MatProvider gearProcProvider = gearProcCamera.getProvider();
+    goalProcProvider.setName("GoalProc"); //Set the names of the MatProviders for logging purposes
+    gearProcProvider.setName("GearProc");
 
     DataStreamer dataStreamer(config.networkBasePort + 1); //Creates a data streamer to send processing data to the RIO
-    GoalProc goalProc(config, &processingProvider, &dataStreamer); //Creates a processor to be run in a thread that processes images and sends output to the dataStreamer
-    GearProc gearProc(config, &processingProvider, &dataStreamer);
+    Camera blank(-1);
+    GoalProc goalProc(config, &goalProcProvider, &dataStreamer); //Creates a processor to be run in a thread that processes images and sends output to the dataStreamer
+    GearProc gearProc(config, &gearProcProvider, &dataStreamer);
+    Streamer streamer(config.networkBasePort + 2, &goalProcProvider, &gearProcProvider);
+    Controller controller(config, &goalProcCamera, &gearProcCamera, &goalProc, &gearProc, &streamer, config.networkBasePort + 3);
 
     //THREADING START
-    providerGroup.create_thread(boost::bind(&MatProvider::run, &processingProvider)); //Start the thread for the processing matprovider
+    providerGroup.create_thread(boost::bind(&MatProvider::run, &goalProcProvider)); //Start the thread for the processing matprovider
+    providerGroup.create_thread(boost::bind(&MatProvider::run, &gearProcProvider));
 
     networkingGroup.create_thread(boost::bind(&DataStreamer::run, &dataStreamer)); //Start the thread for the network data streamer
+    networkingGroup.create_thread(boost::bind(&Streamer::run, &streamer));
+    networkingGroup.create_thread(boost::bind(&Controller::run, &controller));
 
     processingGroup.create_thread(boost::bind(&GoalProc::run, &goalProc)); //Start the main processing thread
     processingGroup.create_thread(boost::bind(&GearProc::run, &gearProc));
 
     //AT THIS POINT IT IS ASSUMED THAT ALL THREADS ARE STARTED OR IN THE PROCESS OF STARTING
+
+    boost::this_thread::sleep(boost::posix_time::seconds(5));
+
+    Configuration newConfig = config;
+    newConfig.goalProcAspect = 10;
+    goalProc.subConfig(newConfig);
 
     bool loop = true;
     int exitCode = 1;
@@ -107,15 +127,19 @@ int main(int argc, char *argv[]) {
     processingGroup.interrupt_all(); //Signal all processing threads to stop
     processingGroup.join_all(); //Wait for all processing threads to stop
 
-    dataStreamer.addToQueue(StreamData::Type::SHUTDOWN);
+    dataStreamer.addToQueue(StreamData::Type::SHUTDOWN); //Tell the robot we are shutting down
 
     //It is now safe to stop networking, since all processing has stopped
     networkingGroup.interrupt_all(); //Signal all networking threads to stop
     networkingGroup.join_all(); //Wait for all networking threads to stop
 
-    //Finally, it is now safe to stop provider threads, since all streaming has stopped
+    //It is now safe to stop provider threads, since all streaming has stopped
     providerGroup.interrupt_all(); //Signal all provider threads to stop
     providerGroup.join_all(); //Wait for all provider threads to stop
+
+    //Finally, tell all camera instances to close
+    goalProcCamera.close();
+    //gearProcCamera.close();
 
     return exitCode; //Allow signaling to the loop script for auto restart
 

@@ -6,6 +6,7 @@
 #include <libv4l2.h>
 #include <linux/videodev2.h>
 #include <fcntl.h>
+#include <iostream>
 #include "Camera.hpp"
 #include "../utility/Log.hpp"
 
@@ -61,18 +62,26 @@ Camera::Camera(std::string deviceId_)  {
  */
 bool Camera::setProperty(int property, int value) {
     if (type != VIRTUAL) { //If the camera is not virtual (video file)
-        int descriptor = v4l2_open(("/dev/video" + std::to_string(deviceNumber)).c_str(), O_RDWR); //A number that linux uses to reference the camera object
+        if (v4lHandle != -1) { //If the instance is valid
+            v4l2_control c; //A video4linux control that we will use to change a specific setting
+            c.id = property; //Set the control property to our property
+            c.value = value; //Set the control value to our value
 
-        v4l2_control c; //A video4linux control that we will use to change a specific setting
-        c.id = property; //Set the control property to our property
-        c.value = value; //Set the control value to our value
-
-        bool success = v4l2_ioctl(descriptor, VIDIOC_S_CTRL, &c) == 0; //Run the operation and see if it succeeds
-        if (success) { //If the operation succeeded
-            Log::i(ld, "Set property [" + std::to_string(property) + "] to value [" + std::to_string(value) + "] on device [" + std::to_string(deviceNumber) + "]");
-            return true; //NOTE: This is not just "return success;" because we may want to add additional (log) functions later
-        } else { //The operation didn't succeed
-            Log::e(ld, "Failed to set property [" + std::to_string(property) + "] to value [" + std::to_string(value) + "] on device [" + std::to_string(deviceNumber) + "]");
+            bool success =
+                    v4l2_ioctl(v4lHandle, VIDIOC_S_CTRL, &c) == 0; //Run the operation and see if it succeeds
+            if (success) { //If the operation succeeded
+                Log::i(ld, "Set property [" + std::to_string(property) + "] to value [" + std::to_string(value) +
+                           "] on device [" + std::to_string(deviceNumber) + "]");
+                return true; //NOTE: This is not just "return success;" because we may want to add additional (log) functions later
+            } else { //The operation didn't succeed
+                Log::e(ld,
+                       "Failed to set property [" + std::to_string(property) + "] to value [" +
+                       std::to_string(value) +
+                       "] on device [" + std::to_string(deviceNumber) + "]");
+                return false;
+            }
+        } else {
+            Log::e(ld, "Can't set properties on a bad descriptor!");
             return false;
         }
     } else { //The camera is virtual
@@ -87,36 +96,36 @@ bool Camera::setProperty(int property, int value) {
  */
 bool Camera::setup() {
     bool validity = true;
+    if (type != VIRTUAL) {
+        v4lHandle = v4l2_open(("/dev/video" + std::to_string(deviceNumber)).c_str(), O_RDWR); //Try to open a v4l instance of our camera
+        Log::d(ld, "V4L Handle: [" + std::to_string(v4lHandle) + "]");
+    }
     switch (type) {
         case GOAL_PROCESSING:
-            //TODO INSERT SET PROPERTIES FROM CONFIG HERE
-            setProperty(V4L2_CID_EXPOSURE_AUTO, V4L2_EXPOSURE_MANUAL);
-            setProperty(V4L2_CID_AUTOGAIN, 0);
-            setProperty(V4L2_CID_AUTO_WHITE_BALANCE, 0);
-            setProperty(V4L2_CID_VFLIP, 1);
-
-            setProperty(V4L2_CID_BRIGHTNESS, 0);
-            setProperty(V4L2_CID_CONTRAST, 0);
-            setProperty(V4L2_CID_SATURATION, 255);
-            setProperty(V4L2_CID_HUE, 0);
-            setProperty(V4L2_CID_EXPOSURE, 20);
-            setProperty(V4L2_CID_GAIN, 15);
-            setProperty(V4L2_CID_SHARPNESS, 0);
+            setProperty(V4L2_CID_BRIGHTNESS, config.goalProcCameraBrightness);
+            setProperty(V4L2_CID_CONTRAST, config.goalProcCameraContrast);
+            setProperty(V4L2_CID_SATURATION, config.goalProcCameraSaturation);
+            setProperty(V4L2_CID_HUE, config.goalProcCameraHue);
+            setProperty(V4L2_CID_AUTO_WHITE_BALANCE, config.goalProcCameraAutoWB);
+            setProperty(V4L2_CID_EXPOSURE, config.goalProcCameraExposure);
+            setProperty(V4L2_CID_AUTOGAIN, config.goalProcCameraAutoGain);
+            setProperty(V4L2_CID_GAIN, config.goalProcCameraGain);
+            setProperty(V4L2_CID_VFLIP, config.goalProcCameraVFlip);
+            setProperty(V4L2_CID_HFLIP, config.goalProcCameraHFlip);
+            setProperty(V4L2_CID_EXPOSURE_AUTO, config.goalProcCameraManualExposure);
             break;
         case GEAR_PROCESSING:
-            //TODO INSERT SET PROPERTIES FROM CONFIG HERE
-            setProperty(V4L2_CID_EXPOSURE_AUTO, V4L2_EXPOSURE_MANUAL);
-            setProperty(V4L2_CID_AUTOGAIN, 0);
-            setProperty(V4L2_CID_AUTO_WHITE_BALANCE, 0);
-            setProperty(V4L2_CID_VFLIP, 1);
-
-            setProperty(V4L2_CID_BRIGHTNESS, 0);
-            setProperty(V4L2_CID_CONTRAST, 0);
-            setProperty(V4L2_CID_SATURATION, 255);
-            setProperty(V4L2_CID_HUE, 0);
-            setProperty(V4L2_CID_EXPOSURE, 20);
-            setProperty(V4L2_CID_GAIN, 15);
-            setProperty(V4L2_CID_SHARPNESS, 0);
+            setProperty(V4L2_CID_BRIGHTNESS, config.gearProcCameraBrightness);
+            setProperty(V4L2_CID_CONTRAST, config.gearProcCameraContrast);
+            setProperty(V4L2_CID_SATURATION, config.gearProcCameraSaturation);
+            setProperty(V4L2_CID_HUE, config.gearProcCameraHue);
+            setProperty(V4L2_CID_AUTO_WHITE_BALANCE, config.gearProcCameraAutoWB);
+            setProperty(V4L2_CID_EXPOSURE, config.gearProcCameraExposure);
+            setProperty(V4L2_CID_AUTOGAIN, config.gearProcCameraAutoGain);
+            setProperty(V4L2_CID_GAIN, config.gearProcCameraGain);
+            setProperty(V4L2_CID_VFLIP, config.gearProcCameraVFlip);
+            setProperty(V4L2_CID_HFLIP, config.gearProcCameraHFlip);
+            setProperty(V4L2_CID_EXPOSURE_AUTO, config.gearProcCameraManualExposure);
             break;
         case STREAM:
             //TODO INSERT SET PROPERTIES FROM CONFIG HERE
@@ -182,5 +191,6 @@ MatProvider Camera::getProvider() {
  * Closes the CV capture instance associated with this camera
  */
 void Camera::close() {
-    cap.release();
+    cap.release(); //Release the opencv instance of our device
+    v4l2_close(v4lHandle); //Close the v4l2 capture instance
 }

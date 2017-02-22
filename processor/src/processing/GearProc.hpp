@@ -10,14 +10,31 @@
 #include "../abstraction/MatProvider.hpp"
 #include "../networking/DataStreamer.hpp"
 
+#include <mutex>
+
 class GearProc {
 public:
     GearProc(Configuration config_, MatProvider *provider_, DataStreamer *streamer_);
     void run();
+    void subConfig(Configuration config_);
 private:
     Configuration config;
     MatProvider *provider;
     DataStreamer *streamer;
+    std::mutex operativeLock;
+    void calc();
+
+    int hLower;
+    int sLower;
+    int vLower;
+    int hUpper;
+    int sUpper;
+    int vUpper;
+
+    double yawCalculation;
+
+    double aspectLower;
+    double aspectUpper;
 };
 
 

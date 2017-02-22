@@ -16,6 +16,34 @@ GearProc::GearProc(Configuration config_, MatProvider *provider_, DataStreamer *
     streamer = streamer_;
 }
 
+void GearProc::subConfig(Configuration config_) {
+    operativeLock.lock();
+    config = config_;
+    calc();
+    operativeLock.unlock();
+}
+
+void GearProc::calc() {
+    //HSV CALCULATIONS
+    hLower = config.gearProcHBase - config.gearProcHRange;
+    sLower = config.gearProcSBase - config.gearProcSRange;
+    vLower = config.gearProcVBase - config.gearProcVRange;
+    hUpper = config.gearProcHBase + config.gearProcHRange;
+    sUpper = config.gearProcSBase + config.gearProcSRange;
+    vUpper = config.gearProcVBase + config.gearProcVRange;
+
+    //YAW CALCULATIONS
+    if ((provider->getSize().width / 2) % 2 == 0) {
+        yawCalculation = (provider->getSize().width/2) * (config.gearProcFOV/provider->getSize().width);
+    } else {
+        yawCalculation = ((provider->getSize().width/2) - 0.5) * (config.gearProcFOV/provider->getSize().width);
+    }
+
+    //ASPECT CALCULATIONS
+    aspectLower = config.gearProcAspect - config.gearProcAspectRange;
+    aspectUpper = config.gearProcAspect + config.gearProcAspectRange;
+}
+
 void GearProc::run() {
     // Initializes frames
     Mat latestFrame,
@@ -42,28 +70,13 @@ void GearProc::run() {
     vector<Vec4i> hierarchy;
     vector<int> selected;
 
-    double yawCalculation;
 
-    if ((provider->getSize().width / 2) % 2 == 0) {
-        yawCalculation = (provider->getSize().width/2) * (config.gearProcFOV/provider->getSize().width);
-    } else {
-        yawCalculation = ((provider->getSize().width/2) - 0.5) * (config.gearProcFOV/provider->getSize().width);
-    }
 
     int w_threshold = 3;
     int h_threshold = 3;
 
     double yaw;
 
-    int hLower = config.gearProcHBase - config.gearProcHRange;
-    int sLower = config.gearProcSBase - config.gearProcSRange;
-    int vLower = config.gearProcVBase - config.gearProcVRange;
-    int hUpper = config.gearProcHBase + config.gearProcHRange;
-    int sUpper = config.gearProcSBase + config.gearProcSRange;
-    int vUpper = config.gearProcVBase + config.gearProcVRange;
-
-    double aspectLower = config.gearProcAspect - config.gearProcAspectRange;
-    double aspectUpper = config.gearProcAspect + config.gearProcAspectRange;
     double selectedAspect;
 
 
@@ -75,8 +88,12 @@ void GearProc::run() {
 
     StreamData::Strafe strafe = StreamData::Strafe::CENTER; //Variable to hold the current strafe status
     Debug::printDebugText("YAW: " + to_string(yaw) + " | STRAFE: " + to_string(strafe));
+
+    calc(); //Pre-run calculations
+
     // Main loop to run code
     while (!boost::this_thread::interruption_requested()) {
+        operativeLock.lock();
         //start = std::clock();
         // Resets the contours and max contours
         contours.clear();
@@ -168,5 +185,8 @@ void GearProc::run() {
         Debug::updateWindow("gearLatest", imageUndistorted);
         Debug::updateWindow("gearBlank", blankFrame);
         Debug::updateWindow("gearRange", inRangeFrame);
+        
+        operativeLock.unlock();
+        boost::this_thread::sleep(boost::posix_time::microseconds(10));
     }
 }

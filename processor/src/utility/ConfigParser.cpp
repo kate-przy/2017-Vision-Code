@@ -130,6 +130,8 @@ Configuration ConfigParser::getSettings() { //GET SETTINGS
     configuration.showDebugText = configFind<bool>("showDebugText");
     configuration.runDebugFunctions = configFind<bool>("runDebugFunctions");
 
+    configuration.streamCompression = configFind<int>("streamCompression");
+
     configuration.goalProcHBase = configFind<int>("goalProcHBase");
     configuration.goalProcSBase = configFind<int>("goalProcSBase");
     configuration.goalProcVBase = configFind<int>("goalProcVBase");
@@ -148,6 +150,54 @@ Configuration ConfigParser::getSettings() { //GET SETTINGS
     configuration.gearProcAspect = configFind<double>("gearProcAspect");
     configuration.goalProcAspectRange = configFind<double>("goalProcAspectRange");
     configuration.gearProcAspectRange = configFind<double>("gearProcAspectRange");
+
+    configuration.goalProcCameraBrightness = configFind<int>("goalProcCameraBrightness");
+    configuration.goalProcCameraContrast = configFind<int>("goalProcCameraContrast");
+    configuration.goalProcCameraSaturation = configFind<int>("goalProcCameraSaturation");
+    configuration.goalProcCameraHue = configFind<int>("goalProcCameraHue");
+    configuration.goalProcCameraAutoWB = configFind<bool>("goalProcCameraAutoWB");
+    configuration.goalProcCameraExposure = configFind<int>("goalProcCameraExposure");
+    configuration.goalProcCameraAutoGain = configFind<bool>("goalProcCameraAutoGain");
+    configuration.goalProcCameraGain = configFind<int>("goalProcCameraGain");
+    configuration.goalProcCameraVFlip = configFind<bool>("goalProcCameraVFlip");
+    configuration.goalProcCameraHFlip = configFind<bool>("goalProcCameraHFlip");
+    configuration.goalProcCameraManualExposure = configFind<bool>("goalProcCameraManualExposure");
+
+    configuration.gearProcCameraBrightness = configFind<int>("gearProcCameraBrightness");
+    configuration.gearProcCameraContrast = configFind<int>("gearProcCameraContrast");
+    configuration.gearProcCameraSaturation = configFind<int>("gearProcCameraSaturation");
+    configuration.gearProcCameraHue = configFind<int>("gearProcCameraHue");
+    configuration.gearProcCameraAutoWB = configFind<bool>("gearProcCameraAutoWB");
+    configuration.gearProcCameraExposure = configFind<int>("gearProcCameraExposure");
+    configuration.gearProcCameraAutoGain = configFind<bool>("gearProcCameraAutoGain");
+    configuration.gearProcCameraGain = configFind<int>("gearProcCameraGain");
+    configuration.gearProcCameraVFlip = configFind<bool>("gearProcCameraVFlip");
+    configuration.gearProcCameraHFlip = configFind<bool>("gearProcCameraHFlip");
+    configuration.gearProcCameraManualExposure = configFind<bool>("gearProcCameraManualExposure");
+
+    configuration.goalStreamCameraBrightness = configFind<int>("goalStreamCameraBrightness");
+    configuration.goalStreamCameraContrast = configFind<int>("goalStreamCameraContrast");
+    configuration.goalStreamCameraSaturation = configFind<int>("goalStreamCameraSaturation");
+    configuration.goalStreamCameraHue = configFind<int>("goalStreamCameraHue");
+    configuration.goalStreamCameraAutoWB = configFind<bool>("goalStreamCameraAutoWB");
+    configuration.goalStreamCameraExposure = configFind<int>("goalStreamCameraExposure");
+    configuration.goalStreamCameraAutoGain = configFind<bool>("goalStreamCameraAutoGain");
+    configuration.goalStreamCameraGain = configFind<int>("goalStreamCameraGain");
+    configuration.goalStreamCameraVFlip = configFind<bool>("goalStreamCameraVFlip");
+    configuration.goalStreamCameraHFlip = configFind<bool>("goalStreamCameraHFlip");
+    configuration.goalStreamCameraManualExposure = configFind<bool>("goalStreamCameraManualExposure");
+
+    configuration.gearStreamCameraBrightness = configFind<int>("gearStreamCameraBrightness");
+    configuration.gearStreamCameraContrast = configFind<int>("gearStreamCameraContrast");
+    configuration.gearStreamCameraSaturation = configFind<int>("gearStreamCameraSaturation");
+    configuration.gearStreamCameraHue = configFind<int>("gearStreamCameraHue");
+    configuration.gearStreamCameraAutoWB = configFind<bool>("gearStreamCameraAutoWB");
+    configuration.gearStreamCameraExposure = configFind<int>("gearStreamCameraExposure");
+    configuration.gearStreamCameraAutoGain = configFind<bool>("gearStreamCameraAutoGain");
+    configuration.gearStreamCameraGain = configFind<int>("gearStreamCameraGain");
+    configuration.gearStreamCameraVFlip = configFind<bool>("gearStreamCameraVFlip");
+    configuration.gearStreamCameraHFlip = configFind<bool>("gearStreamCameraHFlip");
+    configuration.gearStreamCameraManualExposure = configFind<bool>("gearStreamCameraManualExposure");
 
     return configuration;
 }

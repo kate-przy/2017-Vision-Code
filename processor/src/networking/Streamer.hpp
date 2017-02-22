@@ -11,15 +11,23 @@
 
 class Streamer {
 public:
+    enum StreamType {
+        OFF = 0,
+        GOAL = 1,
+        GEAR = 2
+    };
     Streamer();
-    Streamer(int port_, MatProvider provider_);
+    Streamer(int port_, MatProvider *goalProvider_, MatProvider *gearProvider_);
+    void setMode(int newMode);
     void setCompression(int compression_);
     int getCompression();
     void run();
 private:
     int port;
-    MatProvider provider;
+    MatProvider *goalProvider;
+    MatProvider *gearProvider;
     std::atomic<int> compression;
+    std::atomic<int> currentStreamType;
     bool usable = false;
 };
 

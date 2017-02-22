@@ -18,6 +18,40 @@ GoalProc::GoalProc(Configuration config_, MatProvider *provider_, DataStreamer *
 using namespace std;
 using namespace cv;
 
+void GoalProc::subConfig(Configuration config_) {
+    operativeLock.lock();
+    config = config_;
+    calc(); //Recalculate values
+    operativeLock.unlock(); //Allow execution to resume
+}
+
+void GoalProc::calc() {
+    //HSV CALCULATIONS
+    hLower = config.goalProcHBase - config.goalProcHRange;
+    sLower = config.goalProcSBase - config.goalProcSRange;
+    vLower = config.goalProcVBase - config.goalProcVRange;
+    hUpper = config.goalProcHBase + config.goalProcHRange;
+    sUpper = config.goalProcSBase + config.goalProcSRange;
+    vUpper = config.goalProcVBase + config.goalProcVRange;
+
+    //PITCH AND YAW CALCULATIONS
+    if ((provider->getSize().height / 2) % 2 == 0) {
+        pitchCalculation = (provider->getSize().height/2) * (config.goalProcFOV/provider->getSize().height);
+    } else {
+        pitchCalculation = ((provider->getSize().height/2) - 0.5) * (config.goalProcFOV/provider->getSize().height);
+    }
+
+    if ((provider->getSize().width / 2) % 2 == 0) {
+        yawCalculation = (provider->getSize().width/2) * (config.goalProcFOV/provider->getSize().width);
+    } else {
+        yawCalculation = ((provider->getSize().width/2) - 0.5) * (config.goalProcFOV/provider->getSize().width);
+    }
+
+    //ASPECT CALCULATIONS
+    aspectLower = config.goalProcAspect - config.goalProcAspectRange;
+    aspectUpper = config.goalProcAspect + config.goalProcAspectRange;
+}
+
 void GoalProc::run() {
     // Initializes frames
     Mat latestFrame,
@@ -45,21 +79,6 @@ void GoalProc::run() {
     vector<Vec4i> hierarchy;
     int idx = 0; //The index of the largest contour
 
-    double pitchCalculation,
-    yawCalculation;
-
-    if ((provider->getSize().height / 2) % 2 == 0) {
-        pitchCalculation = (provider->getSize().height/2) * (config.goalProcFOV/provider->getSize().height);
-    } else {
-        pitchCalculation = ((provider->getSize().height/2) - 0.5) * (config.goalProcFOV/provider->getSize().height);
-    }
-
-    if ((provider->getSize().width / 2) % 2 == 0) {
-        yawCalculation = (provider->getSize().width/2) * (config.goalProcFOV/provider->getSize().width);
-    } else {
-        yawCalculation = ((provider->getSize().width/2) - 0.5) * (config.goalProcFOV/provider->getSize().width);
-    }
-
     // Initializes HSV values TODO Change these to what they should
 
     double yaw;
@@ -71,8 +90,11 @@ void GoalProc::run() {
     fs["Camera_Matrix"] >> cameraMatrix;
     fs["Distortion_Coefficients"] >> dist;
 
+    calc(); //Run all pre-calculations
+
     // Main loop to run code
     while (!boost::this_thread::interruption_requested()) {
+        operativeLock.lock(); //Start a cycle
         // Resets the contours and max contours
         contours.clear();
 
@@ -88,8 +110,7 @@ void GoalProc::run() {
         // Converts color from BGR to HSV, filters out unwanted colors, erodes out noise and then finds contours
         cvtColor(imageUndistorted, hsvFrame, CV_BGR2HSV);
 
-        inRange(hsvFrame, Scalar(config.goalProcHBase - config.goalProcHRange, config.goalProcSBase - config.goalProcSRange, config.goalProcVBase - config.goalProcVRange),
-                          Scalar(config.goalProcHBase + config.goalProcHRange, config.goalProcSBase + config.goalProcSRange, config.goalProcVBase + config.goalProcVRange), inRangeFrame);
+        inRange(hsvFrame, Scalar(hLower, sLower, vLower), Scalar(hUpper, sUpper, vUpper), inRangeFrame); //Find data in the configured hsv range
 
         erode(inRangeFrame, erosionMat,  Mat(), Point(-1, -1), 1, 0, 1);
 
@@ -137,5 +158,8 @@ void GoalProc::run() {
         Debug::updateWindow("latestFrame", imageUndistorted);
         Debug::updateWindow("blank", blankFrame);
         Debug::updateWindow("range", inRangeFrame);
+
+        operativeLock.unlock(); //Complete a cycle
+        boost::this_thread::sleep(boost::posix_time::microseconds(10)); //Give any substitution operations time to complete
     }
 }

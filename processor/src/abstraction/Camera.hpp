@@ -31,6 +31,7 @@ public:
     void close(); //Method to close the camera when done
 private:
     cv::VideoCapture cap; //The capture device for use behind the scenes
+    int v4lHandle = -1; //V4L2 Handle for changing settings.  Defaults to invalid
     MatProvider provider; //The MatProvider that is linked to our camera
     int deviceNumber; //The id of the capture device for use in setup functions
     std::string deviceId; //The "string" that holds the virtual device id for video files
