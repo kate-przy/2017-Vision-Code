@@ -9,7 +9,7 @@
 #include "../utility/Configuration.hpp"
 #include "../abstraction/MatProvider.hpp"
 #include "../networking/DataStreamer.hpp"
-
+#include <opencv2/opencv.hpp>
 #include <mutex>
 
 class GoalProc {
@@ -24,18 +24,15 @@ private:
     std::mutex operativeLock;
     void calc();
 
-    int hLower;
-    int sLower;
-    int vLower;
-    int hUpper;
-    int sUpper;
-    int vUpper;
+    int H[2];
+    int S[2];
+    int V[2];
 
     double pitchCalculation;
     double yawCalculation;
+    double distanceCalculation;
 
-    double aspectLower;
-    double aspectUpper;
+
 };
 
 

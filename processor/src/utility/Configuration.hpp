@@ -13,8 +13,10 @@ struct Configuration {
 
     int goalProcDeviceNumber;
     int gearProcDeviceNumber;
-    int goalProcFOV;
-    int gearProcFOV;
+    double goalProcFOV;
+    double gearProcFOV;
+    double goalProcFocalLength;
+    double gearProcFocalLength;
     int streamDeviceNumber;
     int networkBasePort;
     bool showDebugWindows;
@@ -23,24 +25,45 @@ struct Configuration {
 
     int streamCompression;
 
-    int goalProcHBase;
-    int goalProcSBase;
-    int goalProcVBase;
-    int goalProcHRange;
-    int goalProcSRange;
-    int goalProcVRange;
+    int goalProcHLower;
+    int goalProcSLower;
+    int goalProcVLower;
+    int goalProcHUpper;
+    int goalProcSUpper;
+    int goalProcVUpper;
 
-    int gearProcHBase;
-    int gearProcSBase;
-    int gearProcVBase;
-    int gearProcHRange;
-    int gearProcSRange;
-    int gearProcVRange;
+    int gearProcHLower;
+    int gearProcSLower;
+    int gearProcVLower;
+    int gearProcHUpper;
+    int gearProcSUpper;
+    int gearProcVUpper;
 
-    double goalProcAspect;
-    double gearProcAspect;
-    double goalProcAspectRange;
-    double gearProcAspectRange;
+    double goalMinArea;
+    double goalMinPerimeter;
+    double goalMinWidth;
+    double goalMaxWidth;
+    double goalMinHeight;
+    double goalMaxHeight;
+    double goalMinSolidity;
+    double goalMaxSolidity;
+    double goalMinVertices;
+    double goalMaxVertices;
+    double goalMinRatio;
+    double goalMaxRatio;
+
+    double gearMinArea;
+    double gearMinPerimeter;
+    double gearMinWidth;
+    double gearMaxWidth;
+    double gearMinHeight;
+    double gearMaxHeight;
+    double gearMinSolidity;
+    double gearMaxSolidity;
+    double gearMinVertices;
+    double gearMaxVertices;
+    double gearMinRatio;
+    double gearMaxRatio;
 
     int goalProcCameraBrightness;
     int goalProcCameraContrast;
@@ -89,18 +112,6 @@ struct Configuration {
     bool gearStreamCameraVFlip;
     bool gearStreamCameraHFlip;
     bool gearStreamCameraManualExposure;
-    /*
-     * brightness
-     * contrast
-     * saturation
-     * hue
-     * auto wb
-     * exposure
-     * auto gain
-     * gain
-     * flip
-     * auto exposure
-     */
 };
 
 #endif //PROJECT_CONFIGURATION_HPP

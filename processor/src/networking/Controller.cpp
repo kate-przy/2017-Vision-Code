@@ -74,6 +74,7 @@ void Controller::setGoalCamera(CameraMode mode) {
             goalCamera->setProperty(V4L2_CID_VFLIP, storedSettings.goalProcCameraVFlip);
             goalCamera->setProperty(V4L2_CID_HFLIP, storedSettings.goalProcCameraHFlip);
             goalCamera->setProperty(V4L2_CID_EXPOSURE_AUTO, storedSettings.goalProcCameraManualExposure);
+            goalCameraMode = PROC;
             break;
         case STREAM:
             goalCamera->setProperty(V4L2_CID_BRIGHTNESS, storedSettings.goalStreamCameraBrightness);
@@ -87,6 +88,7 @@ void Controller::setGoalCamera(CameraMode mode) {
             goalCamera->setProperty(V4L2_CID_VFLIP, storedSettings.goalStreamCameraVFlip);
             goalCamera->setProperty(V4L2_CID_HFLIP, storedSettings.goalStreamCameraHFlip);
             goalCamera->setProperty(V4L2_CID_EXPOSURE_AUTO, storedSettings.goalStreamCameraManualExposure);
+            goalCameraMode = STREAM;
             break;
     }
 }
@@ -105,6 +107,7 @@ void Controller::setGearCamera(CameraMode mode) {
             gearCamera->setProperty(V4L2_CID_VFLIP, storedSettings.gearProcCameraVFlip);
             gearCamera->setProperty(V4L2_CID_HFLIP, storedSettings.gearProcCameraHFlip);
             gearCamera->setProperty(V4L2_CID_EXPOSURE_AUTO, storedSettings.gearProcCameraManualExposure);
+            gearCameraMode = PROC;
             break;
         case STREAM:
             gearCamera->setProperty(V4L2_CID_BRIGHTNESS, storedSettings.gearStreamCameraBrightness);
@@ -118,6 +121,7 @@ void Controller::setGearCamera(CameraMode mode) {
             gearCamera->setProperty(V4L2_CID_VFLIP, storedSettings.gearStreamCameraVFlip);
             gearCamera->setProperty(V4L2_CID_HFLIP, storedSettings.gearStreamCameraHFlip);
             gearCamera->setProperty(V4L2_CID_EXPOSURE_AUTO, storedSettings.gearStreamCameraManualExposure);
+            gearCameraMode = STREAM;
             break;
     }
 }
@@ -198,25 +202,33 @@ void Controller::react(ParsedCommand command) {
                     }
                     break;
                 case SETTINGS_GOAL_PROC:
-                    storedSettings.goalProcHBase = boost::lexical_cast<int>(command.args["goalProcHBase"]);
-                    storedSettings.goalProcSBase = boost::lexical_cast<int>(command.args["goalProcSBase"]);
-                    storedSettings.goalProcVBase = boost::lexical_cast<int>(command.args["goalProcVBase"]);
-                    storedSettings.goalProcHRange = boost::lexical_cast<int>(command.args["goalProcHRange"]);
-                    storedSettings.goalProcSRange = boost::lexical_cast<int>(command.args["goalProcSRange"]);
-                    storedSettings.goalProcVRange = boost::lexical_cast<int>(command.args["goalProcVRange"]);
-                    storedSettings.goalProcAspect = boost::lexical_cast<double>(command.args["goalProcAspect"]);
-                    storedSettings.goalProcAspectRange = boost::lexical_cast<double>(command.args["goalProcAspectRange"]);
+                    storedSettings.goalMinArea = boost::lexical_cast<double>(command.args["goalMinArea"]);
+                    storedSettings.goalMinPerimeter = boost::lexical_cast<double>(command.args["goalMinPerimeter"]);
+                    storedSettings.goalMinWidth = boost::lexical_cast<double>(command.args["goalMinWidth"]);
+                    storedSettings.goalMaxWidth = boost::lexical_cast<double>(command.args["goalMaxWidth"]);
+                    storedSettings.goalMinHeight = boost::lexical_cast<double>(command.args["goalMinHeight"]);
+                    storedSettings.goalMaxHeight = boost::lexical_cast<double>(command.args["goalMaxHeight"]);
+                    storedSettings.goalMinSolidity = boost::lexical_cast<double>(command.args["goalMinSolidity"]);
+                    storedSettings.goalMaxSolidity = boost::lexical_cast<double>(command.args["goalMaxSolidity"]);
+                    storedSettings.goalMinVertices = boost::lexical_cast<double>(command.args["goalMinVertices"]);
+                    storedSettings.goalMaxVertices = boost::lexical_cast<double>(command.args["goalMaxVertices"]);
+                    storedSettings.goalMinRatio = boost::lexical_cast<double>(command.args["goalMinRatio"]);
+                    storedSettings.goalMaxRatio = boost::lexical_cast<double>(command.args["goalMaxRatio"]);
                     goalProc->subConfig(storedSettings); //Update the config in the goal processor
                     break;
                 case SETTINGS_GEAR_PROC:
-                    storedSettings.gearProcHBase = boost::lexical_cast<int>(command.args["gearProcHBase"]);
-                    storedSettings.gearProcSBase = boost::lexical_cast<int>(command.args["gearProcSBase"]);
-                    storedSettings.gearProcVBase = boost::lexical_cast<int>(command.args["gearProcVBase"]);
-                    storedSettings.gearProcHRange = boost::lexical_cast<int>(command.args["gearProcHRange"]);
-                    storedSettings.gearProcSRange = boost::lexical_cast<int>(command.args["gearProcSRange"]);
-                    storedSettings.gearProcVRange = boost::lexical_cast<int>(command.args["gearProcVRange"]);
-                    storedSettings.gearProcAspect = boost::lexical_cast<double>(command.args["gearProcAspect"]);
-                    storedSettings.gearProcAspectRange = boost::lexical_cast<double>(command.args["gearProcAspectRange"]);
+                    storedSettings.gearMinArea = boost::lexical_cast<double>(command.args["gearMinArea"]);
+                    storedSettings.gearMinPerimeter = boost::lexical_cast<double>(command.args["gearMinPerimeter"]);
+                    storedSettings.gearMinWidth = boost::lexical_cast<double>(command.args["gearMinWidth"]);
+                    storedSettings.gearMaxWidth = boost::lexical_cast<double>(command.args["gearMaxWidth"]);
+                    storedSettings.gearMinHeight = boost::lexical_cast<double>(command.args["gearMinHeight"]);
+                    storedSettings.gearMaxHeight = boost::lexical_cast<double>(command.args["gearMaxHeight"]);
+                    storedSettings.gearMinSolidity = boost::lexical_cast<double>(command.args["gearMinSolidity"]);
+                    storedSettings.gearMaxSolidity = boost::lexical_cast<double>(command.args["gearMaxSolidity"]);
+                    storedSettings.gearMinVertices = boost::lexical_cast<double>(command.args["gearMinVertices"]);
+                    storedSettings.gearMaxVertices = boost::lexical_cast<double>(command.args["gearMaxVertices"]);
+                    storedSettings.gearMinRatio = boost::lexical_cast<double>(command.args["gearMinRatio"]);
+                    storedSettings.gearMaxRatio = boost::lexical_cast<double>(command.args["gearMaxRatio"]);
                     gearProc->subConfig(storedSettings); //Update the config in the gear processor
                     break;
                 case SETTINGS_STREAM_COMPRESSION:
@@ -269,6 +281,7 @@ void Controller::run() {
     while(!boost::this_thread::interruption_requested()) {
         latestRaw = s_recv(socket);
         if (latestRaw != "") { //If there wasn't a timeout
+            std::cout << latestRaw << std::endl;
             latest = parseCommand(latestRaw); //Parse the command
             react(latest); //React to the command
             response = storedSettings.hash(); //Respond to the command (we always respond with a list of our current settings)

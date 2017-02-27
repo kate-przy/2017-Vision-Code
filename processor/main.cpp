@@ -73,10 +73,8 @@ int main(int argc, char *argv[]) {
     boost::thread_group processingGroup; //Thread group for processing threads
 
     //OBJECT INIT
-    Camera goalProcCamera(1);
-    Camera gearProcCamera(2);
-    //Camera goalProcCamera(config, Camera::CameraType::GOAL_PROCESSING); //Set up the processing camera from the config
-    //Camera gearProcCamera(config, Camera::CameraType::GEAR_PROCESSING);
+    Camera goalProcCamera(config, Camera::CameraType::GOAL_PROCESSING); //Set up the processing camera from the config
+    Camera gearProcCamera(config, Camera::CameraType::GEAR_PROCESSING);
     goalProcCamera.setup(); //Set up the camera
     gearProcCamera.setup(); //Set up the gear camera
     MatProvider goalProcProvider = goalProcCamera.getProvider(); //Get a MatProvider for the processing camera
@@ -103,12 +101,6 @@ int main(int argc, char *argv[]) {
     processingGroup.create_thread(boost::bind(&GearProc::run, &gearProc));
 
     //AT THIS POINT IT IS ASSUMED THAT ALL THREADS ARE STARTED OR IN THE PROCESS OF STARTING
-
-    boost::this_thread::sleep(boost::posix_time::seconds(5));
-
-    Configuration newConfig = config;
-    newConfig.goalProcAspect = 10;
-    goalProc.subConfig(newConfig);
 
     bool loop = true;
     int exitCode = 1;

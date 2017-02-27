@@ -122,8 +122,10 @@ Configuration ConfigParser::getSettings() { //GET SETTINGS
 
     configuration.goalProcDeviceNumber = configFind<int>("goalProcDeviceNumber");
     configuration.gearProcDeviceNumber = configFind<int>("gearProcDeviceNumber");
-    configuration.goalProcFOV = configFind<int>("goalProcFOV");
-    configuration.gearProcFOV = configFind<int>("gearProcFOV");
+    configuration.goalProcFOV = configFind<double>("goalProcFOV");
+    configuration.gearProcFOV = configFind<double>("gearProcFOV");
+    configuration.goalProcFocalLength = configFind<double>("goalProcFocalLength");
+    configuration.gearProcFocalLength = configFind<double>("gearProcFocalLength");
     configuration.streamDeviceNumber = configFind<int>("streamDeviceNumber");
     configuration.networkBasePort = configFind<int>("networkBasePort");
     configuration.showDebugWindows = configFind<bool>("showDebugWindows");
@@ -132,24 +134,45 @@ Configuration ConfigParser::getSettings() { //GET SETTINGS
 
     configuration.streamCompression = configFind<int>("streamCompression");
 
-    configuration.goalProcHBase = configFind<int>("goalProcHBase");
-    configuration.goalProcSBase = configFind<int>("goalProcSBase");
-    configuration.goalProcVBase = configFind<int>("goalProcVBase");
-    configuration.goalProcHRange = configFind<int>("goalProcHRange");
-    configuration.goalProcSRange = configFind<int>("goalProcSRange");
-    configuration.goalProcVRange = configFind<int>("goalProcVRange");
+    configuration.goalProcHLower = configFind<int>("goalProcHLower");
+    configuration.goalProcSLower = configFind<int>("goalProcSLower");
+    configuration.goalProcVLower = configFind<int>("goalProcVLower");
+    configuration.goalProcHUpper = configFind<int>("goalProcHUpper");
+    configuration.goalProcSUpper = configFind<int>("goalProcSUpper");
+    configuration.goalProcVUpper = configFind<int>("goalProcVUpper");
 
-    configuration.gearProcHBase = configFind<int>("gearProcHBase");
-    configuration.gearProcSBase = configFind<int>("gearProcSBase");
-    configuration.gearProcVBase = configFind<int>("gearProcVBase");
-    configuration.gearProcHRange = configFind<int>("gearProcHRange");
-    configuration.gearProcSRange = configFind<int>("gearProcSRange");
-    configuration.gearProcVRange = configFind<int>("gearProcVRange");
+    configuration.gearProcHLower = configFind<int>("gearProcHLower");
+    configuration.gearProcSLower = configFind<int>("gearProcSLower");
+    configuration.gearProcVLower = configFind<int>("gearProcVLower");
+    configuration.gearProcHUpper = configFind<int>("gearProcHUpper");
+    configuration.gearProcSUpper = configFind<int>("gearProcSUpper");
+    configuration.gearProcVUpper = configFind<int>("gearProcVUpper");
 
-    configuration.goalProcAspect = configFind<double>("goalProcAspect");
-    configuration.gearProcAspect = configFind<double>("gearProcAspect");
-    configuration.goalProcAspectRange = configFind<double>("goalProcAspectRange");
-    configuration.gearProcAspectRange = configFind<double>("gearProcAspectRange");
+    configuration.goalMinArea = configFind<double>("goalMinArea");
+    configuration.goalMinPerimeter = configFind<double>("goalMinPerimeter");
+    configuration.goalMinWidth = configFind<double>("goalMinWidth");
+    configuration.goalMaxWidth = configFind<double>("goalMaxWidth");
+    configuration.goalMinHeight = configFind<double>("goalMinHeight");
+    configuration.goalMaxHeight = configFind<double>("goalMaxHeight");
+    configuration.goalMinSolidity = configFind<double>("goalMinSolidity");
+    configuration.goalMaxSolidity = configFind<double>("goalMaxSolidity");
+    configuration.goalMinVertices = configFind<double>("goalMinVertices");
+    configuration.goalMaxVertices = configFind<double>("goalMaxVertices");
+    configuration.goalMinRatio = configFind<double>("goalMinRatio");
+    configuration.goalMaxRatio = configFind<double>("goalMaxRatio");
+
+    configuration.gearMinArea = configFind<double>("gearMinArea");
+    configuration.gearMinPerimeter = configFind<double>("gearMinPerimeter");
+    configuration.gearMinWidth = configFind<double>("gearMinWidth");
+    configuration.gearMaxWidth = configFind<double>("gearMaxWidth");
+    configuration.gearMinHeight = configFind<double>("gearMinHeight");
+    configuration.gearMaxHeight = configFind<double>("gearMaxHeight");
+    configuration.gearMinSolidity = configFind<double>("gearMinSolidity");
+    configuration.gearMaxSolidity = configFind<double>("gearMaxSolidity");
+    configuration.gearMinVertices = configFind<double>("gearMinVertices");
+    configuration.gearMaxVertices = configFind<double>("gearMaxVertices");
+    configuration.gearMinRatio = configFind<double>("gearMinRatio");
+    configuration.gearMaxRatio = configFind<double>("gearMaxRatio");
 
     configuration.goalProcCameraBrightness = configFind<int>("goalProcCameraBrightness");
     configuration.goalProcCameraContrast = configFind<int>("goalProcCameraContrast");

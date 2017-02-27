@@ -23,7 +23,14 @@ void GearProc::subConfig(Configuration config_) {
     operativeLock.unlock();
 }
 
+
+//
+//  ALL GEAR PROC CODE IS CURRENTLY BROKEN
+//  THANKS, LIAM!
+//
+
 void GearProc::calc() {
+    /*
     //HSV CALCULATIONS
     hLower = config.gearProcHBase - config.gearProcHRange;
     sLower = config.gearProcSBase - config.gearProcSRange;
@@ -42,9 +49,11 @@ void GearProc::calc() {
     //ASPECT CALCULATIONS
     aspectLower = config.gearProcAspect - config.gearProcAspectRange;
     aspectUpper = config.gearProcAspect + config.gearProcAspectRange;
+     */
 }
 
 void GearProc::run() {
+    /*
     // Initializes frames
     Mat latestFrame,
         grayFrame,
@@ -189,4 +198,5 @@ void GearProc::run() {
         operativeLock.unlock();
         boost::this_thread::sleep(boost::posix_time::microseconds(10));
     }
+     */
 }

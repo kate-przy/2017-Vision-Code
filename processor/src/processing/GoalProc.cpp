@@ -26,140 +26,146 @@ void GoalProc::subConfig(Configuration config_) {
 }
 
 void GoalProc::calc() {
+    int width = provider->getSize().width;  //Convenience variables to simplify calculation statements
+    int height = provider->getSize().height; //Will be deleted when this method is finished
+
     //HSV CALCULATIONS
-    hLower = config.goalProcHBase - config.goalProcHRange;
-    sLower = config.goalProcSBase - config.goalProcSRange;
-    vLower = config.goalProcVBase - config.goalProcVRange;
-    hUpper = config.goalProcHBase + config.goalProcHRange;
-    sUpper = config.goalProcSBase + config.goalProcSRange;
-    vUpper = config.goalProcVBase + config.goalProcVRange;
+    H[0] = config.goalProcHLower;
+    H[1] = config.goalProcHUpper;
+    S[0] = config.goalProcSLower;
+    S[1] = config.goalProcSUpper;
+    V[0] = config.goalProcVLower;
+    V[1] = config.goalProcVUpper;
 
-    //PITCH AND YAW CALCULATIONS
-    if ((provider->getSize().height / 2) % 2 == 0) {
-        pitchCalculation = (provider->getSize().height/2) * (config.goalProcFOV/provider->getSize().height);
+    //DISTANCE, PITCH, AND YAW CALCULATIONS
+    distanceCalculation = config.goalProcFocalLength * 10;
+
+    if ((height / 2) % 2 == 0) { //If height/2 is even
+        pitchCalculation = (height / 2) * (config.goalProcFOV/height); //Find the center
     } else {
-        pitchCalculation = ((provider->getSize().height/2) - 0.5) * (config.goalProcFOV/provider->getSize().height);
+        pitchCalculation = ((height / 2) - 0.5) * (config.goalProcFOV/height); //Find the actual center
     }
 
-    if ((provider->getSize().width / 2) % 2 == 0) {
-        yawCalculation = (provider->getSize().width/2) * (config.goalProcFOV/provider->getSize().width);
+    if ((width / 2) % 2 == 0) { //If width/2 is even
+        yawCalculation = (width / 2) * (config.goalProcFOV/width); //Find the center
     } else {
-        yawCalculation = ((provider->getSize().width/2) - 0.5) * (config.goalProcFOV/provider->getSize().width);
+        yawCalculation = ((width / 2) - 0.5) * (config.goalProcFOV/width); //Find the actual center
     }
-
-    //ASPECT CALCULATIONS
-    aspectLower = config.goalProcAspect - config.goalProcAspectRange;
-    aspectUpper = config.goalProcAspect + config.goalProcAspectRange;
 }
 
 void GoalProc::run() {
-    // Initializes frames
-    Mat latestFrame,
-        grayFrame,
-        hsvFrame,
-        inRangeFrame,
-        erosionMat,
-        imageUndistorted,
-        blankFrame,
-        edges;
+    vector<vector<Point>> contours, goodContours;
 
-    blankFrame = Mat::zeros(provider->getSize(), provider->getType());
-    edges = Mat::zeros(provider->getSize(), provider->getType());
+    // Debug image processing
+    Mat goodCont, drawing;
 
-    // Initializes shapes
-    Rect rect,
-         rect2;
+    // Image processing
+    Mat latestFrame, hsvFrame, rangeFrame;
 
-    Point topLeft,
-          bottomRight,
-          center;
+    Rect rect, rect2;
+    Point topLeft, bottomRight, center, topCenter, bottomCenter;
 
-    // Initializes contours and a blank frame
-    vector<vector<Point>> contours;
-    vector<Vec4i> hierarchy;
-    int idx = 0; //The index of the largest contour
+    double yaw, pitch, distance;
 
-    // Initializes HSV values TODO Change these to what they should
+    Rect bb;    //Context check variables
+    double area;
+    double solid;
+    double ratio;
+    vector<Point> hull;
 
-    double yaw;
-    double pitch;
-
-    // Sets up undistortion on the frame
-    FileStorage fs("res/distortion.yml", FileStorage::READ);
-    Mat cameraMatrix, dist;
-    fs["Camera_Matrix"] >> cameraMatrix;
-    fs["Distortion_Coefficients"] >> dist;
-
-    calc(); //Run all pre-calculations
-
-    // Main loop to run code
     while (!boost::this_thread::interruption_requested()) {
-        operativeLock.lock(); //Start a cycle
-        // Resets the contours and max contours
+        operativeLock.lock();
+        //Clear variables from last run
         contours.clear();
+        goodContours.clear();
+        hull.clear();
 
-        // Reset the blankFrame with an empty Mat if we have debug enabled
-        Debug::runDebugOperation([this, &blankFrame]() {
-            blankFrame = Mat::zeros(provider->getSize(), provider->getType());
-        });
-
-        // Reads in the latest frame and undistorts it
+        // Reads in the latest frame, converts it to HSV, and then filters out the colors we don't want
         latestFrame = provider->getLatestFrame();
-        undistort(latestFrame, imageUndistorted, cameraMatrix, dist);
+        cvtColor(latestFrame, hsvFrame, CV_BGR2HSV);
+        inRange(hsvFrame, Scalar(H[0], S[0], V[0]), Scalar(H[1], S[1], V[1]), rangeFrame);
 
-        // Converts color from BGR to HSV, filters out unwanted colors, erodes out noise and then finds contours
-        cvtColor(imageUndistorted, hsvFrame, CV_BGR2HSV);
+        // Finds contours for our image stream
+        findContours(rangeFrame, contours, RETR_LIST, CHAIN_APPROX_SIMPLE);
 
-        inRange(hsvFrame, Scalar(hLower, sLower, vLower), Scalar(hUpper, sUpper, vUpper), inRangeFrame); //Find data in the configured hsv range
+        //CONTEXT CHECKING
+        for (std::vector<cv::Point> contour: contours) { //Iterate each contour
+            bb = boundingRect(contour);
+            if (bb.width < config.goalMinWidth || bb.width > config.goalMaxWidth) continue;
+            if (bb.height < config.goalMinHeight || bb.height > config.goalMaxHeight) continue;
+            area = cv::contourArea(contour);
+            if (area < config.goalMinArea) continue;
+            if (arcLength(contour, true) < config.goalMinPerimeter) continue;
+            cv::convexHull(cv::Mat(contour, true), hull);
+            solid = 100 * area / cv::contourArea(hull);
+            if (solid < config.goalMinSolidity || solid > config.goalMaxSolidity) continue;
+            if (contour.size() < config.goalMinVertices || contour.size() > config.goalMaxVertices)	continue;
+            ratio = (double) bb.width / (double) bb.height;
+            if (ratio < config.goalMinRatio || ratio > config.goalMaxRatio) continue;
+            goodContours.push_back(contour);
+        }
 
-        erode(inRangeFrame, erosionMat,  Mat(), Point(-1, -1), 1, 0, 1);
-
-        findContours(erosionMat, contours, RETR_LIST, CHAIN_APPROX_SIMPLE);
-
-        //TODO LIAM WRITE ASPECT RATIO CODE RIGHT NOW YOU SCUM
-
-        // If we have at least two contours, find points and do math on them
-        if(contours.size() >= 2) {
-            idx = contours.size() - 1;  // The contours we want will always be contours.size() - 1, the largest contours are biggest
-
-            // Finds the two rectangles for each one of the strips of the tape on the boiler
-            rect = boundingRect(contours[idx]);
-            rect2 = boundingRect(contours[idx - 1]);
+        // If there is a goal, do processing on it
+        if(goodContours.size() >= 2) {
+            // Finds the two rectangles the goal has on it
+            rect = boundingRect(goodContours[1]);
+            rect2 = boundingRect(goodContours[0]);
 
             // Finds the top left point of the higher rectangle
-            topLeft.y = rect.y;
             topLeft.x = rect.x;
+            topLeft.y = rect.y;
 
             // Finds the bottom right point of the lower rectangle
             bottomRight.x = rect2.x + rect2.width;
             bottomRight.y = rect2.y + rect2.height;
 
-            // Finds the center of the rectangles
+            // Finds the center points
             center.x = (topLeft.x + bottomRight.x) / 2;
             center.y = (topLeft.y + bottomRight.y) / 2;
+            topCenter.x = (rect.x + (rect.x + rect.width)) / 2;
+            topCenter.y = (topLeft.y);
+            bottomCenter.x = (rect2.x + (rect2.x + rect2.width)) / 2;
+            bottomCenter.y = (bottomRight.y);
 
             // Calculates Yaw and Pitch in degrees
-            // We decimal at the end is how many degrees/pixel we have
             yaw = (center.x - yawCalculation);
             pitch = (center.y - pitchCalculation);
 
-            streamer->addToQueue(StreamData(0, pitch, yaw)); //Send our data to the RIO
-
-            // Draw and print expensive operations if debug is enabled
-            Debug::runDebugOperation([this, &imageUndistorted, &center]() {
-                circle(imageUndistorted, center, 2, Scalar(255, 204, 10), 2);
-            });
-            Debug::printDebugText("YAW: " + to_string(yaw) + " | PITCH: " + to_string(pitch));
-        } else {
-            streamer->addToQueue(StreamData(StreamData::Type::GOAL_DATA_INVALID));
+            // Calculate the x distance away from the goal the robot is (not diagonal)
+            distance = distanceCalculation / (bottomCenter.y - topCenter.y);
         }
 
-        // Show the image if debug is enabled
-        Debug::updateWindow("latestFrame", imageUndistorted);
-        Debug::updateWindow("blank", blankFrame);
-        Debug::updateWindow("range", inRangeFrame);
+        // Debug drawings and image streams
+        Debug::runDebugOperation([this, &drawing, &latestFrame, &goodCont, &contours, &goodContours, &bottomCenter, &topCenter, &center, &topLeft, &bottomRight](){
+            // Refreshes the Mats
+            drawing = Mat::zeros(latestFrame.size(), CV_8UC3);
+            goodCont = Mat::zeros( latestFrame.size(), CV_8UC3 );
 
-        operativeLock.unlock(); //Complete a cycle
-        boost::this_thread::sleep(boost::posix_time::microseconds(10)); //Give any substitution operations time to complete
+            // Draws the contours and filtered contours onto their respective Mats
+            for (int i = 0; i < contours.size(); i++){
+                drawContours(drawing, contours, i, Scalar(100, 100, 100));
+            }
+            for( int i = 0; i< goodContours.size(); i++ ){
+                drawContours(goodCont, goodContours, i, Scalar(100,100,100));
+            }
+
+            // Draws the centers of the goal on the filtered contours
+            circle(goodCont, bottomCenter, 1, Scalar(255,0,255), 2);
+            circle(goodCont, topCenter, 1, Scalar(0,255,255), 2);
+            circle(goodCont, center, 1, Scalar(0,100,255), 2);
+
+            // Draws the top left and bottom right of the goal on the filtered contours
+            circle(goodCont, topLeft, 1, Scalar(255,255,0), 2);
+            circle(goodCont, bottomRight, 1, Scalar(255,100,0), 2);
+
+            // Draws a dot in the center of the image
+            circle(goodCont, Point(480/2 -0.5, 640/2-0.5), 1, Scalar(255,255,255), 2);
+        });
+
+        Debug::updateWindow("goalFilteredContours", goodCont);
+        Debug::updateWindow("goalContours", drawing);
+
+        operativeLock.unlock();
+        boost::this_thread::sleep(boost::posix_time::microseconds(10));
     }
 }
