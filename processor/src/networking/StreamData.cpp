@@ -4,22 +4,23 @@
 
 #include <assert.h>
 #include "StreamData.hpp"
+#include <string>
 
 /**
  * Null constructor, sets up this instance as an "invalid" object
  */
 StreamData::StreamData() {
-    thisType = Type::INVALID;
+    thisType = StreamData::Type::INVALID;
 }
 
 /**
  * Constructor for setting up command types such as SHUTDOWN
  * @param type The type of command, must not be DATA or INVALID
  */
-StreamData::StreamData(Type type) {
-    assert(type != Type::GOAL_DATA); //Ensure we get the correct type
-    assert(type != Type::GEAR_DATA);
-    assert(type != Type::INVALID);
+StreamData::StreamData(StreamData::Type type) {
+    assert(type != StreamData::Type::GOAL_DATA); //Ensure we get the correct type
+    assert(type != StreamData::Type::GEAR_DATA);
+    assert(type != StreamData::Type::INVALID);
 
     thisType = type;
 }
@@ -31,7 +32,7 @@ StreamData::StreamData(Type type) {
  * @param yaw The yaw to set
  */
 StreamData::StreamData(double distance, double pitch, double yaw) {
-    thisType = Type::GOAL_DATA;
+    thisType = StreamData::Type::GOAL_DATA;
     thisDistance = distance;
     thisPitch = pitch;
     thisYaw = yaw;
@@ -44,7 +45,7 @@ StreamData::StreamData(double distance, double pitch, double yaw) {
  * @param strafe The strafe enum to set
  */
 StreamData::StreamData(double distance, double yaw, Strafe strafe) {
-    thisType = Type::GEAR_DATA;
+    thisType = StreamData::Type::GEAR_DATA;
     thisDistance = distance;
     thisYaw = yaw;
     thisStrafe = strafe;
