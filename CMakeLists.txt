@@ -6,7 +6,6 @@ option(GEN_COVERAGE "Should we build with coverage?" OFF)
 
 
 set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}") #Use STL 11
-set(CMAKE_CXX_COMPILER "/usr/bin/g++")
 
 #INCLUDE LIBS
 include(cmake/FindZMQ.cmake)
