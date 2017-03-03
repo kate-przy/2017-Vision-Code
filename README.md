@@ -12,3 +12,5 @@
 
 
 Vision Code for the 2017 season
+
+OpenCV processing in C++ running on an NVIDIA Jetson TX1, comms to roboRIO via zeroMQ, custom, compressable, switchable video streaming to driver station, custom configuraiton client in Java for processing parameters. 
