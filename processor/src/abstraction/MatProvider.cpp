@@ -64,7 +64,7 @@ Mat MatProvider::getLatestFrame() {
     if (usable) {
         toReturn = frame.clone();
     } else {
-        toReturn = Mat();
+        toReturn = Mat::zeros(480, 640, CV_8UC3); //Return a blank mat of a standard size
     }
     return toReturn;
 }

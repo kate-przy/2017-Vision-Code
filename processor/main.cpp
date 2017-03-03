@@ -75,15 +75,18 @@ int main(int argc, char *argv[]) {
     //OBJECT INIT
     Camera goalProcCamera(config, Camera::CameraType::GOAL_PROCESSING); //Set up the processing camera from the config
     Camera gearProcCamera(config, Camera::CameraType::GEAR_PROCESSING);
-    goalProcCamera.setup(); //Set up the camera
-    gearProcCamera.setup(); //Set up the gear camera
+    if (config.useGoalCamera) { //If we are using the goal camera
+        goalProcCamera.setup(); //Set it up
+    }
+    if (config.useGearCamera) { //If we are using the gear camera
+        gearProcCamera.setup(); //Set it up
+    }
     MatProvider goalProcProvider = goalProcCamera.getProvider(); //Get a MatProvider for the processing camera
     MatProvider gearProcProvider = gearProcCamera.getProvider();
     goalProcProvider.setName("GoalProc"); //Set the names of the MatProviders for logging purposes
     gearProcProvider.setName("GearProc");
 
     DataStreamer dataStreamer(config.networkBasePort + 1); //Creates a data streamer to send processing data to the RIO
-    Camera blank(-1);
     GoalProc goalProc(config, &goalProcProvider, &dataStreamer); //Creates a processor to be run in a thread that processes images and sends output to the dataStreamer
     GearProc gearProc(config, &gearProcProvider, &dataStreamer);
     Streamer streamer(config.networkBasePort + 2, &goalProcProvider, &gearProcProvider);

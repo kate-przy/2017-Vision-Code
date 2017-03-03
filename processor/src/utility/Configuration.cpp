@@ -3,12 +3,15 @@
 //
 
 #include "Configuration.hpp"
+#include <boost/algorithm/string.hpp>
 
 std::string Configuration::hash() {
     return
     "CONFIG#"
     + ("goalProcDeviceNumber:" + std::to_string(goalProcDeviceNumber)) + ","
     + ("gearProcDeviceNumber:" + std::to_string(gearProcDeviceNumber)) + ","
+    + ("useGoalCamera:" + std::to_string(useGoalCamera)) + ","
+    + ("useGearCamera:" + std::to_string(useGearCamera)) + ","
     + ("goalProcFOV:" + std::to_string(goalProcFOV)) + ","
     + ("gearProcFOV:" + std::to_string(gearProcFOV)) + ","
     + ("goalProcFocalLength:" + std::to_string(goalProcFocalLength)) + ","
@@ -100,4 +103,8 @@ std::string Configuration::hash() {
     + ("gearStreamCameraHFlip:" + std::to_string(gearStreamCameraHFlip)) + ","
     + ("gearStreamCameraManualExposure:" + std::to_string(gearStreamCameraManualExposure))
     ;
+}
+
+void Configuration::writeToFile(std::string fileName) {
+    std::string currentConfig = hash();
 }

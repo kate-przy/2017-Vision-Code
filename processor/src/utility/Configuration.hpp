@@ -10,9 +10,12 @@
 struct Configuration {
 
     std::string hash();
+    void writeToFile(std::string fileName);
 
     int goalProcDeviceNumber;
     int gearProcDeviceNumber;
+    bool useGoalCamera;
+    bool useGearCamera;
     double goalProcFOV;
     double gearProcFOV;
     double goalProcFocalLength;

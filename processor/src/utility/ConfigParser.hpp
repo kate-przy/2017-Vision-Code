@@ -26,6 +26,8 @@ private:
     map<string, string> defaults = { //DEFAULTS LIST
             make_pair("goalProcDeviceNumber", "0"),
             make_pair("gearProcDeviceNumber", "1"),
+            make_pair("useGoalCamera", "1"),
+            make_pair("useGearCamera", "0"),
             make_pair("goalProcFOV", "75"),
             make_pair("gearProcFOV", "75"),
             make_pair("goalProcFocalLength", "0"),

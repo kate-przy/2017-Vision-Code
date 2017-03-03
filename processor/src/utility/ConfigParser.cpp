@@ -122,6 +122,8 @@ Configuration ConfigParser::getSettings() { //GET SETTINGS
 
     configuration.goalProcDeviceNumber = configFind<int>("goalProcDeviceNumber");
     configuration.gearProcDeviceNumber = configFind<int>("gearProcDeviceNumber");
+    configuration.useGoalCamera = configFind<bool>("useGoalCamera");
+    configuration.useGearCamera = configFind<bool>("useGearCamera");
     configuration.goalProcFOV = configFind<double>("goalProcFOV");
     configuration.gearProcFOV = configFind<double>("gearProcFOV");
     configuration.goalProcFocalLength = configFind<double>("goalProcFocalLength");

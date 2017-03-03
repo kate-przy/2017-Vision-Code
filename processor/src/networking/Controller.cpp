@@ -202,6 +202,12 @@ void Controller::react(ParsedCommand command) {
                     }
                     break;
                 case SETTINGS_GOAL_PROC:
+                    storedSettings.goalProcHLower = boost::lexical_cast<int>(command.args["goalProcHLower"]);
+                    storedSettings.goalProcSLower = boost::lexical_cast<int>(command.args["goalProcSLower"]);
+                    storedSettings.goalProcVLower = boost::lexical_cast<int>(command.args["goalProcVLower"]);
+                    storedSettings.goalProcHUpper = boost::lexical_cast<int>(command.args["goalProcHUpper"]);
+                    storedSettings.goalProcSUpper = boost::lexical_cast<int>(command.args["goalProcSUpper"]);
+                    storedSettings.goalProcVUpper = boost::lexical_cast<int>(command.args["goalProcVUpper"]);
                     storedSettings.goalMinArea = boost::lexical_cast<double>(command.args["goalMinArea"]);
                     storedSettings.goalMinPerimeter = boost::lexical_cast<double>(command.args["goalMinPerimeter"]);
                     storedSettings.goalMinWidth = boost::lexical_cast<double>(command.args["goalMinWidth"]);
@@ -217,6 +223,12 @@ void Controller::react(ParsedCommand command) {
                     goalProc->subConfig(storedSettings); //Update the config in the goal processor
                     break;
                 case SETTINGS_GEAR_PROC:
+                    storedSettings.gearProcHLower = boost::lexical_cast<int>(command.args["gearProcHLower"]);
+                    storedSettings.gearProcSLower = boost::lexical_cast<int>(command.args["gearProcSLower"]);
+                    storedSettings.gearProcVLower = boost::lexical_cast<int>(command.args["gearProcVLower"]);
+                    storedSettings.gearProcHUpper = boost::lexical_cast<int>(command.args["gearProcHUpper"]);
+                    storedSettings.gearProcSUpper = boost::lexical_cast<int>(command.args["gearProcSUpper"]);
+                    storedSettings.gearProcVUpper = boost::lexical_cast<int>(command.args["gearProcVUpper"]);
                     storedSettings.gearMinArea = boost::lexical_cast<double>(command.args["gearMinArea"]);
                     storedSettings.gearMinPerimeter = boost::lexical_cast<double>(command.args["gearMinPerimeter"]);
                     storedSettings.gearMinWidth = boost::lexical_cast<double>(command.args["gearMinWidth"]);

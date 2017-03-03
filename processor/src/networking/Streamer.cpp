@@ -21,7 +21,7 @@ Streamer::Streamer(int port_, MatProvider *goalProvider_, MatProvider *gearProvi
     gearProvider = gearProvider_;
     usable = true;
     compression = 30;
-    currentStreamType = GOAL;
+    currentStreamType = GEAR;
 }
 
 /**

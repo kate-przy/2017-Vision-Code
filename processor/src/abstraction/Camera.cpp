@@ -182,7 +182,7 @@ MatProvider Camera::getProvider() {
     if (isSetup) {
         return provider;
     } else {
-        Log::w(ld, "Can't get a valid MatProvider from an unconfigured Camera!  This WILL cause problems!");
+        Log::w(ld, "Can't get a valid MatProvider from an unconfigured Camera!  This may cause problems!");
         return MatProvider(); //Return a blank matprovider instance
     }
 }

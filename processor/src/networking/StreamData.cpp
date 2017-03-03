@@ -10,17 +10,17 @@
  * Null constructor, sets up this instance as an "invalid" object
  */
 StreamData::StreamData() {
-    thisType = StreamData::Type::INVALID;
+    thisType = Type::INVALID;
 }
 
 /**
  * Constructor for setting up command types such as SHUTDOWN
  * @param type The type of command, must not be DATA or INVALID
  */
-StreamData::StreamData(StreamData::Type type) {
-    assert(type != StreamData::Type::GOAL_DATA); //Ensure we get the correct type
-    assert(type != StreamData::Type::GEAR_DATA);
-    assert(type != StreamData::Type::INVALID);
+StreamData::StreamData(Type type) {
+    assert(type != Type::GOAL_DATA); //Ensure we get the correct type
+    assert(type != Type::GEAR_DATA);
+    assert(type != Type::INVALID);
 
     thisType = type;
 }
@@ -32,7 +32,7 @@ StreamData::StreamData(StreamData::Type type) {
  * @param yaw The yaw to set
  */
 StreamData::StreamData(double distance, double pitch, double yaw) {
-    thisType = StreamData::Type::GOAL_DATA;
+    thisType = Type::GOAL_DATA;
     thisDistance = distance;
     thisPitch = pitch;
     thisYaw = yaw;
@@ -45,7 +45,7 @@ StreamData::StreamData(double distance, double pitch, double yaw) {
  * @param strafe The strafe enum to set
  */
 StreamData::StreamData(double distance, double yaw, Strafe strafe) {
-    thisType = StreamData::Type::GEAR_DATA;
+    thisType = Type::GEAR_DATA;
     thisDistance = distance;
     thisYaw = yaw;
     thisStrafe = strafe;
@@ -83,7 +83,7 @@ std::string StreamData::hash() {
             returnString = "GOAL_DATA_INVALID#";
             break;
         case GEAR_DATA_INVALID:
-            returnString = "GEAR_DATA_INVALID#";
+            returnString = "GEAR_DATA_INVALID#"; // THIS COULD HAVE BEEN PONIES
             break;
     }
     return returnString;
