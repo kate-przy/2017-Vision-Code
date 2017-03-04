@@ -7,7 +7,7 @@
 while :
 do
 	echo "STARTING VISION"
-	$(build/processor/2017-Vision-processor)
+	$(./2017-Vision-processor)
 	
 	EXITCODE=$(echo $?)
 
