@@ -1,0 +1,1762 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="org.team401.vision.controlpanel.dialog.MainDialog">
+  <grid id="cbd77" binding="contentPane" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="10" left="10" bottom="10" right="10"/>
+    <constraints>
+      <xy x="48" y="54" width="1275" height="805"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <grid id="94766" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <hspacer id="98af6">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </hspacer>
+          <grid id="9538f" layout-manager="GridLayoutManager" row-count="1" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="e7465" class="javax.swing.JButton" binding="saveButton">
+                <constraints>
+                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Save"/>
+                </properties>
+              </component>
+              <component id="5723f" class="javax.swing.JButton" binding="buttonCancel">
+                <constraints>
+                  <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Quit"/>
+                </properties>
+              </component>
+              <component id="88f11" class="javax.swing.JButton" binding="resetButton">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Reset"/>
+                </properties>
+              </component>
+              <component id="ec3d6" class="javax.swing.JButton" binding="refreshButton">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Refresh"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+        </children>
+      </grid>
+      <grid id="e3588" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="c8b82" class="javax.swing.JLabel" binding="imageLabel">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                <minimum-size width="640" height="480"/>
+                <preferred-size width="640" height="480"/>
+                <maximum-size width="640" height="480"/>
+              </grid>
+            </constraints>
+            <properties>
+              <text value=""/>
+            </properties>
+          </component>
+          <vspacer id="7daef">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </vspacer>
+          <tabbedpane id="74556" binding="selectorPane">
+            <constraints>
+              <grid row="0" column="1" row-span="2" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <preferred-size width="550" height="-1"/>
+              </grid>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <scrollpane id="c3dbc">
+                <constraints>
+                  <tabbedpane title="Goal"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <grid id="aa3af" layout-manager="GridLayoutManager" row-count="4" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <constraints/>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <hspacer id="ef9f">
+                        <constraints>
+                          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                      </hspacer>
+                      <vspacer id="63c1">
+                        <constraints>
+                          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                      </vspacer>
+                      <grid id="40deb" binding="goalProcSettingsPanel" layout-manager="GridLayoutManager" row-count="9" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                        <margin top="0" left="0" bottom="0" right="0"/>
+                        <constraints>
+                          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties/>
+                        <border type="none" title="Processing Settings"/>
+                        <children>
+                          <component id="54d13" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Lower Threshold:"/>
+                            </properties>
+                          </component>
+                          <hspacer id="739cf">
+                            <constraints>
+                              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                          </hspacer>
+                          <component id="7668d" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Upper Threshold:"/>
+                            </properties>
+                          </component>
+                          <component id="4f05f" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Minimum Area:"/>
+                            </properties>
+                          </component>
+                          <component id="ff17e" class="javax.swing.JSpinner" binding="goalProcMinAreaSpinner">
+                            <constraints>
+                              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <preferred-size width="100" height="-1"/>
+                                <maximum-size width="100" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties/>
+                          </component>
+                          <component id="a05ec" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Minimum Perimeter:"/>
+                            </properties>
+                          </component>
+                          <component id="55574" class="javax.swing.JSpinner" binding="goalProcMinPerimeterSpinner">
+                            <constraints>
+                              <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <preferred-size width="100" height="-1"/>
+                                <maximum-size width="100" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties/>
+                          </component>
+                          <component id="e133b" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Width:"/>
+                            </properties>
+                          </component>
+                          <grid id="8c7d4" layout-manager="GridLayoutManager" row-count="1" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                            <margin top="0" left="0" bottom="0" right="0"/>
+                            <constraints>
+                              <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="8422b" class="javax.swing.JLabel">
+                                <constraints>
+                                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <text value="Min:"/>
+                                </properties>
+                              </component>
+                              <hspacer id="7c3ec">
+                                <constraints>
+                                  <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                              </hspacer>
+                              <component id="63866" class="javax.swing.JLabel">
+                                <constraints>
+                                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <text value="Max:"/>
+                                </properties>
+                              </component>
+                              <component id="dd1f" class="javax.swing.JFormattedTextField" binding="goalProcMinWidthTextfield" custom-create="true">
+                                <constraints>
+                                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                    <preferred-size width="70" height="-1"/>
+                                  </grid>
+                                </constraints>
+                                <properties/>
+                              </component>
+                              <component id="996e9" class="javax.swing.JFormattedTextField" binding="goalProcMaxWidthTextfield" custom-create="true">
+                                <constraints>
+                                  <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                    <preferred-size width="70" height="-1"/>
+                                  </grid>
+                                </constraints>
+                                <properties/>
+                              </component>
+                            </children>
+                          </grid>
+                          <component id="74d54" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Height:"/>
+                            </properties>
+                          </component>
+                          <grid id="9adac" layout-manager="GridLayoutManager" row-count="1" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                            <margin top="0" left="0" bottom="0" right="0"/>
+                            <constraints>
+                              <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="94138" class="javax.swing.JLabel">
+                                <constraints>
+                                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <text value="Min:"/>
+                                </properties>
+                              </component>
+                              <hspacer id="e39e">
+                                <constraints>
+                                  <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                              </hspacer>
+                              <component id="70c3d" class="javax.swing.JLabel">
+                                <constraints>
+                                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <text value="Max:"/>
+                                </properties>
+                              </component>
+                              <component id="a7d32" class="javax.swing.JFormattedTextField" binding="goalProcMinHeightTextfield" custom-create="true">
+                                <constraints>
+                                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                    <preferred-size width="70" height="-1"/>
+                                  </grid>
+                                </constraints>
+                                <properties/>
+                              </component>
+                              <component id="78e10" class="javax.swing.JFormattedTextField" binding="goalProcMaxHeightTextfield" custom-create="true">
+                                <constraints>
+                                  <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                    <preferred-size width="70" height="-1"/>
+                                  </grid>
+                                </constraints>
+                                <properties/>
+                              </component>
+                            </children>
+                          </grid>
+                          <component id="91c7c" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Solidity:"/>
+                            </properties>
+                          </component>
+                          <grid id="f2305" layout-manager="GridLayoutManager" row-count="1" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                            <margin top="0" left="0" bottom="0" right="0"/>
+                            <constraints>
+                              <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="37eb1" class="javax.swing.JLabel">
+                                <constraints>
+                                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <text value="Min:"/>
+                                </properties>
+                              </component>
+                              <hspacer id="a35f6">
+                                <constraints>
+                                  <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                              </hspacer>
+                              <component id="d48b7" class="javax.swing.JLabel">
+                                <constraints>
+                                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <text value="Max:"/>
+                                </properties>
+                              </component>
+                              <component id="49fd4" class="javax.swing.JFormattedTextField" binding="goalProcMinSolidityTextfield" custom-create="true">
+                                <constraints>
+                                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                    <preferred-size width="70" height="-1"/>
+                                  </grid>
+                                </constraints>
+                                <properties/>
+                              </component>
+                              <component id="56721" class="javax.swing.JFormattedTextField" binding="goalProcMaxSolidityTextfield" custom-create="true">
+                                <constraints>
+                                  <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                    <preferred-size width="70" height="-1"/>
+                                  </grid>
+                                </constraints>
+                                <properties/>
+                              </component>
+                            </children>
+                          </grid>
+                          <component id="16d07" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Vertices:"/>
+                            </properties>
+                          </component>
+                          <grid id="2536b" layout-manager="GridLayoutManager" row-count="1" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                            <margin top="0" left="0" bottom="0" right="0"/>
+                            <constraints>
+                              <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="2afaa" class="javax.swing.JLabel">
+                                <constraints>
+                                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <text value="Min:"/>
+                                </properties>
+                              </component>
+                              <hspacer id="d1fad">
+                                <constraints>
+                                  <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                              </hspacer>
+                              <component id="5e68" class="javax.swing.JLabel">
+                                <constraints>
+                                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <text value="Max:"/>
+                                </properties>
+                              </component>
+                              <component id="e16d7" class="javax.swing.JFormattedTextField" binding="goalProcMinVerticesTextfield" custom-create="true">
+                                <constraints>
+                                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                    <preferred-size width="70" height="-1"/>
+                                  </grid>
+                                </constraints>
+                                <properties/>
+                              </component>
+                              <component id="6b2b0" class="javax.swing.JFormattedTextField" binding="goalProcMaxVerticesTextfield" custom-create="true">
+                                <constraints>
+                                  <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                    <preferred-size width="70" height="-1"/>
+                                  </grid>
+                                </constraints>
+                                <properties/>
+                              </component>
+                            </children>
+                          </grid>
+                          <component id="416b" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Ratio:"/>
+                            </properties>
+                          </component>
+                          <grid id="a0927" layout-manager="GridLayoutManager" row-count="1" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                            <margin top="0" left="0" bottom="0" right="0"/>
+                            <constraints>
+                              <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="a3597" class="javax.swing.JLabel">
+                                <constraints>
+                                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <text value="Min:"/>
+                                </properties>
+                              </component>
+                              <hspacer id="6b53b">
+                                <constraints>
+                                  <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                              </hspacer>
+                              <component id="f4689" class="javax.swing.JLabel">
+                                <constraints>
+                                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <text value="Max:"/>
+                                </properties>
+                              </component>
+                              <component id="93817" class="javax.swing.JFormattedTextField" binding="goalProcMinRatioTextfield" custom-create="true">
+                                <constraints>
+                                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                    <preferred-size width="70" height="-1"/>
+                                  </grid>
+                                </constraints>
+                                <properties/>
+                              </component>
+                              <component id="cec74" class="javax.swing.JFormattedTextField" binding="goalProcMaxRatioTextfield" custom-create="true">
+                                <constraints>
+                                  <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                    <preferred-size width="70" height="-1"/>
+                                  </grid>
+                                </constraints>
+                                <properties/>
+                              </component>
+                            </children>
+                          </grid>
+                          <grid id="41421" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                            <margin top="0" left="0" bottom="0" right="0"/>
+                            <constraints>
+                              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="226ed" class="com.alee.extended.colorchooser.WebColorChooserField" binding="goalProcColorLower">
+                                <constraints>
+                                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties/>
+                              </component>
+                              <hspacer id="a9b4e">
+                                <constraints>
+                                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                              </hspacer>
+                              <component id="48c14" class="javax.swing.JButton" binding="goalProcLowerColorApplyButton">
+                                <constraints>
+                                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <text value="Apply"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                          <grid id="dab53" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                            <margin top="0" left="0" bottom="0" right="0"/>
+                            <constraints>
+                              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="dc189" class="com.alee.extended.colorchooser.WebColorChooserField" binding="goalProcColorUpper">
+                                <constraints>
+                                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties/>
+                              </component>
+                              <hspacer id="b1d3e">
+                                <constraints>
+                                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                              </hspacer>
+                              <component id="201ae" class="javax.swing.JButton" binding="goalProcUpperColorApplyButton">
+                                <constraints>
+                                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <text value="Apply"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                        </children>
+                      </grid>
+                      <grid id="9be26" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                        <margin top="0" left="0" bottom="0" right="0"/>
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties/>
+                        <border type="none" title="Camera Settings"/>
+                        <children>
+                          <tabbedpane id="40254" binding="goalCameraSelectorPane">
+                            <constraints>
+                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                                <preferred-size width="200" height="200"/>
+                              </grid>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <grid id="4dd29" binding="goalCameraProcSettingsPanel" layout-manager="GridLayoutManager" row-count="11" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                                <margin top="0" left="0" bottom="0" right="0"/>
+                                <constraints>
+                                  <tabbedpane title="Processing"/>
+                                </constraints>
+                                <properties/>
+                                <border type="none"/>
+                                <children>
+                                  <component id="2fb7c" class="javax.swing.JLabel">
+                                    <constraints>
+                                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <text value="Brightness:"/>
+                                    </properties>
+                                  </component>
+                                  <hspacer id="26597">
+                                    <constraints>
+                                      <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                  </hspacer>
+                                  <component id="fe5ad" class="javax.swing.JSpinner" binding="goalCameraProcBrightnessSpinner">
+                                    <constraints>
+                                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                        <minimum-size width="70" height="-1"/>
+                                      </grid>
+                                    </constraints>
+                                    <properties/>
+                                  </component>
+                                  <component id="49276" class="javax.swing.JSlider" binding="goalCameraProcBrightnessSlider">
+                                    <constraints>
+                                      <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <paintLabels value="false"/>
+                                    </properties>
+                                  </component>
+                                  <component id="76e0c" class="javax.swing.JLabel">
+                                    <constraints>
+                                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <text value="Contrast:"/>
+                                    </properties>
+                                  </component>
+                                  <component id="83b06" class="javax.swing.JSpinner" binding="goalCameraProcContrastSpinner">
+                                    <constraints>
+                                      <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                        <minimum-size width="70" height="-1"/>
+                                      </grid>
+                                    </constraints>
+                                    <properties/>
+                                  </component>
+                                  <component id="65f41" class="javax.swing.JSlider" binding="goalCameraProcContrastSlider">
+                                    <constraints>
+                                      <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties/>
+                                  </component>
+                                  <component id="2ddd7" class="javax.swing.JLabel">
+                                    <constraints>
+                                      <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <text value="Saturation:"/>
+                                    </properties>
+                                  </component>
+                                  <component id="34c59" class="javax.swing.JSpinner" binding="goalCameraProcSaturationSpinner">
+                                    <constraints>
+                                      <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                        <minimum-size width="70" height="-1"/>
+                                      </grid>
+                                    </constraints>
+                                    <properties/>
+                                  </component>
+                                  <component id="6a947" class="javax.swing.JSlider" binding="goalCameraProcSaturationSlider">
+                                    <constraints>
+                                      <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties/>
+                                  </component>
+                                  <component id="48acb" class="javax.swing.JLabel">
+                                    <constraints>
+                                      <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <text value="Hue:"/>
+                                    </properties>
+                                  </component>
+                                  <component id="4813c" class="javax.swing.JSpinner" binding="goalCameraProcHueSpinner">
+                                    <constraints>
+                                      <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                        <minimum-size width="70" height="-1"/>
+                                      </grid>
+                                    </constraints>
+                                    <properties/>
+                                  </component>
+                                  <component id="208d3" class="javax.swing.JSlider" binding="goalCameraProcHueSlider">
+                                    <constraints>
+                                      <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties/>
+                                  </component>
+                                  <component id="d7b00" class="javax.swing.JLabel">
+                                    <constraints>
+                                      <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <text value="Exposure:"/>
+                                    </properties>
+                                  </component>
+                                  <component id="2988f" class="javax.swing.JLabel">
+                                    <constraints>
+                                      <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <text value="Gain:"/>
+                                    </properties>
+                                  </component>
+                                  <component id="fab94" class="javax.swing.JSpinner" binding="goalCameraProcExposureSpinner">
+                                    <constraints>
+                                      <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                        <minimum-size width="70" height="-1"/>
+                                      </grid>
+                                    </constraints>
+                                    <properties/>
+                                  </component>
+                                  <component id="e2c78" class="javax.swing.JSlider" binding="goalCameraProcExposureSlider">
+                                    <constraints>
+                                      <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties/>
+                                  </component>
+                                  <component id="5efe7" class="javax.swing.JSpinner" binding="goalCameraProcGainSpinner">
+                                    <constraints>
+                                      <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                        <minimum-size width="70" height="-1"/>
+                                      </grid>
+                                    </constraints>
+                                    <properties/>
+                                  </component>
+                                  <component id="4da07" class="javax.swing.JSlider" binding="goalCameraProcGainSlider">
+                                    <constraints>
+                                      <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties/>
+                                  </component>
+                                  <component id="8a479" class="javax.swing.JLabel">
+                                    <constraints>
+                                      <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <text value="Auto WB:"/>
+                                    </properties>
+                                  </component>
+                                  <component id="54490" class="javax.swing.JLabel">
+                                    <constraints>
+                                      <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <text value="Auto Gain:"/>
+                                    </properties>
+                                  </component>
+                                  <component id="cc67c" class="javax.swing.JLabel">
+                                    <constraints>
+                                      <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <text value="Vertical Flip:"/>
+                                    </properties>
+                                  </component>
+                                  <component id="2887b" class="javax.swing.JLabel">
+                                    <constraints>
+                                      <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <text value="Horizontal Flip:"/>
+                                    </properties>
+                                  </component>
+                                  <component id="29454" class="javax.swing.JLabel">
+                                    <constraints>
+                                      <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <text value="Manual Exposure:"/>
+                                    </properties>
+                                  </component>
+                                  <component id="98c22" class="javax.swing.JCheckBox" binding="goalCameraProcAutoWBCheckbox">
+                                    <constraints>
+                                      <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <text value=""/>
+                                    </properties>
+                                  </component>
+                                  <component id="107fb" class="javax.swing.JCheckBox" binding="goalCameraProcAutoGainCheckbox">
+                                    <constraints>
+                                      <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <text value=""/>
+                                    </properties>
+                                  </component>
+                                  <component id="3b03a" class="javax.swing.JCheckBox" binding="goalCameraProcVFlipCheckbox">
+                                    <constraints>
+                                      <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <text value=""/>
+                                    </properties>
+                                  </component>
+                                  <component id="fca41" class="javax.swing.JCheckBox" binding="goalCameraProcHFlipCheckbox">
+                                    <constraints>
+                                      <grid row="9" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <text value=""/>
+                                    </properties>
+                                  </component>
+                                  <component id="5ddbf" class="javax.swing.JCheckBox" binding="goalCameraProcManualExposureCheckbox">
+                                    <constraints>
+                                      <grid row="10" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <text value=""/>
+                                    </properties>
+                                  </component>
+                                </children>
+                              </grid>
+                              <grid id="66bca" binding="goalCameraStreamSettingsPanel" layout-manager="GridLayoutManager" row-count="11" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                                <margin top="0" left="0" bottom="0" right="0"/>
+                                <constraints>
+                                  <tabbedpane title="Stream"/>
+                                </constraints>
+                                <properties/>
+                                <border type="none"/>
+                                <children>
+                                  <component id="cfee0" class="javax.swing.JLabel">
+                                    <constraints>
+                                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <text value="Brightness:"/>
+                                    </properties>
+                                  </component>
+                                  <hspacer id="6840d">
+                                    <constraints>
+                                      <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                  </hspacer>
+                                  <component id="5e314" class="javax.swing.JSpinner" binding="goalCameraStreamBrightnessSpinner">
+                                    <constraints>
+                                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                        <minimum-size width="70" height="-1"/>
+                                      </grid>
+                                    </constraints>
+                                    <properties/>
+                                  </component>
+                                  <component id="b212c" class="javax.swing.JSlider" binding="goalCameraStreamBrightnessSlider">
+                                    <constraints>
+                                      <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <paintLabels value="false"/>
+                                    </properties>
+                                  </component>
+                                  <component id="f78be" class="javax.swing.JLabel">
+                                    <constraints>
+                                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <text value="Contrast:"/>
+                                    </properties>
+                                  </component>
+                                  <component id="f7808" class="javax.swing.JSpinner" binding="goalCameraStreamContrastSpinner">
+                                    <constraints>
+                                      <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                        <minimum-size width="70" height="-1"/>
+                                      </grid>
+                                    </constraints>
+                                    <properties/>
+                                  </component>
+                                  <component id="fa904" class="javax.swing.JSlider" binding="goalCameraStreamContrastSlider">
+                                    <constraints>
+                                      <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties/>
+                                  </component>
+                                  <component id="5d483" class="javax.swing.JLabel">
+                                    <constraints>
+                                      <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <text value="Saturation:"/>
+                                    </properties>
+                                  </component>
+                                  <component id="7ffef" class="javax.swing.JSpinner" binding="goalCameraStreamSaturationSpinner">
+                                    <constraints>
+                                      <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                        <minimum-size width="70" height="-1"/>
+                                      </grid>
+                                    </constraints>
+                                    <properties/>
+                                  </component>
+                                  <component id="1981d" class="javax.swing.JSlider" binding="goalCameraStreamSaturationSlider">
+                                    <constraints>
+                                      <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties/>
+                                  </component>
+                                  <component id="92e1b" class="javax.swing.JLabel">
+                                    <constraints>
+                                      <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <text value="Hue:"/>
+                                    </properties>
+                                  </component>
+                                  <component id="a2eef" class="javax.swing.JSpinner" binding="goalCameraStreamHueSpinner">
+                                    <constraints>
+                                      <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                        <minimum-size width="70" height="-1"/>
+                                      </grid>
+                                    </constraints>
+                                    <properties/>
+                                  </component>
+                                  <component id="d042f" class="javax.swing.JSlider" binding="goalCameraStreamHueSlider">
+                                    <constraints>
+                                      <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties/>
+                                  </component>
+                                  <component id="d468b" class="javax.swing.JLabel">
+                                    <constraints>
+                                      <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <text value="Exposure:"/>
+                                    </properties>
+                                  </component>
+                                  <component id="6e23a" class="javax.swing.JLabel">
+                                    <constraints>
+                                      <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <text value="Gain:"/>
+                                    </properties>
+                                  </component>
+                                  <component id="ae20b" class="javax.swing.JSpinner" binding="goalCameraStreamExposureSpinner">
+                                    <constraints>
+                                      <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                        <minimum-size width="70" height="-1"/>
+                                      </grid>
+                                    </constraints>
+                                    <properties/>
+                                  </component>
+                                  <component id="cf46d" class="javax.swing.JSlider" binding="goalCameraStreamExposureSlider">
+                                    <constraints>
+                                      <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties/>
+                                  </component>
+                                  <component id="8ee8d" class="javax.swing.JSpinner" binding="goalCameraStreamGainSpinner">
+                                    <constraints>
+                                      <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                        <minimum-size width="70" height="-1"/>
+                                      </grid>
+                                    </constraints>
+                                    <properties/>
+                                  </component>
+                                  <component id="b085a" class="javax.swing.JSlider" binding="goalCameraStreamGainSlider">
+                                    <constraints>
+                                      <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties/>
+                                  </component>
+                                  <component id="8ffa6" class="javax.swing.JLabel">
+                                    <constraints>
+                                      <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <text value="Auto WB:"/>
+                                    </properties>
+                                  </component>
+                                  <component id="12dbc" class="javax.swing.JLabel">
+                                    <constraints>
+                                      <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <text value="Auto Gain:"/>
+                                    </properties>
+                                  </component>
+                                  <component id="d5ff1" class="javax.swing.JLabel">
+                                    <constraints>
+                                      <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <text value="Vertical Flip:"/>
+                                    </properties>
+                                  </component>
+                                  <component id="5d7ed" class="javax.swing.JLabel">
+                                    <constraints>
+                                      <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <text value="Horizontal Flip:"/>
+                                    </properties>
+                                  </component>
+                                  <component id="26a71" class="javax.swing.JLabel">
+                                    <constraints>
+                                      <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <text value="Manual Exposure:"/>
+                                    </properties>
+                                  </component>
+                                  <component id="c35a9" class="javax.swing.JCheckBox" binding="goalCameraStreamAutoWBCheckbox">
+                                    <constraints>
+                                      <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <text value=""/>
+                                    </properties>
+                                  </component>
+                                  <component id="632b5" class="javax.swing.JCheckBox" binding="goalCameraStreamAutoGainCheckbox">
+                                    <constraints>
+                                      <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <text value=""/>
+                                    </properties>
+                                  </component>
+                                  <component id="d9737" class="javax.swing.JCheckBox" binding="goalCameraStreamVFlipCheckbox">
+                                    <constraints>
+                                      <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <text value=""/>
+                                    </properties>
+                                  </component>
+                                  <component id="f1ed3" class="javax.swing.JCheckBox" binding="goalCameraStreamHFlipCheckbox">
+                                    <constraints>
+                                      <grid row="9" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <text value=""/>
+                                    </properties>
+                                  </component>
+                                  <component id="fe422" class="javax.swing.JCheckBox" binding="goalCameraStreamManualExposureCheckbox">
+                                    <constraints>
+                                      <grid row="10" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <text value=""/>
+                                    </properties>
+                                  </component>
+                                </children>
+                              </grid>
+                            </children>
+                          </tabbedpane>
+                        </children>
+                      </grid>
+                    </children>
+                  </grid>
+                </children>
+              </scrollpane>
+              <scrollpane id="3abf5">
+                <constraints>
+                  <tabbedpane title="Gear"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <grid id="6c24b" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <constraints/>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <hspacer id="b76a1">
+                        <constraints>
+                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                      </hspacer>
+                      <vspacer id="b38e">
+                        <constraints>
+                          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                      </vspacer>
+                      <grid id="37abf" layout-manager="GridLayoutManager" row-count="11" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                        <margin top="0" left="0" bottom="0" right="0"/>
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties/>
+                        <border type="none" title="Camera Settings"/>
+                        <children>
+                          <component id="2003f" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Brightness:"/>
+                            </properties>
+                          </component>
+                          <hspacer id="537ae">
+                            <constraints>
+                              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                          </hspacer>
+                          <component id="ba2da" class="javax.swing.JSpinner" binding="gearCameraBrightnessSpinner">
+                            <constraints>
+                              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <minimum-size width="70" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties/>
+                          </component>
+                          <component id="db0e3" class="javax.swing.JSlider" binding="gearCameraBrightnessSlider">
+                            <constraints>
+                              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="7" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <paintLabels value="false"/>
+                            </properties>
+                          </component>
+                          <component id="10a4b" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Contrast:"/>
+                            </properties>
+                          </component>
+                          <component id="fab7e" class="javax.swing.JSpinner" binding="gearCameraContrastSpinner">
+                            <constraints>
+                              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <minimum-size width="70" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties/>
+                          </component>
+                          <component id="6a713" class="javax.swing.JSlider" binding="gearCameraContrastSlider">
+                            <constraints>
+                              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="7" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                          </component>
+                          <component id="aef95" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Saturation:"/>
+                            </properties>
+                          </component>
+                          <component id="a17e4" class="javax.swing.JSpinner" binding="gearCameraSaturationSpinner">
+                            <constraints>
+                              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <minimum-size width="70" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties/>
+                          </component>
+                          <component id="19fc6" class="javax.swing.JSlider" binding="gearCameraSaturationSlider">
+                            <constraints>
+                              <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="7" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                          </component>
+                          <component id="d825a" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Hue:"/>
+                            </properties>
+                          </component>
+                          <component id="d6776" class="javax.swing.JSpinner" binding="gearCameraHueSpinner">
+                            <constraints>
+                              <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <minimum-size width="70" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties/>
+                          </component>
+                          <component id="a5389" class="javax.swing.JSlider" binding="gearCameraHueSlider">
+                            <constraints>
+                              <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="7" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                          </component>
+                          <component id="e30ce" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Exposure:"/>
+                            </properties>
+                          </component>
+                          <component id="7bf64" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Gain:"/>
+                            </properties>
+                          </component>
+                          <component id="fea75" class="javax.swing.JSpinner" binding="gearCameraExposureSpinner">
+                            <constraints>
+                              <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <minimum-size width="70" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties/>
+                          </component>
+                          <component id="96173" class="javax.swing.JSlider" binding="gearCameraExposureSlider">
+                            <constraints>
+                              <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="7" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                          </component>
+                          <component id="4c61b" class="javax.swing.JSpinner" binding="gearCameraGainSpinner">
+                            <constraints>
+                              <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <minimum-size width="70" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties/>
+                          </component>
+                          <component id="9212a" class="javax.swing.JSlider" binding="gearCameraGainSlider">
+                            <constraints>
+                              <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="7" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                          </component>
+                          <component id="ba853" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Auto WB:"/>
+                            </properties>
+                          </component>
+                          <component id="3f416" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Auto Gain:"/>
+                            </properties>
+                          </component>
+                          <component id="fe3dd" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Vertical Flip:"/>
+                            </properties>
+                          </component>
+                          <component id="68c7f" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Horizontal Flip:"/>
+                            </properties>
+                          </component>
+                          <component id="6b273" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Manual Exposure:"/>
+                            </properties>
+                          </component>
+                          <component id="8f789" class="javax.swing.JCheckBox" binding="gearCameraAutoWBCheckbox">
+                            <constraints>
+                              <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value=""/>
+                            </properties>
+                          </component>
+                          <component id="94f2a" class="javax.swing.JCheckBox" binding="gearCameraAutoGainCheckbox">
+                            <constraints>
+                              <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value=""/>
+                            </properties>
+                          </component>
+                          <component id="6669f" class="javax.swing.JCheckBox" binding="gearCameraVFlipCheckbox">
+                            <constraints>
+                              <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value=""/>
+                            </properties>
+                          </component>
+                          <component id="78714" class="javax.swing.JCheckBox" binding="gearCameraHFlipCheckbox">
+                            <constraints>
+                              <grid row="9" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value=""/>
+                            </properties>
+                          </component>
+                          <component id="e10d" class="javax.swing.JCheckBox" binding="gearCameraManualExposureCheckbox">
+                            <constraints>
+                              <grid row="10" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value=""/>
+                            </properties>
+                          </component>
+                        </children>
+                      </grid>
+                      <grid id="fa738" layout-manager="GridLayoutManager" row-count="9" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                        <margin top="0" left="0" bottom="0" right="0"/>
+                        <constraints>
+                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties/>
+                        <border type="none" title="Processing Settings"/>
+                        <children>
+                          <component id="ba7e3" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Lower Threshold:"/>
+                            </properties>
+                          </component>
+                          <hspacer id="5c80f">
+                            <constraints>
+                              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                          </hspacer>
+                          <component id="f33b7" class="com.alee.extended.colorchooser.WebColorChooserField" binding="gearProcLowerColor">
+                            <constraints>
+                              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                          </component>
+                          <component id="fb9af" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Upper Threshold:"/>
+                            </properties>
+                          </component>
+                          <component id="7a5ba" class="com.alee.extended.colorchooser.WebColorChooserField" binding="gearProcUpperColor">
+                            <constraints>
+                              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                          </component>
+                          <component id="4a547" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Minimum Area:"/>
+                            </properties>
+                          </component>
+                          <component id="34f78" class="javax.swing.JSpinner" binding="gearProcMinAreaSpinner">
+                            <constraints>
+                              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <preferred-size width="100" height="-1"/>
+                                <maximum-size width="100" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties/>
+                          </component>
+                          <component id="a7c36" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Minimum Perimeter:"/>
+                            </properties>
+                          </component>
+                          <component id="fdafe" class="javax.swing.JSpinner" binding="gearProcMinPerimeterSpinner">
+                            <constraints>
+                              <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <preferred-size width="100" height="-1"/>
+                                <maximum-size width="100" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties/>
+                          </component>
+                          <component id="66d6" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Width:"/>
+                            </properties>
+                          </component>
+                          <grid id="f238c" layout-manager="GridLayoutManager" row-count="1" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                            <margin top="0" left="0" bottom="0" right="0"/>
+                            <constraints>
+                              <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="7b953" class="javax.swing.JLabel">
+                                <constraints>
+                                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <text value="Min:"/>
+                                </properties>
+                              </component>
+                              <hspacer id="ab9c9">
+                                <constraints>
+                                  <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                              </hspacer>
+                              <component id="de72f" class="javax.swing.JLabel">
+                                <constraints>
+                                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <text value="Max:"/>
+                                </properties>
+                              </component>
+                              <component id="8617c" class="javax.swing.JFormattedTextField" binding="gearProcMinWidthTextfield" custom-create="true">
+                                <constraints>
+                                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                    <preferred-size width="70" height="-1"/>
+                                  </grid>
+                                </constraints>
+                                <properties/>
+                              </component>
+                              <component id="d22cf" class="javax.swing.JFormattedTextField" binding="gearProcMaxWidthTextfield" custom-create="true">
+                                <constraints>
+                                  <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                    <preferred-size width="70" height="-1"/>
+                                  </grid>
+                                </constraints>
+                                <properties/>
+                              </component>
+                            </children>
+                          </grid>
+                          <component id="d5f0" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Height:"/>
+                            </properties>
+                          </component>
+                          <grid id="8b141" layout-manager="GridLayoutManager" row-count="1" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                            <margin top="0" left="0" bottom="0" right="0"/>
+                            <constraints>
+                              <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="351da" class="javax.swing.JLabel">
+                                <constraints>
+                                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <text value="Min:"/>
+                                </properties>
+                              </component>
+                              <hspacer id="99fa2">
+                                <constraints>
+                                  <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                              </hspacer>
+                              <component id="e7b3b" class="javax.swing.JLabel">
+                                <constraints>
+                                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <text value="Max:"/>
+                                </properties>
+                              </component>
+                              <component id="2dac6" class="javax.swing.JFormattedTextField" binding="gearProcMinHeightTextfield" custom-create="true">
+                                <constraints>
+                                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                    <preferred-size width="70" height="-1"/>
+                                  </grid>
+                                </constraints>
+                                <properties/>
+                              </component>
+                              <component id="d6fc0" class="javax.swing.JFormattedTextField" binding="gearProcMaxHeightTextfield" custom-create="true">
+                                <constraints>
+                                  <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                    <preferred-size width="70" height="-1"/>
+                                  </grid>
+                                </constraints>
+                                <properties/>
+                              </component>
+                            </children>
+                          </grid>
+                          <component id="d4faa" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Solidity:"/>
+                            </properties>
+                          </component>
+                          <grid id="5067e" layout-manager="GridLayoutManager" row-count="1" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                            <margin top="0" left="0" bottom="0" right="0"/>
+                            <constraints>
+                              <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="896d9" class="javax.swing.JLabel">
+                                <constraints>
+                                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <text value="Min:"/>
+                                </properties>
+                              </component>
+                              <hspacer id="17447">
+                                <constraints>
+                                  <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                              </hspacer>
+                              <component id="fe333" class="javax.swing.JLabel">
+                                <constraints>
+                                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <text value="Max:"/>
+                                </properties>
+                              </component>
+                              <component id="31cb8" class="javax.swing.JFormattedTextField" binding="gearProcMinSolidityTextfield" custom-create="true">
+                                <constraints>
+                                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                    <preferred-size width="70" height="-1"/>
+                                  </grid>
+                                </constraints>
+                                <properties/>
+                              </component>
+                              <component id="e0fa" class="javax.swing.JFormattedTextField" binding="gearProcMaxSolidityTextfield" custom-create="true">
+                                <constraints>
+                                  <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                    <preferred-size width="70" height="-1"/>
+                                  </grid>
+                                </constraints>
+                                <properties/>
+                              </component>
+                            </children>
+                          </grid>
+                          <component id="e7f14" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Vertices:"/>
+                            </properties>
+                          </component>
+                          <grid id="8872" layout-manager="GridLayoutManager" row-count="1" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                            <margin top="0" left="0" bottom="0" right="0"/>
+                            <constraints>
+                              <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="71f4c" class="javax.swing.JLabel">
+                                <constraints>
+                                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <text value="Min:"/>
+                                </properties>
+                              </component>
+                              <hspacer id="48494">
+                                <constraints>
+                                  <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                              </hspacer>
+                              <component id="88d0c" class="javax.swing.JLabel">
+                                <constraints>
+                                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <text value="Max:"/>
+                                </properties>
+                              </component>
+                              <component id="4d525" class="javax.swing.JFormattedTextField" binding="gearProcMinVerticesTextfield" custom-create="true">
+                                <constraints>
+                                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                    <preferred-size width="70" height="-1"/>
+                                  </grid>
+                                </constraints>
+                                <properties/>
+                              </component>
+                              <component id="7f" class="javax.swing.JFormattedTextField" binding="gearProcMaxVerticesTextfield" custom-create="true">
+                                <constraints>
+                                  <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                    <preferred-size width="70" height="-1"/>
+                                  </grid>
+                                </constraints>
+                                <properties/>
+                              </component>
+                            </children>
+                          </grid>
+                          <component id="d2933" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Ratio:"/>
+                            </properties>
+                          </component>
+                          <grid id="17260" layout-manager="GridLayoutManager" row-count="1" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                            <margin top="0" left="0" bottom="0" right="0"/>
+                            <constraints>
+                              <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="6b662" class="javax.swing.JLabel">
+                                <constraints>
+                                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <text value="Min:"/>
+                                </properties>
+                              </component>
+                              <hspacer id="5df58">
+                                <constraints>
+                                  <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                              </hspacer>
+                              <component id="eef7b" class="javax.swing.JLabel">
+                                <constraints>
+                                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties>
+                                  <text value="Max:"/>
+                                </properties>
+                              </component>
+                              <component id="f1107" class="javax.swing.JFormattedTextField" binding="gearProcMinRatioTextfield" custom-create="true">
+                                <constraints>
+                                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                    <preferred-size width="70" height="-1"/>
+                                  </grid>
+                                </constraints>
+                                <properties/>
+                              </component>
+                              <component id="c94c5" class="javax.swing.JFormattedTextField" binding="gearProcMaxRatioTextfield" custom-create="true">
+                                <constraints>
+                                  <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                    <preferred-size width="70" height="-1"/>
+                                  </grid>
+                                </constraints>
+                                <properties/>
+                              </component>
+                            </children>
+                          </grid>
+                        </children>
+                      </grid>
+                    </children>
+                  </grid>
+                </children>
+              </scrollpane>
+              <scrollpane id="ee2f8">
+                <constraints>
+                  <tabbedpane title="Streamer"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <grid id="27f16" layout-manager="GridLayoutManager" row-count="3" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <constraints/>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <component id="8a9b2" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Quality:"/>
+                        </properties>
+                      </component>
+                      <hspacer id="7c987">
+                        <constraints>
+                          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                      </hspacer>
+                      <vspacer id="aa1fe">
+                        <constraints>
+                          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                      </vspacer>
+                      <component id="2b819" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Active Camera:"/>
+                        </properties>
+                      </component>
+                      <grid id="d7d74" layout-manager="GridLayoutManager" row-count="1" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                        <margin top="0" left="0" bottom="0" right="0"/>
+                        <constraints>
+                          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties/>
+                        <border type="none"/>
+                        <children>
+                          <component id="6f0c3" class="javax.swing.JButton" binding="offButton" default-binding="true">
+                            <constraints>
+                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Off"/>
+                            </properties>
+                          </component>
+                          <hspacer id="eed29">
+                            <constraints>
+                              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                          </hspacer>
+                          <component id="1c0fe" class="javax.swing.JButton" binding="goalButton" default-binding="true">
+                            <constraints>
+                              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Goal"/>
+                            </properties>
+                          </component>
+                          <component id="361a3" class="javax.swing.JButton" binding="gearButton" default-binding="true">
+                            <constraints>
+                              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Gear"/>
+                            </properties>
+                          </component>
+                        </children>
+                      </grid>
+                      <grid id="53dff" layout-manager="GridLayoutManager" row-count="1" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                        <margin top="0" left="0" bottom="0" right="0"/>
+                        <constraints>
+                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties/>
+                        <border type="none"/>
+                        <children>
+                          <component id="75185" class="javax.swing.JSpinner" binding="streamCompressionSpinner">
+                            <constraints>
+                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <minimum-size width="100" height="-1"/>
+                                <preferred-size width="100" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties/>
+                          </component>
+                          <hspacer id="f6e0d">
+                            <constraints>
+                              <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                          </hspacer>
+                          <component id="5cfa1" class="javax.swing.JSlider" binding="streamCompressionSlider">
+                            <constraints>
+                              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                          </component>
+                          <component id="8ddfc" class="javax.swing.JButton" binding="streamerQualityApplyButton">
+                            <constraints>
+                              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Apply"/>
+                            </properties>
+                          </component>
+                          <component id="a6a70" class="javax.swing.JLabel" binding="streamWarningLabel">
+                            <constraints>
+                              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                                <minimum-size width="32" height="32"/>
+                                <preferred-size width="32" height="32"/>
+                                <maximum-size width="32" height="32"/>
+                              </grid>
+                            </constraints>
+                            <properties>
+                              <icon value="com/sun/deploy/resources/image/warning32.png"/>
+                              <text value=""/>
+                              <toolTipText value="High quality levels (over 30) can cause possibly non-recoverable latency!"/>
+                            </properties>
+                          </component>
+                        </children>
+                      </grid>
+                    </children>
+                  </grid>
+                </children>
+              </scrollpane>
+            </children>
+          </tabbedpane>
+          <component id="d95fc" class="javax.swing.JButton" binding="freezeStreamButton" default-binding="true">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Freeze Stream"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>
