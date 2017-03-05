@@ -48,7 +48,7 @@ public class NetworkData {
                 toReturn = new NetworkData("INVALID"); //Mark the data to return as "INVALID" (there is no "invalid" state, all data MUST be initialized)
             }
         } else {
-            toReturn = new NetworkData("TIMEOUT"); //Mark the data as timed out
+            toReturn = new NetworkData("INVALID"); //Mark the data as timed out
         }
         return toReturn;
     }
