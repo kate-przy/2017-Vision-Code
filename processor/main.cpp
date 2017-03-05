@@ -73,6 +73,7 @@ int main(int argc, char *argv[]) {
     boost::thread_group processingGroup; //Thread group for processing threads
 
     //OBJECT INIT
+
     Camera goalProcCamera(config, Camera::CameraType::GOAL_PROCESSING); //Set up the processing camera from the config
     Camera gearProcCamera(config, Camera::CameraType::GEAR_PROCESSING);
     if (config.useGoalCamera) { //If we are using the goal camera

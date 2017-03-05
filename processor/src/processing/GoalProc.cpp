@@ -133,6 +133,10 @@ void GoalProc::run() {
 
             // Calculate the x distance away from the goal the robot is (not diagonal)
             distance = distanceCalculation / (bottomCenter.y - topCenter.y);
+
+            streamer->addToQueue(StreamData(distance, pitch, yaw)); //Send the data
+        } else {
+            streamer->addToQueue(StreamData(StreamData::Type::GOAL_DATA_INVALID)); //Send invalid data
         }
 
         // Debug drawings and image streams
