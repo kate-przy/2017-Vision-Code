@@ -2,6 +2,7 @@
 project(2017-Vision-processor)
 
 file(COPY res DESTINATION ./)
+file(COPY start.sh DESTINATION ./)
 
 add_subdirectory(src)
 
