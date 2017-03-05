@@ -27,24 +27,28 @@ public class NetworkData {
      * @param encoded The encoded string
      */
     public static NetworkData decode(String encoded) {
-        String commandSplit[] = encoded.split("#"); //Split on the '#', dividing the command in half
-        String commandType;
-        String args[];
         NetworkData toReturn;
-        if (commandSplit.length >= 1) { //If there is any data
-            commandType = commandSplit[0]; //Set the command type
-            toReturn = new NetworkData(commandType);
-            if (commandSplit.length >= 2) { //If there are args
-                String[] argsSplit = commandSplit[1].split(","); //Split up each argument group
-                for (String s : argsSplit) {
-                    String[] argSplit = s.split(":"); //Break each arg into key and value
-                    if (argSplit.length >= 2) { //If this is a valid arg
-                        toReturn.putElement(argSplit[0], argSplit[1]); //Put the element into the map
+        if (encoded != null) {
+            String commandSplit[] = encoded.split("#"); //Split on the '#', dividing the command in half
+            String commandType;
+            String args[];
+            if (commandSplit.length >= 1) { //If there is any data
+                commandType = commandSplit[0]; //Set the command type
+                toReturn = new NetworkData(commandType);
+                if (commandSplit.length >= 2) { //If there are args
+                    String[] argsSplit = commandSplit[1].split(","); //Split up each argument group
+                    for (String s : argsSplit) {
+                        String[] argSplit = s.split(":"); //Break each arg into key and value
+                        if (argSplit.length >= 2) { //If this is a valid arg
+                            toReturn.putElement(argSplit[0], argSplit[1]); //Put the element into the map
+                        }
                     }
                 }
+            } else { //There is no data
+                toReturn = new NetworkData("INVALID"); //Mark the data to return as "INVALID" (there is no "invalid" state, all data MUST be initialized)
             }
-        } else { //There is no data
-            toReturn = new NetworkData("INVALID"); //Mark the data to return as "INVALID" (there is no "invalid" state, all data MUST be initialized)
+        } else {
+            toReturn = new NetworkData("TIMEOUT"); //Mark the data as timed out
         }
         return toReturn;
     }

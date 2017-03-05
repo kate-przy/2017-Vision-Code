@@ -14,7 +14,7 @@ import java.io.IOException;
  */
 public class Eyes {
     public static void main(String[] args) {
-        String address = "127.0.0.1";
+        String address = "10.4.1.17";
         int port = 5802;
 
         if (args.length == 1) { //We have a custom address

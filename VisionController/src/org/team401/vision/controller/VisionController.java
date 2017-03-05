@@ -24,6 +24,7 @@ public class VisionController extends Thread {
     public void run() {
         ZMQ.Context context = ZMQ.context(1);
         ZMQ.Socket socket = context.socket(ZMQ.REQ); //Create a socket to communicate with vision
+        socket.setReceiveTimeOut(3000);
         socket.connect("tcp://" + address + ":" + port);
 
         NetworkJob latestJob;
