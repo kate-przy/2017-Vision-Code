@@ -9,8 +9,8 @@
 
 struct Configuration {
 
-    std::string hash();
-    void writeToFile(std::string fileName);
+    std::string hash(bool fileMode = false);
+    void writeToFile(std::string fileName, bool moveOldFile = true);
 
     int goalProcDeviceNumber;
     int gearProcDeviceNumber;

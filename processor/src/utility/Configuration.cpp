@@ -4,107 +4,133 @@
 
 #include "Configuration.hpp"
 #include <boost/algorithm/string.hpp>
+#include <fstream>
+#include <iostream>
 
-std::string Configuration::hash() {
-    return
-    "CONFIG#"
-    + ("goalProcDeviceNumber:" + std::to_string(goalProcDeviceNumber)) + ","
-    + ("gearProcDeviceNumber:" + std::to_string(gearProcDeviceNumber)) + ","
-    + ("useGoalCamera:" + std::to_string(useGoalCamera)) + ","
-    + ("useGearCamera:" + std::to_string(useGearCamera)) + ","
-    + ("goalProcFOV:" + std::to_string(goalProcFOV)) + ","
-    + ("gearProcFOV:" + std::to_string(gearProcFOV)) + ","
-    + ("goalProcFocalLength:" + std::to_string(goalProcFocalLength)) + ","
-    + ("gearProcFocalLength:" + std::to_string(gearProcFocalLength)) + ","
-    + ("streamDeviceNumber:" + std::to_string(streamDeviceNumber)) + ","
-    + ("networkBasePort:" + std::to_string(networkBasePort)) + ","
-    + ("showDebugWindows:" + std::to_string(showDebugWindows)) + ","
-    + ("showDebugText:" + std::to_string(showDebugText)) + ","
-    + ("runDebugFunctions:" + std::to_string(runDebugFunctions)) + ","
-    + ("streamCompression:" + std::to_string(streamCompression)) + ","
-    + ("goalProcHLower:" + std::to_string(goalProcHLower)) + ","
-    + ("goalProcSLower:" + std::to_string(goalProcSLower)) + ","
-    + ("goalProcVLower:" + std::to_string(goalProcVLower)) + ","
-    + ("goalProcHUpper:" + std::to_string(goalProcHUpper)) + ","
-    + ("goalProcSUpper:" + std::to_string(goalProcSUpper)) + ","
-    + ("goalProcVUpper:" + std::to_string(goalProcVUpper)) + ","
-    + ("gearProcHLower:" + std::to_string(gearProcHLower)) + ","
-    + ("gearProcSLower:" + std::to_string(gearProcSLower)) + ","
-    + ("gearProcVLower:" + std::to_string(gearProcVLower)) + ","
-    + ("gearProcHUpper:" + std::to_string(gearProcHUpper)) + ","
-    + ("gearProcSUpper:" + std::to_string(gearProcSUpper)) + ","
-    + ("gearProcVUpper:" + std::to_string(gearProcVUpper)) + ","
-    + ("goalMinArea:" + std::to_string(goalMinArea)) + ","
-    + ("goalMinPerimeter:" + std::to_string(goalMinPerimeter)) + ","
-    + ("goalMinWidth:" + std::to_string(goalMinWidth)) + ","
-    + ("goalMaxWidth:" + std::to_string(goalMaxWidth)) + ","
-    + ("goalMinHeight:" + std::to_string(goalMinHeight)) + ","
-    + ("goalMaxHeight:" + std::to_string(goalMaxHeight)) + ","
-    + ("goalMinSolidity:" + std::to_string(goalMinSolidity)) + ","
-    + ("goalMaxSolidity:" + std::to_string(goalMaxSolidity)) + ","
-    + ("goalMinVertices:" + std::to_string(goalMinVertices)) + ","
-    + ("goalMaxVertices:" + std::to_string(goalMaxVertices)) + ","
-    + ("goalMinRatio:" + std::to_string(goalMinRatio)) + ","
-    + ("goalMaxRatio:" + std::to_string(goalMaxRatio)) + ","
-    + ("gearMinArea:" + std::to_string(gearMinArea)) + ","
-    + ("gearMinPerimeter:" + std::to_string(gearMinPerimeter)) + ","
-    + ("gearMinWidth:" + std::to_string(gearMinWidth)) + ","
-    + ("gearMaxWidth:" + std::to_string(gearMaxWidth)) + ","
-    + ("gearMinHeight:" + std::to_string(gearMinHeight)) + ","
-    + ("gearMaxHeight:" + std::to_string(gearMaxHeight)) + ","
-    + ("gearMinSolidity:" + std::to_string(gearMinSolidity)) + ","
-    + ("gearMaxSolidity:" + std::to_string(gearMaxSolidity)) + ","
-    + ("gearMinVertices:" + std::to_string(gearMinVertices)) + ","
-    + ("gearMaxVertices:" + std::to_string(gearMaxVertices)) + ","
-    + ("gearMinRatio:" + std::to_string(gearMinRatio)) + ","
-    + ("gearMaxRatio:" + std::to_string(gearMaxRatio)) + ","
-    + ("goalProcCameraBrightness:" + std::to_string(goalProcCameraBrightness)) + ","
-    + ("goalProcCameraContrast:" + std::to_string(goalProcCameraContrast)) + ","
-    + ("goalProcCameraSaturation:" + std::to_string(goalProcCameraSaturation)) + ","
-    + ("goalProcCameraHue:" + std::to_string(goalProcCameraHue)) + ","
-    + ("goalProcCameraAutoWB:" + std::to_string(goalProcCameraAutoWB)) + ","
-    + ("goalProcCameraExposure:" + std::to_string(goalProcCameraExposure)) + ","
-    + ("goalProcCameraAutoGain:" + std::to_string(goalProcCameraAutoGain)) + ","
-    + ("goalProcCameraGain:" + std::to_string(goalProcCameraGain)) + ","
-    + ("goalProcCameraVFlip:" + std::to_string(goalProcCameraVFlip)) + ","
-    + ("goalProcCameraHFlip:" + std::to_string(goalProcCameraHFlip)) + ","
-    + ("goalProcCameraManualExposure:" + std::to_string(goalProcCameraManualExposure)) + ","
-    + ("gearProcCameraBrightness:" + std::to_string(gearProcCameraBrightness)) + ","
-    + ("gearProcCameraContrast:" + std::to_string(gearProcCameraContrast)) + ","
-    + ("gearProcCameraSaturation:" + std::to_string(gearProcCameraSaturation)) + ","
-    + ("gearProcCameraHue:" + std::to_string(gearProcCameraHue)) + ","
-    + ("gearProcCameraAutoWB:" + std::to_string(gearProcCameraAutoWB)) + ","
-    + ("gearProcCameraExposure:" + std::to_string(gearProcCameraExposure)) + ","
-    + ("gearProcCameraAutoGain:" + std::to_string(gearProcCameraAutoGain)) + ","
-    + ("gearProcCameraGain:" + std::to_string(gearProcCameraGain)) + ","
-    + ("gearProcCameraVFlip:" + std::to_string(gearProcCameraVFlip)) + ","
-    + ("gearProcCameraHFlip:" + std::to_string(gearProcCameraHFlip)) + ","
-    + ("gearProcCameraManualExposure:" + std::to_string(gearProcCameraManualExposure)) + ","
-    + ("goalStreamCameraBrightness:" + std::to_string(goalStreamCameraBrightness)) + ","
-    + ("goalStreamCameraContrast:" + std::to_string(goalStreamCameraContrast)) + ","
-    + ("goalStreamCameraSaturation:" + std::to_string(goalStreamCameraSaturation)) + ","
-    + ("goalStreamCameraHue:" + std::to_string(goalStreamCameraHue)) + ","
-    + ("goalStreamCameraAutoWB:" + std::to_string(goalStreamCameraAutoWB)) + ","
-    + ("goalStreamCameraExposure:" + std::to_string(goalStreamCameraExposure)) + ","
-    + ("goalStreamCameraAutoGain:" + std::to_string(goalStreamCameraAutoGain)) + ","
-    + ("goalStreamCameraGain:" + std::to_string(goalStreamCameraGain)) + ","
-    + ("goalStreamCameraVFlip:" + std::to_string(goalStreamCameraVFlip)) + ","
-    + ("goalStreamCameraHFlip:" + std::to_string(goalStreamCameraHFlip)) + ","
-    + ("goalStreamCameraManualExposure:" + std::to_string(goalStreamCameraManualExposure)) + ","
-    + ("gearStreamCameraBrightness:" + std::to_string(gearStreamCameraBrightness)) + ","
-    + ("gearStreamCameraContrast:" + std::to_string(gearStreamCameraContrast)) + ","
-    + ("gearStreamCameraSaturation:" + std::to_string(gearStreamCameraSaturation)) + ","
-    + ("gearStreamCameraHue:" + std::to_string(gearStreamCameraHue)) + ","
-    + ("gearStreamCameraAutoWB:" + std::to_string(gearStreamCameraAutoWB)) + ","
-    + ("gearStreamCameraExposure:" + std::to_string(gearStreamCameraExposure)) + ","
-    + ("gearStreamCameraAutoGain:" + std::to_string(gearStreamCameraAutoGain)) + ","
-    + ("gearStreamCameraGain:" + std::to_string(gearStreamCameraGain)) + ","
-    + ("gearStreamCameraVFlip:" + std::to_string(gearStreamCameraVFlip)) + ","
-    + ("gearStreamCameraHFlip:" + std::to_string(gearStreamCameraHFlip)) + ","
-    + ("gearStreamCameraManualExposure:" + std::to_string(gearStreamCameraManualExposure))
+std::string Configuration::hash(bool fileMode) {
+    std::string endLine;
+    std::string delimiter;
+    
+    std::string toReturn;
+    
+    if (fileMode) {
+        endLine = "\n";
+        delimiter = "=";
+        toReturn  = "";
+    } else {
+        endLine = ",";
+        delimiter = ":";
+        toReturn = "CONFIG#";
+    }
+    
+    toReturn = toReturn
+    + ("goalProcDeviceNumber" + delimiter + std::to_string(goalProcDeviceNumber)) + endLine
+    + ("gearProcDeviceNumber" + delimiter + std::to_string(gearProcDeviceNumber)) + endLine
+    + ("useGoalCamera" + delimiter + std::to_string(useGoalCamera)) + endLine
+    + ("useGearCamera" + delimiter + std::to_string(useGearCamera)) + endLine
+    + ("goalProcFOV" + delimiter + std::to_string(goalProcFOV)) + endLine
+    + ("gearProcFOV" + delimiter + std::to_string(gearProcFOV)) + endLine
+    + ("goalProcFocalLength" + delimiter + std::to_string(goalProcFocalLength)) + endLine
+    + ("gearProcFocalLength" + delimiter + std::to_string(gearProcFocalLength)) + endLine
+    + ("streamDeviceNumber" + delimiter + std::to_string(streamDeviceNumber)) + endLine
+    + ("networkBasePort" + delimiter + std::to_string(networkBasePort)) + endLine
+    + ("showDebugWindows" + delimiter + std::to_string(showDebugWindows)) + endLine
+    + ("showDebugText" + delimiter + std::to_string(showDebugText)) + endLine
+    + ("runDebugFunctions" + delimiter + std::to_string(runDebugFunctions)) + endLine
+    + ("streamCompression" + delimiter + std::to_string(streamCompression)) + endLine
+    + ("goalProcHLower" + delimiter + std::to_string(goalProcHLower)) + endLine
+    + ("goalProcSLower" + delimiter + std::to_string(goalProcSLower)) + endLine
+    + ("goalProcVLower" + delimiter + std::to_string(goalProcVLower)) + endLine
+    + ("goalProcHUpper" + delimiter + std::to_string(goalProcHUpper)) + endLine
+    + ("goalProcSUpper" + delimiter + std::to_string(goalProcSUpper)) + endLine
+    + ("goalProcVUpper" + delimiter + std::to_string(goalProcVUpper)) + endLine
+    + ("gearProcHLower" + delimiter + std::to_string(gearProcHLower)) + endLine
+    + ("gearProcSLower" + delimiter + std::to_string(gearProcSLower)) + endLine
+    + ("gearProcVLower" + delimiter + std::to_string(gearProcVLower)) + endLine
+    + ("gearProcHUpper" + delimiter + std::to_string(gearProcHUpper)) + endLine
+    + ("gearProcSUpper" + delimiter + std::to_string(gearProcSUpper)) + endLine
+    + ("gearProcVUpper" + delimiter + std::to_string(gearProcVUpper)) + endLine
+    + ("goalMinArea" + delimiter + std::to_string(goalMinArea)) + endLine
+    + ("goalMinPerimeter" + delimiter + std::to_string(goalMinPerimeter)) + endLine
+    + ("goalMinWidth" + delimiter + std::to_string(goalMinWidth)) + endLine
+    + ("goalMaxWidth" + delimiter + std::to_string(goalMaxWidth)) + endLine
+    + ("goalMinHeight" + delimiter + std::to_string(goalMinHeight)) + endLine
+    + ("goalMaxHeight" + delimiter + std::to_string(goalMaxHeight)) + endLine
+    + ("goalMinSolidity" + delimiter + std::to_string(goalMinSolidity)) + endLine
+    + ("goalMaxSolidity" + delimiter + std::to_string(goalMaxSolidity)) + endLine
+    + ("goalMinVertices" + delimiter + std::to_string(goalMinVertices)) + endLine
+    + ("goalMaxVertices" + delimiter + std::to_string(goalMaxVertices)) + endLine
+    + ("goalMinRatio" + delimiter + std::to_string(goalMinRatio)) + endLine
+    + ("goalMaxRatio" + delimiter + std::to_string(goalMaxRatio)) + endLine
+    + ("gearMinArea" + delimiter + std::to_string(gearMinArea)) + endLine
+    + ("gearMinPerimeter" + delimiter + std::to_string(gearMinPerimeter)) + endLine
+    + ("gearMinWidth" + delimiter + std::to_string(gearMinWidth)) + endLine
+    + ("gearMaxWidth" + delimiter + std::to_string(gearMaxWidth)) + endLine
+    + ("gearMinHeight" + delimiter + std::to_string(gearMinHeight)) + endLine
+    + ("gearMaxHeight" + delimiter + std::to_string(gearMaxHeight)) + endLine
+    + ("gearMinSolidity" + delimiter + std::to_string(gearMinSolidity)) + endLine
+    + ("gearMaxSolidity" + delimiter + std::to_string(gearMaxSolidity)) + endLine
+    + ("gearMinVertices" + delimiter + std::to_string(gearMinVertices)) + endLine
+    + ("gearMaxVertices" + delimiter + std::to_string(gearMaxVertices)) + endLine
+    + ("gearMinRatio" + delimiter + std::to_string(gearMinRatio)) + endLine
+    + ("gearMaxRatio" + delimiter + std::to_string(gearMaxRatio)) + endLine
+    + ("goalProcCameraBrightness" + delimiter + std::to_string(goalProcCameraBrightness)) + endLine
+    + ("goalProcCameraContrast" + delimiter + std::to_string(goalProcCameraContrast)) + endLine
+    + ("goalProcCameraSaturation" + delimiter + std::to_string(goalProcCameraSaturation)) + endLine
+    + ("goalProcCameraHue" + delimiter + std::to_string(goalProcCameraHue)) + endLine
+    + ("goalProcCameraAutoWB" + delimiter + std::to_string(goalProcCameraAutoWB)) + endLine
+    + ("goalProcCameraExposure" + delimiter + std::to_string(goalProcCameraExposure)) + endLine
+    + ("goalProcCameraAutoGain" + delimiter + std::to_string(goalProcCameraAutoGain)) + endLine
+    + ("goalProcCameraGain" + delimiter + std::to_string(goalProcCameraGain)) + endLine
+    + ("goalProcCameraVFlip" + delimiter + std::to_string(goalProcCameraVFlip)) + endLine
+    + ("goalProcCameraHFlip" + delimiter + std::to_string(goalProcCameraHFlip)) + endLine
+    + ("goalProcCameraManualExposure" + delimiter + std::to_string(goalProcCameraManualExposure)) + endLine
+    + ("gearProcCameraBrightness" + delimiter + std::to_string(gearProcCameraBrightness)) + endLine
+    + ("gearProcCameraContrast" + delimiter + std::to_string(gearProcCameraContrast)) + endLine
+    + ("gearProcCameraSaturation" + delimiter + std::to_string(gearProcCameraSaturation)) + endLine
+    + ("gearProcCameraHue" + delimiter + std::to_string(gearProcCameraHue)) + endLine
+    + ("gearProcCameraAutoWB" + delimiter + std::to_string(gearProcCameraAutoWB)) + endLine
+    + ("gearProcCameraExposure" + delimiter + std::to_string(gearProcCameraExposure)) + endLine
+    + ("gearProcCameraAutoGain" + delimiter + std::to_string(gearProcCameraAutoGain)) + endLine
+    + ("gearProcCameraGain" + delimiter + std::to_string(gearProcCameraGain)) + endLine
+    + ("gearProcCameraVFlip" + delimiter + std::to_string(gearProcCameraVFlip)) + endLine
+    + ("gearProcCameraHFlip" + delimiter + std::to_string(gearProcCameraHFlip)) + endLine
+    + ("gearProcCameraManualExposure" + delimiter + std::to_string(gearProcCameraManualExposure)) + endLine
+    + ("goalStreamCameraBrightness" + delimiter + std::to_string(goalStreamCameraBrightness)) + endLine
+    + ("goalStreamCameraContrast" + delimiter + std::to_string(goalStreamCameraContrast)) + endLine
+    + ("goalStreamCameraSaturation" + delimiter + std::to_string(goalStreamCameraSaturation)) + endLine
+    + ("goalStreamCameraHue" + delimiter + std::to_string(goalStreamCameraHue)) + endLine
+    + ("goalStreamCameraAutoWB" + delimiter + std::to_string(goalStreamCameraAutoWB)) + endLine
+    + ("goalStreamCameraExposure" + delimiter + std::to_string(goalStreamCameraExposure)) + endLine
+    + ("goalStreamCameraAutoGain" + delimiter + std::to_string(goalStreamCameraAutoGain)) + endLine
+    + ("goalStreamCameraGain" + delimiter + std::to_string(goalStreamCameraGain)) + endLine
+    + ("goalStreamCameraVFlip" + delimiter + std::to_string(goalStreamCameraVFlip)) + endLine
+    + ("goalStreamCameraHFlip" + delimiter + std::to_string(goalStreamCameraHFlip)) + endLine
+    + ("goalStreamCameraManualExposure" + delimiter + std::to_string(goalStreamCameraManualExposure)) + endLine
+    + ("gearStreamCameraBrightness" + delimiter + std::to_string(gearStreamCameraBrightness)) + endLine
+    + ("gearStreamCameraContrast" + delimiter + std::to_string(gearStreamCameraContrast)) + endLine
+    + ("gearStreamCameraSaturation" + delimiter + std::to_string(gearStreamCameraSaturation)) + endLine
+    + ("gearStreamCameraHue" + delimiter + std::to_string(gearStreamCameraHue)) + endLine
+    + ("gearStreamCameraAutoWB" + delimiter + std::to_string(gearStreamCameraAutoWB)) + endLine
+    + ("gearStreamCameraExposure" + delimiter + std::to_string(gearStreamCameraExposure)) + endLine
+    + ("gearStreamCameraAutoGain" + delimiter + std::to_string(gearStreamCameraAutoGain)) + endLine
+    + ("gearStreamCameraGain" + delimiter + std::to_string(gearStreamCameraGain)) + endLine
+    + ("gearStreamCameraVFlip" + delimiter + std::to_string(gearStreamCameraVFlip)) + endLine
+    + ("gearStreamCameraHFlip" + delimiter + std::to_string(gearStreamCameraHFlip)) + endLine
+    + ("gearStreamCameraManualExposure" + delimiter + std::to_string(gearStreamCameraManualExposure))
     ;
+
+    return toReturn;
 }
 
-void Configuration::writeToFile(std::string fileName) {
-    std::string currentConfig = hash();
+void Configuration::writeToFile(std::string fileName, bool moveOldFile) {
+    if (moveOldFile) { //If we should move the old file
+        std::string oldFileName = fileName + ".old";
+        std::rename(fileName.c_str(), oldFileName.c_str()); //Rename the old file to "[name].old"
+    }
+
+    std::ofstream newFile;
+    newFile.open(fileName); //Create the new file
+    newFile << hash(true); //Write the data to the file
+    newFile.close(); //Close the file
 }

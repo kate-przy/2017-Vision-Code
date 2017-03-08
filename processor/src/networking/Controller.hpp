@@ -34,11 +34,13 @@ private:
         MODE_GEAR_STREAM,
         MODE_STREAMER_OFF,
         MODE_STREAMER_GOAL,
-        MODE_STREAMER_GEAR
+        MODE_STREAMER_GEAR,
+        ACTION_WRITE_CONFIG
 
     };
 
     std::map<std::string, Command> commandMapping = {
+            std::make_pair("INIT", INIT),
             std::make_pair("SETTINGS_GOAL_PROC_CAMERA", SETTINGS_GOAL_PROC_CAMERA),
             std::make_pair("SETTINGS_GEAR_PROC_CAMERA", SETTINGS_GEAR_PROC_CAMERA),
             std::make_pair("SETTINGS_GOAL_STREAM_CAMERA", SETTINGS_GOAL_STREAM_CAMERA),
@@ -52,7 +54,8 @@ private:
             std::make_pair("MODE_GEAR_STREAM", MODE_GEAR_STREAM),
             std::make_pair("MODE_STREAMER_OFF", MODE_STREAMER_OFF),
             std::make_pair("MODE_STREAMER_GOAL", MODE_STREAMER_GOAL),
-            std::make_pair("MODE_STREAMER_GEAR", MODE_STREAMER_GEAR)
+            std::make_pair("MODE_STREAMER_GEAR", MODE_STREAMER_GEAR),
+            std::make_pair("ACTION_WRITE_CONFIG", ACTION_WRITE_CONFIG)
     };
 
     enum CameraMode {

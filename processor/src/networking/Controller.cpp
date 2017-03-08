@@ -131,7 +131,6 @@ void Controller::react(ParsedCommand command) {
         if (command.valid) { //If the given command is valid
             switch (command.command) { //Switch on the command
                 case INIT:
-                    Log::d(ld, "Got INIT.  This may indicate an invalid command!");
                     break;
                 case SETTINGS_GOAL_PROC_CAMERA:
                     storedSettings.goalProcCameraBrightness = boost::lexical_cast<int>(command.args["goalProcCameraBrightness"]);
@@ -274,6 +273,9 @@ void Controller::react(ParsedCommand command) {
                     break;
                 case MODE_STREAMER_GEAR:
                     streamer->setMode(Streamer::StreamType::GEAR);
+                    break;
+                case ACTION_WRITE_CONFIG:
+                    storedSettings.writeToFile("config.txt"); //Write the config out to the file
                     break;
 
             }
