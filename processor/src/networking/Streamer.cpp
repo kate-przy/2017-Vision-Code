@@ -15,12 +15,12 @@
  * @param provider_ The MatProvider to grab frames from
  */
 
-Streamer::Streamer(int port_, MatProvider *goalProvider_, MatProvider *gearProvider_) {
+Streamer::Streamer(int port_, MatProvider *goalProvider_, MatProvider *gearProvider_, int initialCompression) {
     port = port_;
     goalProvider = goalProvider_;
     gearProvider = gearProvider_;
     usable = true;
-    compression = 30;
+    compression = initialCompression;
     currentStreamType = GOAL;
 }
 

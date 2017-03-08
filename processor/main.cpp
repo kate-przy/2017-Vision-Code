@@ -64,8 +64,6 @@ int main(int argc, char *argv[]) {
     ConfigParser parser(vector<string>(argv+1, argv + argc)); //Initialize a configuration parser
     Configuration config = parser.getSettings(); //Get the settings from the config parser
 
-    config.writeToFile("config.txt");
-
     Debug::init(config); //Initialize the debug manager
 
 
@@ -92,7 +90,7 @@ int main(int argc, char *argv[]) {
     DataStreamer dataStreamer(config.networkBasePort + 1); //Creates a data streamer to send processing data to the RIO
     GoalProc goalProc(config, &goalProcProvider, &dataStreamer); //Creates a processor to be run in a thread that processes images and sends output to the dataStreamer
     GearProc gearProc(config, &gearProcProvider, &dataStreamer);
-    Streamer streamer(config.networkBasePort + 2, &goalProcProvider, &gearProcProvider);
+    Streamer streamer(config.networkBasePort + 2, &goalProcProvider, &gearProcProvider, config.streamCompression);
     Controller controller(config, &goalProcCamera, &gearProcCamera, &goalProc, &gearProc, &streamer, config.networkBasePort + 3);
 
     //THREADING START

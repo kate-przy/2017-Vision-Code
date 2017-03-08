@@ -17,7 +17,7 @@ public:
         GEAR = 2
     };
     Streamer();
-    Streamer(int port_, MatProvider *goalProvider_, MatProvider *gearProvider_);
+    Streamer(int port_, MatProvider *goalProvider_, MatProvider *gearProvider_, int initialCompression = 30);
     void setMode(int newMode);
     void setCompression(int compression_);
     int getCompression();
