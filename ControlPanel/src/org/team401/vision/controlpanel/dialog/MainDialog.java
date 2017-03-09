@@ -3,8 +3,6 @@ package org.team401.vision.controlpanel.dialog;
 import com.alee.extended.colorchooser.WebColorChooserField;
 import org.team401.vision.controller.NetworkData;
 import org.team401.vision.controller.VisionController;
-import org.team401.vision.controller.preset.CameraSettingsOperations;
-import org.team401.vision.controller.preset.StreamOperations;
 import org.team401.vision.controlpanel.dialog.component.LinkedControlGroup;
 
 import javax.swing.*;
@@ -115,20 +113,35 @@ public class MainDialog extends JDialog {
     private JCheckBox goalCameraStreamHFlipCheckbox;
     private JCheckBox goalCameraStreamManualExposureCheckbox;
     private JButton refreshButton;
+    private JTabbedPane gearCameraSelectorPane;
 
-    private LinkedControlGroup goalCameraBrightnessGroup;
-    private LinkedControlGroup goalCameraContrastGroup;
-    private LinkedControlGroup goalCameraSaturationGroup;
-    private LinkedControlGroup goalCameraHueGroup;
-    private LinkedControlGroup goalCameraExposureGroup;
-    private LinkedControlGroup goalCameraGainGroup;
+    private LinkedControlGroup goalCameraProcBrightnessGroup;
+    private LinkedControlGroup goalCameraProcContrastGroup;
+    private LinkedControlGroup goalCameraProcSaturationGroup;
+    private LinkedControlGroup goalCameraProcHueGroup;
+    private LinkedControlGroup goalCameraProcExposureGroup;
+    private LinkedControlGroup goalCameraProcGainGroup;
 
-    private LinkedControlGroup gearCameraBrightnessGroup;
-    private LinkedControlGroup gearCameraContrastGroup;
-    private LinkedControlGroup gearCameraSaturationGroup;
-    private LinkedControlGroup gearCameraHueGroup;
-    private LinkedControlGroup gearCameraExposureGroup;
-    private LinkedControlGroup gearCameraGainGroup;
+    private LinkedControlGroup gearCameraProcBrightnessGroup;
+    private LinkedControlGroup gearCameraProcContrastGroup;
+    private LinkedControlGroup gearCameraProcSaturationGroup;
+    private LinkedControlGroup gearCameraProcHueGroup;
+    private LinkedControlGroup gearCameraProcExposureGroup;
+    private LinkedControlGroup gearCameraProcGainGroup;
+
+    private LinkedControlGroup goalCameraStreamBrightnessGroup;
+    private LinkedControlGroup goalCameraStreamContrastGroup;
+    private LinkedControlGroup goalCameraStreamSaturationGroup;
+    private LinkedControlGroup goalCameraStreamHueGroup;
+    private LinkedControlGroup goalCameraStreamExposureGroup;
+    private LinkedControlGroup goalCameraStreamGainGroup;
+
+    private LinkedControlGroup gearCameraStreamBrightnessGroup;
+    private LinkedControlGroup gearCameraStreamContrastGroup;
+    private LinkedControlGroup gearCameraStreamSaturationGroup;
+    private LinkedControlGroup gearCameraStreamHueGroup;
+    private LinkedControlGroup gearCameraStreamExposureGroup;
+    private LinkedControlGroup gearCameraStreamGainGroup;
 
     private LinkedControlGroup streamCompressionGroup;
 
@@ -152,31 +165,40 @@ public class MainDialog extends JDialog {
         });
 
         //SET UP LINKED CONTROLS
-        goalCameraBrightnessGroup = new LinkedControlGroup(goalCameraProcBrightnessSlider, goalCameraProcBrightnessSpinner, 0, 255, 0);
-        goalCameraContrastGroup = new LinkedControlGroup(goalCameraProcContrastSlider, goalCameraProcContrastSpinner, 0, 255, 0);
-        goalCameraSaturationGroup = new LinkedControlGroup(goalCameraProcSaturationSlider, goalCameraProcSaturationSpinner, 0, 255, 0);
-        goalCameraHueGroup = new LinkedControlGroup(goalCameraProcHueSlider, goalCameraProcHueSpinner, 0, 255, 0);
-        goalCameraExposureGroup = new LinkedControlGroup(goalCameraProcExposureSlider, goalCameraProcExposureSpinner, 0, 255, 0);
-        goalCameraGainGroup = new LinkedControlGroup(goalCameraProcGainSlider, goalCameraProcGainSpinner, 0, 255, 0);
+        goalCameraProcBrightnessGroup = new LinkedControlGroup(goalCameraProcBrightnessSlider, goalCameraProcBrightnessSpinner, 0, 255, 0);
+        goalCameraProcContrastGroup = new LinkedControlGroup(goalCameraProcContrastSlider, goalCameraProcContrastSpinner, 0, 255, 0);
+        goalCameraProcSaturationGroup = new LinkedControlGroup(goalCameraProcSaturationSlider, goalCameraProcSaturationSpinner, 0, 255, 0);
+        goalCameraProcHueGroup = new LinkedControlGroup(goalCameraProcHueSlider, goalCameraProcHueSpinner, 0, 255, 0);
+        goalCameraProcExposureGroup = new LinkedControlGroup(goalCameraProcExposureSlider, goalCameraProcExposureSpinner, 0, 255, 0);
+        goalCameraProcGainGroup = new LinkedControlGroup(goalCameraProcGainSlider, goalCameraProcGainSpinner, 0, 255, 0);
 
-        gearCameraBrightnessGroup = new LinkedControlGroup(gearCameraBrightnessSlider, gearCameraBrightnessSpinner, 0, 255, 0);
-        gearCameraContrastGroup = new LinkedControlGroup(gearCameraContrastSlider, gearCameraContrastSpinner, 0, 255, 0);
-        gearCameraSaturationGroup = new LinkedControlGroup(gearCameraSaturationSlider, gearCameraSaturationSpinner, 0, 255, 0);
-        gearCameraHueGroup = new LinkedControlGroup(gearCameraHueSlider, gearCameraHueSpinner, 0, 255, 0);
-        gearCameraExposureGroup = new LinkedControlGroup(gearCameraExposureSlider, gearCameraExposureSpinner, 0, 255, 0);
-        gearCameraGainGroup = new LinkedControlGroup(gearCameraGainSlider, gearCameraGainSpinner, 0, 255, 0);
+        goalCameraStreamBrightnessGroup = new LinkedControlGroup(goalCameraStreamBrightnessSlider, goalCameraStreamBrightnessSpinner, 0, 255, 0);
+        goalCameraStreamContrastGroup = new LinkedControlGroup(goalCameraStreamContrastSlider, goalCameraStreamContrastSpinner, 0, 255, 0);
+        goalCameraStreamSaturationGroup = new LinkedControlGroup(goalCameraStreamSaturationSlider, goalCameraStreamSaturationSpinner, 0, 255, 0);
+        goalCameraStreamHueGroup = new LinkedControlGroup(goalCameraStreamHueSlider, goalCameraStreamHueSpinner, 0, 255, 0);
+        goalCameraStreamExposureGroup = new LinkedControlGroup(goalCameraStreamExposureSlider, goalCameraStreamExposureSpinner, 0, 255, 0);
+        goalCameraStreamGainGroup = new LinkedControlGroup(goalCameraStreamGainSlider, goalCameraStreamGainSpinner, 0, 255, 0);
+
+        gearCameraProcBrightnessGroup = new LinkedControlGroup(gearCameraBrightnessSlider, gearCameraBrightnessSpinner, 0, 255, 0);
+        gearCameraProcContrastGroup = new LinkedControlGroup(gearCameraContrastSlider, gearCameraContrastSpinner, 0, 255, 0);
+        gearCameraProcSaturationGroup = new LinkedControlGroup(gearCameraSaturationSlider, gearCameraSaturationSpinner, 0, 255, 0);
+        gearCameraProcHueGroup = new LinkedControlGroup(gearCameraHueSlider, gearCameraHueSpinner, 0, 255, 0);
+        gearCameraProcExposureGroup = new LinkedControlGroup(gearCameraExposureSlider, gearCameraExposureSpinner, 0, 255, 0);
+        gearCameraProcGainGroup = new LinkedControlGroup(gearCameraGainSlider, gearCameraGainSpinner, 0, 255, 0);
 
         streamCompressionGroup = new LinkedControlGroup(streamCompressionSlider, streamCompressionSpinner, 0, 100, 0);
 
         //ACTION BINDINGS
         resetButton.addActionListener(this::onReset);
-
+        
+        /*
         goalCameraBrightnessGroup.addChangeListener(this::onGoalCameraUpdate);
         goalCameraContrastGroup.addChangeListener(this::onGoalCameraUpdate);
         goalCameraSaturationGroup.addChangeListener(this::onGoalCameraUpdate);
         goalCameraHueGroup.addChangeListener(this::onGoalCameraUpdate);
         goalCameraExposureGroup.addChangeListener(this::onGoalCameraUpdate);
         goalCameraGainGroup.addChangeListener(this::onGoalCameraUpdate);
+        */
         goalCameraProcAutoWBCheckbox.addActionListener(this::onGoalCameraUpdate);
         goalCameraProcAutoGainCheckbox.addActionListener(this::onGoalCameraUpdate);
         goalCameraProcVFlipCheckbox.addActionListener(this::onGoalCameraUpdate);
@@ -241,7 +263,7 @@ public class MainDialog extends JDialog {
     }
 
     /**
-     * Method called when any of the goal proc settings
+     * Method called when any of the goal proc settings are change
      * @param e
      */
     private void onGoalProcUpdate(EventObject e) {
@@ -257,7 +279,7 @@ public class MainDialog extends JDialog {
     }
 
     private void onStreamCompressionApply(EventObject e) {
-        StreamOperations.setCompression(controller, streamCompressionGroup.getValue()); //Update the compression on the server
+        controller.setQuality(streamCompressionGroup.getValue());
     }
 
     private void createUIComponents() {

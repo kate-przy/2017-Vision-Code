@@ -3,6 +3,7 @@ package org.team401.vision.controller;
 import org.zeromq.ZMQ;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 
 /**
@@ -13,7 +14,7 @@ public class VisionController extends Thread {
     private String address;
     private int port;
 
-    private ArrayList<NetworkJob> jobQueue = new ArrayList<>(); //A queue to hold the jobs
+    private Vector<NetworkJob> jobQueue = new Vector<>(); //A queue to hold the jobs
 
 
     public VisionController(String address, int port) {
