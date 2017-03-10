@@ -64,6 +64,12 @@ int main(int argc, char *argv[]) {
     ConfigParser parser(vector<string>(argv+1, argv + argc)); //Initialize a configuration parser
     Configuration config = parser.getSettings(); //Get the settings from the config parser
 
+    Configuration targetConfig = config; //Make a copy of the config for the target
+    config.showDebugWindows = false;
+    config.showDebugText = false;
+    config.runDebugFunctions = false;
+    targetConfig.writeToFile("targetConfig.txt", false); //Save the current config to a file to be copied to the target
+
     Debug::init(config); //Initialize the debug manager
 
 
