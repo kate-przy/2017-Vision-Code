@@ -29,11 +29,11 @@ public class VisionData {
         }
     }
 
-    private VisionDataType type = VisionDataType.INVALID;
-    private double distance = 0;
-    private double pitch = 0;
-    private double yaw = 0;
-    private Strafe strafe = null;
+    VisionDataType type = VisionDataType.INVALID;
+    double distance = 0;
+    double pitch = 0;
+    double yaw = 0;
+    Strafe strafe = null;
 
     private HashMap<String, String> rawData = new HashMap<>();
 

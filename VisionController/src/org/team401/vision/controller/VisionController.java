@@ -1,5 +1,6 @@
 package org.team401.vision.controller;
 
+import org.team401.vision.controller.event.*;
 import org.zeromq.ZMQ;
 
 import java.util.ArrayList;
@@ -14,12 +15,23 @@ public class VisionController extends Thread {
     private String address;
     private int port;
 
+    private EventHandlerGroup<OutgoingDataEventHandler> outgoingHandlerGroup = new EventHandlerGroup<>();
+    private EventHandlerGroup<IncomingDataEventHandler> incomingHandlerGroup = new EventHandlerGroup<>();
+
     private Vector<NetworkJob> jobQueue = new Vector<>(); //A queue to hold the jobs
 
 
     public VisionController(String address, int port) {
         this.address = address;
         this.port = port;
+    }
+
+    public void addOutgoingDataEventHandler(OutgoingDataEventHandler e) {
+        outgoingHandlerGroup.addEventHandler(e);
+    }
+
+    public void addIncomingDataEventHandler(IncomingDataEventHandler e) {
+        incomingHandlerGroup.addEventHandler(e);
     }
 
     @Override
@@ -35,10 +47,14 @@ public class VisionController extends Thread {
                 latestJob = jobQueue.remove(0); //Remove the latest job from the queue
                 try {
                     socket.send(latestJob.request.hash());
+                    final NetworkData finalRequest = latestJob.request;
+                    new Thread(() -> outgoingHandlerGroup.callGroup(new OutgoingDataEvent(finalRequest))).start(); //Announce the send
                 } catch (Exception e) {}
 
                 try {
                     latestJob.response = NetworkData.decode(socket.recvStr()); //Try to get the response
+                    final NetworkData finalResponse = latestJob.response;
+                    new Thread(() -> incomingHandlerGroup.callGroup(new IncomingDataEvent(finalResponse))).start(); //Announce the receive
                 } catch (Exception e) {
                     latestJob.response = new NetworkData("INVALID"); //Set to invalid if there was no response
                 }
@@ -163,6 +179,9 @@ public class VisionController extends Thread {
             case GEAR:
                 setActiveCamera(Camera.GOAL);
                 break;
+            case OFF: //If the streaming is off, this will turn it back on
+                setActiveCamera(Camera.GOAL);
+                break;
         }
     }
 
@@ -172,8 +191,8 @@ public class VisionController extends Thread {
      * @param quality The quality level to set, integer between 0 and 100
      * @return The updated config
      */
-    public NetworkData setQuality(int quality) {
-        return request(new NetworkData("SETTINGS_STREAM_COMPRESSION", new Pair("compression", quality)));
+    public void setQuality(int quality) {
+        asyncRequest(new NetworkData("SETTINGS_STREAM_COMPRESSION", new Pair("streamCompression", quality)));
     }
 
     //// END STREAM SETTINGS ////
@@ -215,7 +234,7 @@ public class VisionController extends Thread {
      * @param maxRatio The maximum ratio of the target
      * @return The updated config
      */
-    public NetworkData setProcSettings(Camera camera, int hLower, int sLower, int vLower, int hUpper, int sUpper, int vUpper,
+    public void setProcSettings(Camera camera, int hLower, int sLower, int vLower, int hUpper, int sUpper, int vUpper,
                                                   double minArea, double minPerimeter, double minWidth, double maxWidth,
                                                   double minHeight, double maxHeight, double minSolidity, double maxSolidity,
                                                   double minVertices, double maxVertices, double minRatio, double maxRatio) {
@@ -265,7 +284,7 @@ public class VisionController extends Thread {
                 request.putElement("gearMaxRatio", maxRatio);
                 break;
         }
-        return request(request); //Make the request
+        asyncRequest(request); //Make the request
     }
 
     //// END PROC SETTINGS ////
@@ -289,7 +308,7 @@ public class VisionController extends Thread {
      * @param manualExposure Should we use manual exposure?
      * @return The updated config
      */
-    public NetworkData setCameraSettings(Camera camera, CameraMode cameraMode, int brightness, int contrast, int saturation,
+    public void setCameraSettings(Camera camera, CameraMode cameraMode, int brightness, int contrast, int saturation,
                                          int hue, boolean autoWB, int exposure, boolean autoGain, int gain,
                                          boolean vFlip, boolean hFlip, boolean manualExposure) {
         NetworkData request = new NetworkData("INVALID");
@@ -359,7 +378,7 @@ public class VisionController extends Thread {
                 }
                 break;
         }
-        return request(request);
+        asyncRequest(request);
     }
 
     //// END CAMERA SETTINGS ////

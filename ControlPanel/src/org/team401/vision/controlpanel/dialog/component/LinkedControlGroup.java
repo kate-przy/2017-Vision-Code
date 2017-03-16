@@ -31,12 +31,12 @@ public class LinkedControlGroup {
 
     private void sliderUpdate(ChangeEvent e) {
         spinner.setValue(slider.getValue()); //Set the spinner to match the spinner
-        fireUpdate(); //Tell the listeners of this class that we updated
+        //fireUpdate(); //Tell the listeners of this class that we updated
     }
 
     private void spinnerUpdate(ChangeEvent e) {
         slider.setValue((int) spinner.getValue()); //Set the slider to match the spinner
-        //fireUpdate();
+        fireUpdate();
     }
 
     public void updateAll(int newValue) {
@@ -50,6 +50,10 @@ public class LinkedControlGroup {
 
     public int getValue() {
         return slider.getValue();
+    }
+
+    public void setValue(int value) {
+        slider.setValue(value);
     }
 
     private void fireUpdate() {

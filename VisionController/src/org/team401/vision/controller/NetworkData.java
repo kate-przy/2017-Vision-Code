@@ -59,7 +59,7 @@ public class NetworkData {
      * @param value The value to use
      */
     public void putElement(String key, Object value) {
-        map.put(key, value.toString());
+        map.put(key, Filter.filter(value));
     }
 
     /**

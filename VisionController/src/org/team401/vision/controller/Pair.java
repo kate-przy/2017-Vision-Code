@@ -9,7 +9,7 @@ public class Pair {
 
     public Pair(String key, Object value) {
         this.key = key;
-        this.value = value.toString();
+        this.value = Filter.filter(value);
     }
 
     public String getKey() {
