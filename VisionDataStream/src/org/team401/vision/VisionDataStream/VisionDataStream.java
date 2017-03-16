@@ -66,4 +66,12 @@ public class VisionDataStream extends Thread {
     public double getLatestGearYaw() {
         return currentGearData.yaw;
     }
+
+    public boolean isLatestGoalValid() {
+        return currentGoalData.isValid();
+    }
+
+    public boolean isLatestGearValid() {
+        return currentGearData.isValid();
+    }
 }
