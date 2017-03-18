@@ -47,6 +47,7 @@ public class VisionController extends Thread {
                 latestJob = jobQueue.remove(0); //Remove the latest job from the queue
                 try {
                     socket.send(latestJob.request.hash());
+                    System.out.println("REQUEST: " + latestJob.request.hash());
                     final NetworkData finalRequest = latestJob.request;
                     new Thread(() -> outgoingHandlerGroup.callGroup(new OutgoingDataEvent(finalRequest))).start(); //Announce the send
                 } catch (Exception e) {}

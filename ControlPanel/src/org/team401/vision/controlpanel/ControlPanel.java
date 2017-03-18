@@ -14,7 +14,7 @@ import java.io.ByteArrayInputStream;
  */
 public class ControlPanel {
     public static void main(String[] args) {
-        String address = "10.4.1.17";
+        String address = "127.0.0.1";
         int port = 5800;
 
         if (args.length == 1) { //We have a custom address
@@ -30,27 +30,12 @@ public class ControlPanel {
         controller.start(); //Start the controller
 
         WebLookAndFeel.install(); //Set up the WebLAF
-
         MainDialog mainDialog = new MainDialog(controller); //Set up the main dialog
 
         SwingUtilities.invokeLater(() -> {
             mainDialog.pack(); //Render the dialog
             mainDialog.setVisible(true); //Make the dialog visible
         });
-
-        ZMQ.Context context = ZMQ.context(1);
-        ZMQ.Socket imageStream = context.socket(ZMQ.SUB);
-        imageStream.subscribe("".getBytes());
-        imageStream.connect("tcp://" + address + ":" + (port + 2));
-
-        while (true) {
-            try {
-                mainDialog.updateImage(ImageIO.read(new ByteArrayInputStream(imageStream.recv())));
-                Thread.sleep(10);
-            } catch (Exception e) {
-                System.out.println("screw you");
-            }
-        }
 
     }
 }

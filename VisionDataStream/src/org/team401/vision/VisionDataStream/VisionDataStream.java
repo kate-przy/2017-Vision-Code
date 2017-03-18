@@ -25,7 +25,7 @@ public class VisionDataStream extends Thread {
         //currentData.set(new VisionData()); //Null init
         ZMQ.Context context = ZMQ.context(1);
         ZMQ.Socket socket = context.socket(ZMQ.SUB);
-        socket.setReceiveTimeOut(500); //Set a receive timeout so that the data is marked as invalid if we don't get anything
+        socket.setReceiveTimeOut(1000); //Set a receive timeout so that the data is marked as invalid if we don't get anything
         socket.subscribe("".getBytes());
         socket.connect("tcp://" + address + ":" + port);
         VisionData latestFromNetwork = null;

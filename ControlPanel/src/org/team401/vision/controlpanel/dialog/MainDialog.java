@@ -540,8 +540,8 @@ public class MainDialog extends JDialog {
         updateManager = new UpdateManager(controller, 500, goalCameraProcGroup, goalCameraStreamGroup,
                 gearCameraProcGroup, gearCameraStreamGroup, goalProcUpdateGroup, gearProcUpdateGroup, streamCompressionUpdateGroup);
 
-        updateManager.refreshComponents(); //Set the initial values
-        updateManager.start(); //Start the manager
+        //updateManager.refreshComponents(); //Set the initial values
+        //updateManager.start(); //Start the manager
 
 
         // call onCancel() when cross is clicked
@@ -573,14 +573,16 @@ public class MainDialog extends JDialog {
         });
         
         //STREAM BUTTONS
-        activeCameraOffButton.addActionListener((ActionEvent e) -> controller.setActiveCamera(VisionController.Camera.OFF));
-        activeCameraGoalButton.addActionListener((ActionEvent e) -> controller.setActiveCamera(VisionController.Camera.GOAL));
-        activeCameraGearButton.addActionListener((ActionEvent e) -> controller.setActiveCamera(VisionController.Camera.GEAR));
+        activeCameraOffButton.addActionListener((ActionEvent e) -> updateManager.setActiveCamera(VisionController.Camera.OFF));
+        activeCameraGoalButton.addActionListener((ActionEvent e) -> updateManager.setActiveCamera(VisionController.Camera.GOAL));
+        activeCameraGearButton.addActionListener((ActionEvent e) -> updateManager.setActiveCamera(VisionController.Camera.GEAR));
         
-        goalCameraProcModeButton.addActionListener((ActionEvent e) -> controller.setCameraMode(VisionController.Camera.GOAL, VisionController.CameraMode.PROCESSING));
-        goalCameraStreamModeButton.addActionListener((ActionEvent e) -> controller.setCameraMode(VisionController.Camera.GOAL, VisionController.CameraMode.STREAMING));
-        gearCameraProcModeButton.addActionListener((ActionEvent e) -> controller.setCameraMode(VisionController.Camera.GEAR, VisionController.CameraMode.PROCESSING));
-        gearCameraStreamModeButton.addActionListener((ActionEvent e) -> controller.setCameraMode(VisionController.Camera.GEAR, VisionController.CameraMode.STREAMING));
+        goalCameraProcModeButton.addActionListener((ActionEvent e) -> updateManager.setCameraMode(VisionController.Camera.GOAL, VisionController.CameraMode.PROCESSING));
+        goalCameraStreamModeButton.addActionListener((ActionEvent e) -> updateManager.setCameraMode(VisionController.Camera.GOAL, VisionController.CameraMode.STREAMING));
+        gearCameraProcModeButton.addActionListener((ActionEvent e) -> updateManager.setCameraMode(VisionController.Camera.GEAR, VisionController.CameraMode.PROCESSING));
+        gearCameraStreamModeButton.addActionListener((ActionEvent e) -> updateManager.setCameraMode(VisionController.Camera.GEAR, VisionController.CameraMode.STREAMING));
+
+        refreshButton.addActionListener((ActionEvent e) -> updateManager.refreshComponents());
 
         //SAVE
         saveButton.addActionListener((ActionEvent e) -> controller.asyncRequest(new NetworkData("ACTION_WRITE_CONFIG")));

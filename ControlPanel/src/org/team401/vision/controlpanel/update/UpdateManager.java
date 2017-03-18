@@ -1,5 +1,6 @@
 package org.team401.vision.controlpanel.update;
 
+import org.team401.vision.controller.NetworkData;
 import org.team401.vision.controller.VisionController;
 
 import java.util.List;
@@ -16,7 +17,8 @@ public class UpdateManager {
     private VisionController controller;
     private ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1);
     private UpdaterTask updaterTask;
-    
+    private ConnectionStateManager stateManager;
+
     private int interval;
     private List<UpdateGroup> updateGroupList = new Vector<>();
     
@@ -26,7 +28,14 @@ public class UpdateManager {
         for (UpdateGroup g : groups) {
             updateGroupList.add(g);
         }
-        updaterTask = new UpdaterTask(this.controller, updateGroupList);
+        updaterTask = new UpdaterTask(this, this.controller, updateGroupList);
+
+        stateManager = new ConnectionStateManager(false);
+        stateManager.update(this.controller);
+    }
+
+    public ConnectionStateManager getStateManager() {
+        return stateManager;
     }
 
     public void start() {
@@ -42,14 +51,14 @@ public class UpdateManager {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
-        } /*
-        while (!f.isDone()) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
-        */
+    }
+
+    public void setActiveCamera(VisionController.Camera newCamera) {
+        executor.submit(new CameraSwitchTask(controller, newCamera));
+    }
+
+    public void setCameraMode(VisionController.Camera camera, VisionController.CameraMode newMode) {
+        executor.submit(new CameraModeTask(controller, camera, newMode));
     }
 }

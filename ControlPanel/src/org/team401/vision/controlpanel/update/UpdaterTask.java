@@ -14,8 +14,10 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 class UpdaterTask implements Runnable {
     private List<UpdateGroup> groupList = new Vector<>();
     private VisionController controller;
+    private UpdateManager manager;
 
-    public UpdaterTask(VisionController controller, List<UpdateGroup> groups) {
+    public UpdaterTask(UpdateManager manager, VisionController controller, List<UpdateGroup> groups) {
+        this.manager = manager;
         this.controller = controller;
         for (UpdateGroup g : groups) {
             groupList.add(g);
