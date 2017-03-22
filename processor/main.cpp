@@ -56,7 +56,7 @@ char getch() {
  * @return Exit code
  */
 int main(int argc, char *argv[]) {
-    std::cerr << "lol pwnd" << std::endl; //From: Preston
+    std::string ld = "MAIN";
 
     //BASIC INIT
     Log::init(Log::Level::INFO, true); //Initialize the logger to record info and higher messages and use a file
@@ -64,14 +64,10 @@ int main(int argc, char *argv[]) {
     ConfigParser parser(vector<string>(argv+1, argv + argc)); //Initialize a configuration parser
     Configuration config = parser.getSettings(); //Get the settings from the config parser
 
-    Configuration targetConfig = config; //Make a copy of the config for the target
-    config.showDebugWindows = false;
-    config.showDebugText = false;
-    config.runDebugFunctions = false;
-    targetConfig.writeToFile("targetConfig.txt", false); //Save the current config to a file to be copied to the target
+    Log::i(ld, "Finished parsing config");
 
+    Log::setDoDebug(config.showDebugText);
     Debug::init(config); //Initialize the debug manager
-
 
     //THREADING INIT
     boost::thread_group providerGroup;   //Thread group for provider threads
@@ -79,7 +75,6 @@ int main(int argc, char *argv[]) {
     boost::thread_group processingGroup; //Thread group for processing threads
 
     //OBJECT INIT
-
     Camera goalProcCamera(config, Camera::CameraType::GOAL_PROCESSING); //Set up the processing camera from the config
     Camera gearProcCamera(config, Camera::CameraType::GEAR_PROCESSING);
     if (config.useGoalCamera) { //If we are using the goal camera
@@ -99,6 +94,8 @@ int main(int argc, char *argv[]) {
     Streamer streamer(config.networkBasePort + 2, &goalProcProvider, &gearProcProvider, config.streamCompression);
     Controller controller(config, &goalProcCamera, &gearProcCamera, &goalProc, &gearProc, &streamer, config.networkBasePort + 3);
 
+    Log::i(ld, "Initialization Complete!");
+
     //THREADING START
     providerGroup.create_thread(boost::bind(&MatProvider::run, &goalProcProvider)); //Start the thread for the processing matprovider
     providerGroup.create_thread(boost::bind(&MatProvider::run, &gearProcProvider));
@@ -106,11 +103,11 @@ int main(int argc, char *argv[]) {
     networkingGroup.create_thread(boost::bind(&DataStreamer::run, &dataStreamer)); //Start the thread for the network data streamer
     networkingGroup.create_thread(boost::bind(&Streamer::run, &streamer));
     networkingGroup.create_thread(boost::bind(&Controller::run, &controller));
-
     processingGroup.create_thread(boost::bind(&GoalProc::run, &goalProc)); //Start the main processing thread
     processingGroup.create_thread(boost::bind(&GearProc::run, &gearProc));
 
     //AT THIS POINT IT IS ASSUMED THAT ALL THREADS ARE STARTED OR IN THE PROCESS OF STARTING
+    Log::i(ld, "VISION STARTED, GOOD LUCK 401!!!");
 
     bool loop = true;
     int exitCode = 1;
@@ -123,6 +120,8 @@ int main(int argc, char *argv[]) {
         }
         boost::this_thread::sleep(boost::posix_time::milliseconds(10)); //Keep the processor happy
     }
+
+    Log::i(ld, "Stop signal recieved, exiting with code " + std::to_string(exitCode));
 
     //AT THIS POINT IT IS ASSUMED THAT ALL THREADS SHOULD BE SIGNALED TO STOP
 
@@ -142,6 +141,8 @@ int main(int argc, char *argv[]) {
     //Finally, tell all camera instances to close
     goalProcCamera.close();
     //gearProcCamera.close();
+
+    Log::i(ld, "All threads terminated, shutting down!");
 
     return exitCode; //Allow signaling to the loop script for auto restart
 

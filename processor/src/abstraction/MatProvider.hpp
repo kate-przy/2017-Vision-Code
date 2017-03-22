@@ -7,7 +7,7 @@
 #define PROJECT_MATPROVIDER_HPP
 
 #include <atomic>
-#include "opencv2/videoio/videoio.hpp"
+#include <opencv2/opencv.hpp>
 #include <string>
 #include <mutex>
 

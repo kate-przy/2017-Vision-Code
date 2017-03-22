@@ -8,6 +8,8 @@
 
 #include <boost/lockfree/queue.hpp>
 #include "StreamData.hpp"
+#include <atomic>
+#include <string>
 
 class DataStreamer {
 public:
@@ -17,6 +19,8 @@ public:
 private:
     int port; //The port to bind to (ZMQ requires single thread sockets, so the socket is created and connected in run()
     boost::lockfree::queue<StreamData> sendQueue; //The instance sensitive queue to hold incoming data
+    std::atomic<unsigned long> counter;
+    std::string ld = "DataStreamer";
 };
 
 

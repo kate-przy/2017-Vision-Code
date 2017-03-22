@@ -5,6 +5,7 @@
 
 #include <zhelpers.hpp>
 #include "DataStreamer.hpp"
+#include "../utility/Log.hpp"
 #include <boost/thread/thread.hpp>
 
 /**
@@ -14,6 +15,7 @@
  */
 DataStreamer::DataStreamer(int port_) : sendQueue(512) {
     port = port_;
+    counter = 0;
 }
 
 /**
@@ -22,6 +24,7 @@ DataStreamer::DataStreamer(int port_) : sendQueue(512) {
  */
 void DataStreamer::addToQueue(StreamData data) {
     sendQueue.push(data);
+    counter++;
 }
 
 /**
@@ -35,10 +38,16 @@ void DataStreamer::run() {
     socket.bind("tcp://*:" + std::to_string(port)); //Connect to the socket
     StreamData latestData; //Null object to hold the latest data from the queue
     while (!boost::this_thread::interruption_requested()) { //While this thread should run
-        while (sendQueue.pop(latestData)) { //Store the latest data from the queue into latestData
-            s_send(socket, latestData.hash()); //Send the latest data hashed
+        if (counter > 10) {
+            sendQueue.empty();
+            std::cout << "CLEARING!" << std::endl;
         }
-        boost::this_thread::sleep(boost::posix_time::milliseconds(10)); //Keep the CPU happy
+        while (sendQueue.pop(latestData)) { //Store the latest data from the queue into latestData
+            counter--;
+            s_send(socket, latestData.hash()); //Send the latest data hashed
+            Log::d(ld, "Sent Data: [" + latestData.hash() + "]");
+        }
+        boost::this_thread::sleep(boost::posix_time::milliseconds(1)); //Keep the CPU happy
     }
     socket.close(); //Close the socket and terminate the thread
 }

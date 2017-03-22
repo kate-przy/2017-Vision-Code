@@ -11,6 +11,8 @@ struct Configuration {
 
     std::string hash(bool fileMode = false);
     void writeToFile(std::string fileName, bool moveOldFile = true);
+    bool operator==(const Configuration& config);
+    bool operator!=(const Configuration& config);
 
     int goalProcDeviceNumber;
     int gearProcDeviceNumber;

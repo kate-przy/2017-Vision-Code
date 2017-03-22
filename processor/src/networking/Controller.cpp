@@ -3,7 +3,7 @@
 //
 
 #include "Controller.hpp"
-#include <zhelpers.hpp>
+#include "zhelpers.hpp"
 #include <boost/thread/thread.hpp>
 #include <linux/v4l2-controls.h>
 
@@ -63,32 +63,32 @@ Controller::ParsedCommand Controller::parseCommand(std::string input) {
 void Controller::setGoalCamera(CameraMode mode) {
     switch (mode) {
         case PROC:
+            goalCameraMode = PROC;
+            goalCamera->setProperty(V4L2_CID_EXPOSURE_AUTO, storedSettings.goalProcCameraManualExposure);
+            goalCamera->setProperty(V4L2_CID_AUTOGAIN, storedSettings.goalProcCameraAutoGain);
+            goalCamera->setProperty(V4L2_CID_AUTO_WHITE_BALANCE, storedSettings.goalProcCameraAutoWB);
             goalCamera->setProperty(V4L2_CID_BRIGHTNESS, storedSettings.goalProcCameraBrightness);
             goalCamera->setProperty(V4L2_CID_CONTRAST, storedSettings.goalProcCameraContrast);
             goalCamera->setProperty(V4L2_CID_SATURATION, storedSettings.goalProcCameraSaturation);
             goalCamera->setProperty(V4L2_CID_HUE, storedSettings.goalProcCameraHue);
-            goalCamera->setProperty(V4L2_CID_AUTO_WHITE_BALANCE, storedSettings.goalProcCameraAutoWB);
             goalCamera->setProperty(V4L2_CID_EXPOSURE, storedSettings.goalProcCameraExposure);
-            goalCamera->setProperty(V4L2_CID_AUTOGAIN, storedSettings.goalProcCameraAutoGain);
             goalCamera->setProperty(V4L2_CID_GAIN, storedSettings.goalProcCameraGain);
             goalCamera->setProperty(V4L2_CID_VFLIP, storedSettings.goalProcCameraVFlip);
             goalCamera->setProperty(V4L2_CID_HFLIP, storedSettings.goalProcCameraHFlip);
-            goalCamera->setProperty(V4L2_CID_EXPOSURE_AUTO, storedSettings.goalProcCameraManualExposure);
-            goalCameraMode = PROC;
             break;
         case STREAM:
+            goalCameraMode = STREAM;
+            goalCamera->setProperty(V4L2_CID_AUTOGAIN, storedSettings.goalStreamCameraAutoGain);
+            goalCamera->setProperty(V4L2_CID_AUTO_WHITE_BALANCE, storedSettings.goalStreamCameraAutoWB);
+            goalCamera->setProperty(V4L2_CID_EXPOSURE_AUTO, storedSettings.goalStreamCameraManualExposure);
             goalCamera->setProperty(V4L2_CID_BRIGHTNESS, storedSettings.goalStreamCameraBrightness);
             goalCamera->setProperty(V4L2_CID_CONTRAST, storedSettings.goalStreamCameraContrast);
             goalCamera->setProperty(V4L2_CID_SATURATION, storedSettings.goalStreamCameraSaturation);
             goalCamera->setProperty(V4L2_CID_HUE, storedSettings.goalStreamCameraHue);
-            goalCamera->setProperty(V4L2_CID_AUTO_WHITE_BALANCE, storedSettings.goalStreamCameraAutoWB);
             goalCamera->setProperty(V4L2_CID_EXPOSURE, storedSettings.goalStreamCameraExposure);
-            goalCamera->setProperty(V4L2_CID_AUTOGAIN, storedSettings.goalStreamCameraAutoGain);
             goalCamera->setProperty(V4L2_CID_GAIN, storedSettings.goalStreamCameraGain);
             goalCamera->setProperty(V4L2_CID_VFLIP, storedSettings.goalStreamCameraVFlip);
             goalCamera->setProperty(V4L2_CID_HFLIP, storedSettings.goalStreamCameraHFlip);
-            goalCamera->setProperty(V4L2_CID_EXPOSURE_AUTO, storedSettings.goalStreamCameraManualExposure);
-            goalCameraMode = STREAM;
             break;
     }
 }
@@ -96,31 +96,31 @@ void Controller::setGoalCamera(CameraMode mode) {
 void Controller::setGearCamera(CameraMode mode) {
     switch (mode) {
         case PROC:
+            gearCamera->setProperty(V4L2_CID_EXPOSURE_AUTO, storedSettings.gearProcCameraManualExposure);
+            gearCamera->setProperty(V4L2_CID_AUTO_WHITE_BALANCE, storedSettings.gearProcCameraAutoWB);
+            gearCamera->setProperty(V4L2_CID_AUTOGAIN, storedSettings.gearProcCameraAutoGain);
             gearCamera->setProperty(V4L2_CID_BRIGHTNESS, storedSettings.gearProcCameraBrightness);
             gearCamera->setProperty(V4L2_CID_CONTRAST, storedSettings.gearProcCameraContrast);
             gearCamera->setProperty(V4L2_CID_SATURATION, storedSettings.gearProcCameraSaturation);
             gearCamera->setProperty(V4L2_CID_HUE, storedSettings.gearProcCameraHue);
-            gearCamera->setProperty(V4L2_CID_AUTO_WHITE_BALANCE, storedSettings.gearProcCameraAutoWB);
-            gearCamera->setProperty(V4L2_CID_EXPOSURE, storedSettings.gearProcCameraExposure);
-            gearCamera->setProperty(V4L2_CID_AUTOGAIN, storedSettings.gearProcCameraAutoGain);
             gearCamera->setProperty(V4L2_CID_GAIN, storedSettings.gearProcCameraGain);
             gearCamera->setProperty(V4L2_CID_VFLIP, storedSettings.gearProcCameraVFlip);
             gearCamera->setProperty(V4L2_CID_HFLIP, storedSettings.gearProcCameraHFlip);
-            gearCamera->setProperty(V4L2_CID_EXPOSURE_AUTO, storedSettings.gearProcCameraManualExposure);
+            gearCamera->setProperty(V4L2_CID_EXPOSURE, storedSettings.gearProcCameraExposure);
             gearCameraMode = PROC;
             break;
         case STREAM:
+            gearCamera->setProperty(V4L2_CID_AUTO_WHITE_BALANCE, storedSettings.gearStreamCameraAutoWB);
+            gearCamera->setProperty(V4L2_CID_AUTOGAIN, storedSettings.gearStreamCameraAutoGain);
+            gearCamera->setProperty(V4L2_CID_EXPOSURE_AUTO, storedSettings.gearStreamCameraManualExposure);
             gearCamera->setProperty(V4L2_CID_BRIGHTNESS, storedSettings.gearStreamCameraBrightness);
             gearCamera->setProperty(V4L2_CID_CONTRAST, storedSettings.gearStreamCameraContrast);
             gearCamera->setProperty(V4L2_CID_SATURATION, storedSettings.gearStreamCameraSaturation);
             gearCamera->setProperty(V4L2_CID_HUE, storedSettings.gearStreamCameraHue);
-            gearCamera->setProperty(V4L2_CID_AUTO_WHITE_BALANCE, storedSettings.gearStreamCameraAutoWB);
-            gearCamera->setProperty(V4L2_CID_EXPOSURE, storedSettings.gearStreamCameraExposure);
-            gearCamera->setProperty(V4L2_CID_AUTOGAIN, storedSettings.gearStreamCameraAutoGain);
             gearCamera->setProperty(V4L2_CID_GAIN, storedSettings.gearStreamCameraGain);
             gearCamera->setProperty(V4L2_CID_VFLIP, storedSettings.gearStreamCameraVFlip);
             gearCamera->setProperty(V4L2_CID_HFLIP, storedSettings.gearStreamCameraHFlip);
-            gearCamera->setProperty(V4L2_CID_EXPOSURE_AUTO, storedSettings.gearStreamCameraManualExposure);
+            gearCamera->setProperty(V4L2_CID_EXPOSURE, storedSettings.gearStreamCameraExposure);
             gearCameraMode = STREAM;
             break;
     }
@@ -144,10 +144,6 @@ void Controller::react(ParsedCommand command) {
                     storedSettings.goalProcCameraVFlip = boost::lexical_cast<bool>(command.args["goalProcCameraVFlip"]);
                     storedSettings.goalProcCameraHFlip = boost::lexical_cast<bool>(command.args["goalProcCameraHFlip"]);
                     storedSettings.goalProcCameraManualExposure = boost::lexical_cast<bool>(command.args["goalProcCameraManualExposure"]);
-                    
-                    if (goalCameraMode == PROC) { //If the goal camera is already in proc mode
-                        setGoalCamera(PROC); //Update the settings
-                    }
                     break;
                 case SETTINGS_GEAR_PROC_CAMERA:
                     storedSettings.gearProcCameraBrightness = boost::lexical_cast<int>(command.args["gearProcCameraBrightness"]);
@@ -161,10 +157,6 @@ void Controller::react(ParsedCommand command) {
                     storedSettings.gearProcCameraVFlip = boost::lexical_cast<bool>(command.args["gearProcCameraVFlip"]);
                     storedSettings.gearProcCameraHFlip = boost::lexical_cast<bool>(command.args["gearProcCameraHFlip"]);
                     storedSettings.gearProcCameraManualExposure = boost::lexical_cast<bool>(command.args["gearProcCameraManualExposure"]);
-                    
-                    if (gearCameraMode == PROC) { //If the gear camera is already in proc mode
-                        setGearCamera(PROC); //Update the settings
-                    }
                     break;
                 case SETTINGS_GOAL_STREAM_CAMERA:
                     storedSettings.goalStreamCameraBrightness = boost::lexical_cast<int>(command.args["goalStreamCameraBrightness"]);
@@ -178,10 +170,6 @@ void Controller::react(ParsedCommand command) {
                     storedSettings.goalStreamCameraVFlip = boost::lexical_cast<bool>(command.args["goalStreamCameraVFlip"]);
                     storedSettings.goalStreamCameraHFlip = boost::lexical_cast<bool>(command.args["goalStreamCameraHFlip"]);
                     storedSettings.goalStreamCameraManualExposure = boost::lexical_cast<bool>(command.args["goalStreamCameraManualExposure"]);
-
-                    if (goalCameraMode == STREAM) { //If the goal camera is already in stream mode
-                        setGoalCamera(STREAM); //Update the settings
-                    }
                     break;
                 case SETTINGS_GEAR_STREAM_CAMERA:
                     storedSettings.gearStreamCameraBrightness = boost::lexical_cast<int>(command.args["gearStreamCameraBrightness"]);
@@ -195,10 +183,6 @@ void Controller::react(ParsedCommand command) {
                     storedSettings.gearStreamCameraVFlip = boost::lexical_cast<bool>(command.args["gearStreamCameraVFlip"]);
                     storedSettings.gearStreamCameraHFlip = boost::lexical_cast<bool>(command.args["gearStreamCameraHFlip"]);
                     storedSettings.gearStreamCameraManualExposure = boost::lexical_cast<bool>(command.args["gearStreamCameraManualExposure"]);
-
-                    if (gearCameraMode == STREAM) { //If the gear camera is already in stream mode
-                        setGearCamera(STREAM); //Update the settings
-                    }
                     break;
                 case SETTINGS_GOAL_PROC:
                     storedSettings.goalProcHLower = boost::lexical_cast<int>(command.args["goalProcHLower"]);
@@ -219,7 +203,6 @@ void Controller::react(ParsedCommand command) {
                     storedSettings.goalMaxVertices = boost::lexical_cast<double>(command.args["goalMaxVertices"]);
                     storedSettings.goalMinRatio = boost::lexical_cast<double>(command.args["goalMinRatio"]);
                     storedSettings.goalMaxRatio = boost::lexical_cast<double>(command.args["goalMaxRatio"]);
-                    goalProc->subConfig(storedSettings); //Update the config in the goal processor
                     break;
                 case SETTINGS_GEAR_PROC:
                     storedSettings.gearProcHLower = boost::lexical_cast<int>(command.args["gearProcHLower"]);
@@ -240,30 +223,21 @@ void Controller::react(ParsedCommand command) {
                     storedSettings.gearMaxVertices = boost::lexical_cast<double>(command.args["gearMaxVertices"]);
                     storedSettings.gearMinRatio = boost::lexical_cast<double>(command.args["gearMinRatio"]);
                     storedSettings.gearMaxRatio = boost::lexical_cast<double>(command.args["gearMaxRatio"]);
-                    gearProc->subConfig(storedSettings); //Update the config in the gear processor
                     break;
                 case SETTINGS_STREAM_COMPRESSION:
                     storedSettings.streamCompression = boost::lexical_cast<int>(command.args["streamCompression"]);
-                    streamer->setCompression(storedSettings.streamCompression);
+                    break;
                 case MODE_GOAL_PROC:
-                    if (goalCameraMode != PROC) {
-                        setGoalCamera(PROC);
-                    }
+                    setGoalCamera(PROC);
                     break;
                 case MODE_GOAL_STREAM:
-                    if (goalCameraMode != STREAM) {
-                        setGoalCamera(STREAM);
-                    }
+                    setGoalCamera(STREAM);
                     break;
                 case MODE_GEAR_PROC:
-                    if (gearCameraMode != PROC) {
-                        setGearCamera(PROC);
-                    }
+                    setGearCamera(PROC);
                     break;
                 case MODE_GEAR_STREAM:
-                    if (gearCameraMode != STREAM) {
-                        setGearCamera(STREAM);
-                    }
+                    setGearCamera(STREAM);
                     break;
                 case MODE_STREAMER_OFF:
                     streamer->setMode(Streamer::StreamType::OFF);
@@ -280,7 +254,52 @@ void Controller::react(ParsedCommand command) {
 
             }
         }
-    } catch (...) {} //Handle any errors gracefully
+    } catch (...) { //Handle any errors gracefully
+        Log::w(ld, "Invalid request of type [" + std::to_string(command.command) + "]");
+    }
+}
+
+void Controller::postAction(ParsedCommand command) {
+    if (!(storedSettings == lastSettings)) { //If any settings have changed
+        std::cout << "POST ACTIONS RUNNING" << std::endl;
+        try {
+            switch (command.command) {
+                case SETTINGS_GOAL_PROC_CAMERA:
+                    if (goalCameraMode == PROC) { //If the goal camera is already in proc mode
+                        setGoalCamera(PROC); //Update the settings
+                    }
+                    break;
+                case SETTINGS_GEAR_PROC_CAMERA:
+                    if (gearCameraMode == PROC) { //If the gear camera is already in proc mode
+                        setGearCamera(PROC); //Update the settings
+                    }
+                    break;
+                case SETTINGS_GOAL_STREAM_CAMERA:
+                    if (goalCameraMode == STREAM) { //If the goal camera is already in stream mode
+                        setGoalCamera(STREAM); //Update the settings
+                    }
+                    break;
+                case SETTINGS_GEAR_STREAM_CAMERA:
+                    if (gearCameraMode == STREAM) { //If the gear camera is already in stream mode
+                        setGearCamera(STREAM); //Update the settings
+                    }
+                    break;
+                case SETTINGS_GOAL_PROC:
+                    goalProc->subConfig(storedSettings); //Update the config in the goal processor
+                    break;
+                case SETTINGS_GEAR_PROC:
+                    gearProc->subConfig(storedSettings); //Update the config in the gear processor
+                    break;
+                case SETTINGS_STREAM_COMPRESSION:
+                    streamer->setCompression(storedSettings.streamCompression);
+                    break;
+            }
+        } catch (...) {
+            Log::w(ld, "Error running post actions for [" + std::to_string(command.command) + "]");
+        }
+    } else {
+        std::cout << "CONFIG MATCH, NO POST REQUIRED!" << std::endl;
+    }
 }
 
 void Controller::run() {
@@ -288,17 +307,21 @@ void Controller::run() {
     zmq::socket_t socket(context, ZMQ_REP);
     socket.setsockopt(ZMQ_RCVTIMEO, 30);
     socket.bind("tcp://*:" + std::to_string(port));
-
     std::string latestRaw;
     ParsedCommand latest;
     std::string response;
     while(!boost::this_thread::interruption_requested()) {
         latestRaw = s_recv(socket);
         if (latestRaw != "") { //If there wasn't a timeout
-            std::cout << latestRaw << std::endl;
+            lastSettings = storedSettings; //Store the last settings so we can compare
             latest = parseCommand(latestRaw); //Parse the command
-            react(latest); //React to the command
-            response = storedSettings.hash(); //Respond to the command (we always respond with a list of our current settings)
+            if (latest.command == PING) {
+                response = "PONG#";
+            } else {
+                react(latest); //React to the command
+                postAction(latest); //Run any post actions
+                response = storedSettings.hash(); //Respond to the command (we always respond with a list of our current settings)
+            }
             s_send(socket, response);
         }
     }

@@ -21,6 +21,7 @@ public:
 private:
     enum Command {
         INIT,
+        PING,
         SETTINGS_GOAL_PROC_CAMERA,
         SETTINGS_GEAR_PROC_CAMERA,
         SETTINGS_GOAL_STREAM_CAMERA,
@@ -41,6 +42,7 @@ private:
 
     std::map<std::string, Command> commandMapping = {
             std::make_pair("INIT", INIT),
+            std::make_pair("PING", PING),
             std::make_pair("SETTINGS_GOAL_PROC_CAMERA", SETTINGS_GOAL_PROC_CAMERA),
             std::make_pair("SETTINGS_GEAR_PROC_CAMERA", SETTINGS_GEAR_PROC_CAMERA),
             std::make_pair("SETTINGS_GOAL_STREAM_CAMERA", SETTINGS_GOAL_STREAM_CAMERA),
@@ -62,6 +64,7 @@ private:
         PROC,
         STREAM
     };
+
     struct ParsedCommand {
         Command command;
         std::map<std::string, std::string> args;
@@ -70,7 +73,8 @@ private:
 
     Configuration config;
     Configuration storedSettings; //The current settings, updated every time we get new commands
-    //REKT
+    Configuration lastSettings;
+
     int port;
     Camera *goalCamera;
     Camera *gearCamera;
@@ -80,12 +84,13 @@ private:
 
     CameraMode goalCameraMode;
     CameraMode gearCameraMode;
-
+    
     void setGoalCamera(CameraMode mode);
     void setGearCamera(CameraMode mode);
 
     ParsedCommand parseCommand(std::string input);
     void react(ParsedCommand command);
+    void postAction(ParsedCommand command);
 
 
     std::string ld = "Controller";

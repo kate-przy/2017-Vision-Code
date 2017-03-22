@@ -5,9 +5,11 @@
 #include "Configuration.hpp"
 #include <boost/algorithm/string.hpp>
 #include <fstream>
+#include <string>
 #include <iostream>
 
 std::string Configuration::hash(bool fileMode) {
+
     std::string endLine;
     std::string delimiter;
     
@@ -121,6 +123,107 @@ std::string Configuration::hash(bool fileMode) {
     ;
 
     return toReturn;
+}
+
+bool Configuration::operator==(const Configuration &config) {
+    return (goalProcDeviceNumber == config.goalProcDeviceNumber &&
+            gearProcDeviceNumber == config.gearProcDeviceNumber &&
+            useGoalCamera == config.useGoalCamera &&
+            useGearCamera == config.useGearCamera &&
+            goalProcFOV == config.goalProcFOV &&
+            gearProcFOV == config.gearProcFOV &&
+            goalProcFocalLength == config.goalProcFocalLength &&
+            gearProcFocalLength == config.gearProcFocalLength &&
+            streamDeviceNumber == config.streamDeviceNumber &&
+            networkBasePort == config.networkBasePort &&
+            showDebugWindows == config.showDebugWindows &&
+            showDebugText == config.showDebugText &&
+            runDebugFunctions == config.runDebugFunctions &&
+            streamCompression == config.streamCompression &&
+            goalProcHLower == config.goalProcHLower &&
+            goalProcSLower == config.goalProcSLower &&
+            goalProcVLower == config.goalProcVLower &&
+            goalProcHUpper == config.goalProcHUpper &&
+            goalProcSUpper == config.goalProcSUpper &&
+            goalProcVUpper == config.goalProcVUpper &&
+            gearProcHLower == config.gearProcHLower &&
+            gearProcSLower == config.gearProcSLower &&
+            gearProcVLower == config.gearProcVLower &&
+            gearProcHUpper == config.gearProcHUpper &&
+            gearProcSUpper == config.gearProcSUpper &&
+            gearProcVUpper == config.gearProcVUpper &&
+            goalMinArea == config.goalMinArea &&
+            goalMinPerimeter == config.goalMinPerimeter &&
+            goalMinWidth == config.goalMinWidth &&
+            goalMaxWidth == config.goalMaxWidth &&
+            goalMinHeight == config.goalMinHeight &&
+            goalMaxHeight == config.goalMaxHeight &&
+            goalMinSolidity == config.goalMinSolidity &&
+            goalMaxSolidity == config.goalMaxSolidity &&
+            goalMinVertices == config.goalMinVertices &&
+            goalMaxVertices == config.goalMaxVertices &&
+            goalMinRatio == config.goalMinRatio &&
+            goalMaxRatio == config.goalMaxRatio &&
+            gearMinArea == config.gearMinArea &&
+            gearMinPerimeter == config.gearMinPerimeter &&
+            gearMinWidth == config.gearMinWidth &&
+            gearMaxWidth == config.gearMaxWidth &&
+            gearMinHeight == config.gearMinHeight &&
+            gearMaxHeight == config.gearMaxHeight &&
+            gearMinSolidity == config.gearMinSolidity &&
+            gearMaxSolidity == config.gearMaxSolidity &&
+            gearMinVertices == config.gearMinVertices &&
+            gearMaxVertices == config.gearMaxVertices &&
+            gearMinRatio == config.gearMinRatio &&
+            gearMaxRatio == config.gearMaxRatio &&
+            goalProcCameraBrightness == config.goalProcCameraBrightness &&
+            goalProcCameraContrast == config.goalProcCameraContrast &&
+            goalProcCameraSaturation == config.goalProcCameraSaturation &&
+            goalProcCameraHue == config.goalProcCameraHue &&
+            goalProcCameraAutoWB == config.goalProcCameraAutoWB &&
+            goalProcCameraExposure == config.goalProcCameraExposure &&
+            goalProcCameraAutoGain == config.goalProcCameraAutoGain &&
+            goalProcCameraGain == config.goalProcCameraGain &&
+            goalProcCameraVFlip == config.goalProcCameraVFlip &&
+            goalProcCameraHFlip == config.goalProcCameraHFlip &&
+            goalProcCameraManualExposure == config.goalProcCameraManualExposure &&
+            gearProcCameraBrightness == config.gearProcCameraBrightness &&
+            gearProcCameraContrast == config.gearProcCameraContrast &&
+            gearProcCameraSaturation == config.gearProcCameraSaturation &&
+            gearProcCameraHue == config.gearProcCameraHue &&
+            gearProcCameraAutoWB == config.gearProcCameraAutoWB &&
+            gearProcCameraExposure == config.gearProcCameraExposure &&
+            gearProcCameraAutoGain == config.gearProcCameraAutoGain &&
+            gearProcCameraGain == config.gearProcCameraGain &&
+            gearProcCameraVFlip == config.gearProcCameraVFlip &&
+            gearProcCameraHFlip == config.gearProcCameraHFlip &&
+            gearProcCameraManualExposure == config.gearProcCameraManualExposure &&
+            goalStreamCameraBrightness == config.goalStreamCameraBrightness &&
+            goalStreamCameraContrast == config.goalStreamCameraContrast &&
+            goalStreamCameraSaturation == config.goalStreamCameraSaturation &&
+            goalStreamCameraHue == config.goalStreamCameraHue &&
+            goalStreamCameraAutoWB == config.goalStreamCameraAutoWB &&
+            goalStreamCameraExposure == config.goalStreamCameraExposure &&
+            goalStreamCameraAutoGain == config.goalStreamCameraAutoGain &&
+            goalStreamCameraGain == config.goalStreamCameraGain &&
+            goalStreamCameraVFlip == config.goalStreamCameraVFlip &&
+            goalStreamCameraHFlip == config.goalStreamCameraHFlip &&
+            goalStreamCameraManualExposure == config.goalStreamCameraManualExposure &&
+            gearStreamCameraBrightness == config.gearStreamCameraBrightness &&
+            gearStreamCameraContrast == config.gearStreamCameraContrast &&
+            gearStreamCameraSaturation == config.gearStreamCameraSaturation &&
+            gearStreamCameraHue == config.gearStreamCameraHue &&
+            gearStreamCameraAutoWB == config.gearStreamCameraAutoWB &&
+            gearStreamCameraExposure == config.gearStreamCameraExposure &&
+            gearStreamCameraAutoGain == config.gearStreamCameraAutoGain &&
+            gearStreamCameraGain == config.gearStreamCameraGain &&
+            gearStreamCameraVFlip == config.gearStreamCameraVFlip &&
+            gearStreamCameraHFlip == config.gearStreamCameraHFlip &&
+            gearStreamCameraManualExposure == config.gearStreamCameraManualExposure);
+}
+
+bool Configuration::operator!=(const Configuration &config) {
+    return !operator==(config);
 }
 
 void Configuration::writeToFile(std::string fileName, bool moveOldFile) {

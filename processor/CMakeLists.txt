@@ -3,6 +3,7 @@ project(2017-Vision-processor)
 
 file(COPY res DESTINATION ./)
 file(COPY start.sh DESTINATION ./)
+file(COPY runLoop.sh DESTINATION ./)
 
 add_subdirectory(src)
 

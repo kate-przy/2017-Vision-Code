@@ -28,11 +28,16 @@ private:
     int S[2];
     int V[2];
 
+    int width;
+    int height;
+
     double pitchCalculation;
     double yawCalculation;
+    double horizontalDPP;
+    double verticalDPP;
     double distanceCalculation;
 
-
+    std::string ld = "GoalProc";
 };
 
 

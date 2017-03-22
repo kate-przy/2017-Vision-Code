@@ -8,7 +8,7 @@
 
 
 #include "../utility/Configuration.hpp"
-#include "opencv2/videoio/videoio.hpp"
+#include <opencv2/opencv.hpp>
 #include "MatProvider.hpp"
 #include <string>
 

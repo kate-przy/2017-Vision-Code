@@ -102,30 +102,30 @@ bool Camera::setup() {
     }
     switch (type) {
         case GOAL_PROCESSING:
+            setProperty(V4L2_CID_AUTO_WHITE_BALANCE, config.goalProcCameraAutoWB);
+            setProperty(V4L2_CID_AUTOGAIN, config.goalProcCameraAutoGain);
+            setProperty(V4L2_CID_EXPOSURE_AUTO, config.goalProcCameraManualExposure);
             setProperty(V4L2_CID_BRIGHTNESS, config.goalProcCameraBrightness);
             setProperty(V4L2_CID_CONTRAST, config.goalProcCameraContrast);
             setProperty(V4L2_CID_SATURATION, config.goalProcCameraSaturation);
             setProperty(V4L2_CID_HUE, config.goalProcCameraHue);
-            setProperty(V4L2_CID_AUTO_WHITE_BALANCE, config.goalProcCameraAutoWB);
-            setProperty(V4L2_CID_EXPOSURE, config.goalProcCameraExposure);
-            setProperty(V4L2_CID_AUTOGAIN, config.goalProcCameraAutoGain);
             setProperty(V4L2_CID_GAIN, config.goalProcCameraGain);
             setProperty(V4L2_CID_VFLIP, config.goalProcCameraVFlip);
             setProperty(V4L2_CID_HFLIP, config.goalProcCameraHFlip);
-            setProperty(V4L2_CID_EXPOSURE_AUTO, config.goalProcCameraManualExposure);
+            setProperty(V4L2_CID_EXPOSURE, config.goalProcCameraExposure);
             break;
         case GEAR_PROCESSING:
+            setProperty(V4L2_CID_AUTO_WHITE_BALANCE, config.gearProcCameraAutoWB);
+            setProperty(V4L2_CID_AUTOGAIN, config.gearProcCameraAutoGain);
+            setProperty(V4L2_CID_EXPOSURE_AUTO, config.gearProcCameraManualExposure);
             setProperty(V4L2_CID_BRIGHTNESS, config.gearProcCameraBrightness);
             setProperty(V4L2_CID_CONTRAST, config.gearProcCameraContrast);
             setProperty(V4L2_CID_SATURATION, config.gearProcCameraSaturation);
             setProperty(V4L2_CID_HUE, config.gearProcCameraHue);
-            setProperty(V4L2_CID_AUTO_WHITE_BALANCE, config.gearProcCameraAutoWB);
-            setProperty(V4L2_CID_EXPOSURE, config.gearProcCameraExposure);
-            setProperty(V4L2_CID_AUTOGAIN, config.gearProcCameraAutoGain);
             setProperty(V4L2_CID_GAIN, config.gearProcCameraGain);
             setProperty(V4L2_CID_VFLIP, config.gearProcCameraVFlip);
             setProperty(V4L2_CID_HFLIP, config.gearProcCameraHFlip);
-            setProperty(V4L2_CID_EXPOSURE_AUTO, config.gearProcCameraManualExposure);
+            setProperty(V4L2_CID_EXPOSURE, config.gearProcCameraExposure);
             break;
         case STREAM:
             //TODO INSERT SET PROPERTIES FROM CONFIG HERE
