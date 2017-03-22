@@ -3,6 +3,7 @@ package org.team401.vision.controlpanel;
 import com.alee.laf.WebLookAndFeel;
 import org.team401.vision.controller.VisionController;
 import org.team401.vision.controlpanel.dialog.MainDialog;
+import org.team401.vision.controlpanel.stream.StreamListener;
 import org.zeromq.ZMQ;
 
 import javax.imageio.ImageIO;
@@ -29,8 +30,11 @@ public class ControlPanel {
         VisionController controller = new VisionController(address, port + 3); //Set up the controller
         controller.start(); //Start the controller
 
+        StreamListener streamListener = new StreamListener(address, port + 2);
+        streamListener.start();
+
         WebLookAndFeel.install(); //Set up the WebLAF
-        MainDialog mainDialog = new MainDialog(controller); //Set up the main dialog
+        MainDialog mainDialog = new MainDialog(controller, streamListener); //Set up the main dialog
 
         SwingUtilities.invokeLater(() -> {
             mainDialog.pack(); //Render the dialog

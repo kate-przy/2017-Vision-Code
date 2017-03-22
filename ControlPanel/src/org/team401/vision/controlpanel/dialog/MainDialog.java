@@ -6,6 +6,7 @@ import com.alee.laf.button.WebButton;
 import org.team401.vision.controller.NetworkData;
 import org.team401.vision.controller.VisionController;
 import org.team401.vision.controlpanel.dialog.component.LinkedControlGroup;
+import org.team401.vision.controlpanel.stream.StreamListener;
 import org.team401.vision.controlpanel.update.ColorConverter;
 import org.team401.vision.controlpanel.update.UpdateGroup;
 import org.team401.vision.controlpanel.update.UpdateManager;
@@ -21,6 +22,7 @@ import java.util.EventObject;
 
 public class MainDialog extends JDialog {
     private VisionController controller;
+    private StreamListener streamListener;
 
     private JPanel contentPane;
     private JButton saveButton;
@@ -198,12 +200,21 @@ public class MainDialog extends JDialog {
 
     private UpdateManager updateManager;
     
-    public MainDialog(VisionController controller) {
+    public MainDialog(VisionController controller, StreamListener streamListener) {
         this.controller = controller;
+        this.streamListener = streamListener;
 
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(saveButton);
+
+        // call onCancel() when cross is clicked
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                onQuit();
+            }
+        });
 
         //SET UP LINKED CONTROLS
         goalCameraProcBrightnessGroup = new LinkedControlGroup(goalCameraProcBrightnessSlider, goalCameraProcBrightnessSpinner, 0, 255, 0);
@@ -540,30 +551,15 @@ public class MainDialog extends JDialog {
         updateManager = new UpdateManager(controller, 500, goalCameraProcGroup, goalCameraStreamGroup,
                 gearCameraProcGroup, gearCameraStreamGroup, goalProcUpdateGroup, gearProcUpdateGroup, streamCompressionUpdateGroup);
 
-        //updateManager.refreshComponents(); //Set the initial values
-        //updateManager.start(); //Start the manager
+        updateManager.start();
 
+        //Streaming
+        streamListener.setUpdateLabel(imageLabel); //Set the label to be updated from the camera
 
-        // call onCancel() when cross is clicked
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                onCancel();
-            }
-        });
-
-        // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-
-        buttonCancel.addActionListener((ActionEvent e) -> onCancel());
+        buttonCancel.addActionListener((ActionEvent e) -> onQuit());
 
         streamWarningLabel.setVisible(false);
 
-        //COMPRESSION
         streamCompressionGroup.addChangeListener((ChangeEvent e) -> {
             if (streamCompressionGroup.getValue() > 30) {
                 streamWarningLabel.setVisible(true);
@@ -571,42 +567,40 @@ public class MainDialog extends JDialog {
                 streamWarningLabel.setVisible(false);
             }
         });
-        
+
+        saveButton.addActionListener((ActionEvent e) -> controller.asyncRequest(new NetworkData("ACTION_WRITE_CONFIG"))); //Config saving
+
+        resetButton.addActionListener((ActionEvent e) -> controller.asyncRequest(new NetworkData("ACTION_RESET_CONFIG"))); //Config reset
+
         //STREAM BUTTONS
-        activeCameraOffButton.addActionListener((ActionEvent e) -> updateManager.setActiveCamera(VisionController.Camera.OFF));
-        activeCameraGoalButton.addActionListener((ActionEvent e) -> updateManager.setActiveCamera(VisionController.Camera.GOAL));
-        activeCameraGearButton.addActionListener((ActionEvent e) -> updateManager.setActiveCamera(VisionController.Camera.GEAR));
-        
-        goalCameraProcModeButton.addActionListener((ActionEvent e) -> updateManager.setCameraMode(VisionController.Camera.GOAL, VisionController.CameraMode.PROCESSING));
-        goalCameraStreamModeButton.addActionListener((ActionEvent e) -> updateManager.setCameraMode(VisionController.Camera.GOAL, VisionController.CameraMode.STREAMING));
-        gearCameraProcModeButton.addActionListener((ActionEvent e) -> updateManager.setCameraMode(VisionController.Camera.GEAR, VisionController.CameraMode.PROCESSING));
-        gearCameraStreamModeButton.addActionListener((ActionEvent e) -> updateManager.setCameraMode(VisionController.Camera.GEAR, VisionController.CameraMode.STREAMING));
+        activeCameraOffButton.addActionListener((ActionEvent e) -> controller.setActiveCamera(VisionController.Camera.OFF));
+        activeCameraGoalButton.addActionListener((ActionEvent e) -> controller.setActiveCamera(VisionController.Camera.GOAL));
+        activeCameraGearButton.addActionListener((ActionEvent e) -> controller.setActiveCamera(VisionController.Camera.GEAR));
 
-        refreshButton.addActionListener((ActionEvent e) -> updateManager.refreshComponents());
+        goalCameraProcModeButton.addActionListener((ActionEvent e) -> controller.setCameraMode(VisionController.Camera.GOAL, VisionController.CameraMode.PROCESSING));
+        goalCameraStreamModeButton.addActionListener((ActionEvent e) -> controller.setCameraMode(VisionController.Camera.GOAL, VisionController.CameraMode.STREAMING));
+        gearCameraProcModeButton.addActionListener((ActionEvent e) -> controller.setCameraMode(VisionController.Camera.GEAR, VisionController.CameraMode.PROCESSING));
+        gearCameraStreamModeButton.addActionListener((ActionEvent e) -> controller.setCameraMode(VisionController.Camera.GEAR, VisionController.CameraMode.STREAMING));
 
-        //SAVE
-        saveButton.addActionListener((ActionEvent e) -> controller.asyncRequest(new NetworkData("ACTION_WRITE_CONFIG")));
+
+        refreshButton.addActionListener((ActionEvent e) -> updateManager.refresh());
+
+        freezeStreamButton.addActionListener((ActionEvent e) -> {
+            if (streamListener.toggleFreeze()) {
+                freezeStreamButton.setText("Resume Stream");
+            } else {
+                freezeStreamButton.setText("Freeze Stream");
+            }
+        });
 
     }
 
-    public void onCancel() {
+    //General action methods
+    public void onQuit() {
         System.exit(0);
     }
 
-    //COMPRESSION
-
-
-    public void updateImage(BufferedImage image) {
-        imageLabel.setIcon(new ImageIcon(image));
-    }
-
     private void createUIComponents() {
-        NumberFormat nf = NumberFormat.getInstance();                //Initialize JFormattedSpinners to only hold numbers
-        SpinnerNumberModel nm = new SpinnerNumberModel(0d, -2147483648d, 2147483648d, 1d);
-        SpinnerNumberModel nm1 = new SpinnerNumberModel(0d, -2147483648d, 2147483648d, 1d);
-        SpinnerNumberModel nm2 = new SpinnerNumberModel(0d, -2147483648d, 2147483648d, 1d);
-        SpinnerNumberModel nm3 = new SpinnerNumberModel(0d, -2147483648d, 2147483648d, 1d);
-
         goalProcMinWidthSpinner = new JSpinner(new SpinnerNumberModel(0d, -2147483648d, 2147483648d, 1d));
         goalProcMaxWidthSpinner = new JSpinner(new SpinnerNumberModel(0d, -2147483648d, 2147483648d, 1d));
         goalProcMinHeightSpinner = new JSpinner(new SpinnerNumberModel(0d, -2147483648d, 2147483648d, 1d));

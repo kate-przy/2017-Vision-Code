@@ -384,4 +384,9 @@ public class VisionController extends Thread {
 
     //// END CAMERA SETTINGS ////
 
+    //// PING ////
+    public boolean ping() {
+        return request(new NetworkData("PING")).getType().equals("PONG");
+    }
+
 }
