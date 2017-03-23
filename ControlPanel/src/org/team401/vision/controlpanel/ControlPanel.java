@@ -15,7 +15,7 @@ import java.io.ByteArrayInputStream;
  */
 public class ControlPanel {
     public static void main(String[] args) {
-        String address = "127.0.0.1";
+        String address = "10.4.1.17";
         int port = 5800;
 
         if (args.length == 1) { //We have a custom address
