@@ -593,6 +593,8 @@ public class MainDialog extends JDialog {
             }
         });
 
+        streamWarningLabel.setIcon(new ImageIcon(MainDialog.class.getResource("/res/warning32.png")));
+
     }
 
     //General action methods

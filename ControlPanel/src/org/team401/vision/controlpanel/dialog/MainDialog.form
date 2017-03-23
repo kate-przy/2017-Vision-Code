@@ -1992,7 +1992,6 @@
                               </grid>
                             </constraints>
                             <properties>
-                              <icon value="res/Warning-icon.png_32x32.png"/>
                               <text value=""/>
                               <toolTipText value="High quality levels (over 30) can cause possibly non-recoverable latency!"/>
                             </properties>
