@@ -3,6 +3,9 @@
 //Description: An object that abstracts things such as raw V4L operations from the user.  Can return CV and MatProvider camera reader objects
 //Author: Cameron Earle
 
+//LCOV_EXCL_START
+//This class is tested by hardware tests, and is thus not a valid representation of coverage
+
 #include <libv4l2.h>
 #include <linux/videodev2.h>
 #include <fcntl.h>
@@ -194,3 +197,5 @@ void Camera::close() {
     cap.release(); //Release the opencv instance of our device
     v4l2_close(v4lHandle); //Close the v4l2 capture instance
 }
+
+//LCOV_EXCL_STOP

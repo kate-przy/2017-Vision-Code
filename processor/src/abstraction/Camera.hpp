@@ -3,6 +3,9 @@
 //Description: An object that abstracts things such as raw V4L operations from the user.  Can return CV and MatProvider camera reader objects
 //Author: Cameron Earle
 
+//LCOV_EXCL_START
+//This class is tested by hardware tests, and is thus not a valid representation of coverage
+
 #ifndef PROJECT_CAMERA_HPP
 #define PROJECT_CAMERA_HPP
 
@@ -44,3 +47,5 @@ private:
 
 
 #endif //PROJECT_CAMERA_HPP
+
+//LCOV_EXCL_STOP

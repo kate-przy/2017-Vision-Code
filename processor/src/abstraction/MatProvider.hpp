@@ -3,6 +3,9 @@
 //Description: A threadable object that provides the latest image from a capture device in a non-blocking way
 //Author: Cameron Earle
 
+//LCOV_EXCL_START
+//This class is tested by hardware tests, and is thus not a valid representation of coverage
+
 #ifndef PROJECT_MATPROVIDER_HPP
 #define PROJECT_MATPROVIDER_HPP
 
@@ -35,3 +38,5 @@ private:
 
 
 #endif //PROJECT_MATPROVIDER_HPP
+
+//LCOV_EXCL_STOP

@@ -3,6 +3,9 @@
 //Description: A threadable object that provides the latest image from a capture device in a non-blocking way
 //Author: Cameron Earle
 
+//LCOV_EXCL_START
+//This class is tested by hardware tests, and is thus not a valid representation of coverage
+
 #include <opencv/cv.hpp>
 #include "MatProvider.hpp"
 #include <boost/thread/thread.hpp>
@@ -92,3 +95,5 @@ int MatProvider::getType() {
 void MatProvider::setName(std::string name_) {
     ld = "MatProvider-" + name_; //Update the log descriptor with the name
 }
+
+//LCOV_EXCL_STOP
