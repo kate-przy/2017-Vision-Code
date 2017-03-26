@@ -14,6 +14,38 @@ StreamData::StreamData() {
 }
 
 /**
+ * Compares two StreamData objects
+ * @param data The data to compare against this instance
+ * @return True if the data is the same, false if it is not
+ */
+bool StreamData::operator==(const StreamData data) {
+    if (data.thisType != thisType) { //If the types are different
+        return false; //The data is different
+    }
+    
+    switch (data.thisType) { //If the data is a valid type, do a comparision on the fields
+        case GOAL_DATA:
+            return (data.thisDistance == thisDistance &&
+                    data.thisPitch == thisPitch &&
+                    data.thisYaw == thisYaw);
+        case GEAR_DATA:
+            return (data.thisDistance == thisDistance &&
+                    data.thisYaw == thisYaw &&
+                    data.thisStrafe == thisStrafe);
+    }
+    return true; //The data must be invalid, and we know the types match, so they are the same
+}
+
+/**
+ * Compares two StreamData objects
+ * @param data The data to compare against this instance
+ * @return True if the data is different, false if it is not
+ */
+bool StreamData::operator!=(const StreamData data) {
+    return !operator==(data); //Return the opposite of the == operator
+}
+
+/**
  * Constructor for setting up command types such as SHUTDOWN
  * @param type The type of command, must not be DATA or INVALID
  */

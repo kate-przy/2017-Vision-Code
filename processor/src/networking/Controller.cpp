@@ -26,6 +26,10 @@ Controller::Controller(Configuration config_, Camera *goalCamera_, Camera *gearC
     gearCameraMode = PROC;
 }
 
+Configuration Controller::getCurrentSettings() {
+    return storedSettings;
+}
+
 Controller::ParsedCommand Controller::parseCommand(std::string input) {
     std::vector<string> commandSplit;
     std::vector<string> argsList;
@@ -251,6 +255,13 @@ void Controller::react(ParsedCommand command) {
                 case ACTION_WRITE_CONFIG:
                     storedSettings.writeToFile("config.txt"); //Write the config out to the file
                     break;
+                case ACTION_RESET_CONFIG:
+                    storedSettings = config; //Reset the stored settings to the originals
+                    goalProc->subConfig(storedSettings);
+                    gearProc->subConfig(storedSettings);
+                    setGoalCamera(goalCameraMode);
+                    setGearCamera(gearCameraMode);
+                    break;
 
             }
         }
@@ -261,7 +272,6 @@ void Controller::react(ParsedCommand command) {
 
 void Controller::postAction(ParsedCommand command) {
     if (!(storedSettings == lastSettings)) { //If any settings have changed
-        std::cout << "POST ACTIONS RUNNING" << std::endl;
         try {
             switch (command.command) {
                 case SETTINGS_GOAL_PROC_CAMERA:
@@ -297,8 +307,6 @@ void Controller::postAction(ParsedCommand command) {
         } catch (...) {
             Log::w(ld, "Error running post actions for [" + std::to_string(command.command) + "]");
         }
-    } else {
-        std::cout << "CONFIG MATCH, NO POST REQUIRED!" << std::endl;
     }
 }
 
@@ -312,11 +320,12 @@ void Controller::run() {
     std::string response;
     while(!boost::this_thread::interruption_requested()) {
         latestRaw = s_recv(socket);
+        Log::d(ld, "Got Request: [" + latestRaw + "]");
         if (latestRaw != "") { //If there wasn't a timeout
             lastSettings = storedSettings; //Store the last settings so we can compare
             latest = parseCommand(latestRaw); //Parse the command
-            if (latest.command == PING) {
-                response = "PONG#";
+            if (latest.command == PING) { //If the latest request is a ping request
+                response = "PONG#"; //Respond to a ping
             } else {
                 react(latest); //React to the command
                 postAction(latest); //Run any post actions

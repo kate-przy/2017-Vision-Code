@@ -93,7 +93,7 @@ T ConfigParser::configFind(string key_) {
     } else { //We couldn't find the value in the map
         Log::w(ld, "Couldn't find value with key [" + key_ + "], using default");
         if (defaults.find(key_) == defaults.end()) { //This should never happen
-            Log::wtfomgy(ld, "Couldn't find value with key [" + key_ + "] in defaults. This is a problem!");
+            Log::wtfomgy(ld, "Couldn't find value with key [" + key_ + "] in DEFAULTS. This is a problem!");
             return 0;
         }
         ofstream writeFile;

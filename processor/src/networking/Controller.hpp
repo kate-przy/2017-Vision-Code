@@ -18,6 +18,7 @@ class Controller {
 public:
     Controller(Configuration config_, Camera *goalCamera_, Camera *gearCamera_, GoalProc *goalProc_, GearProc *gearProc_, Streamer *streamer_, int port_);
     void run();
+    Configuration getCurrentSettings();
 private:
     enum Command {
         INIT,
@@ -36,7 +37,8 @@ private:
         MODE_STREAMER_OFF,
         MODE_STREAMER_GOAL,
         MODE_STREAMER_GEAR,
-        ACTION_WRITE_CONFIG
+        ACTION_WRITE_CONFIG,
+        ACTION_RESET_CONFIG
 
     };
 
@@ -57,7 +59,8 @@ private:
             std::make_pair("MODE_STREAMER_OFF", MODE_STREAMER_OFF),
             std::make_pair("MODE_STREAMER_GOAL", MODE_STREAMER_GOAL),
             std::make_pair("MODE_STREAMER_GEAR", MODE_STREAMER_GEAR),
-            std::make_pair("ACTION_WRITE_CONFIG", ACTION_WRITE_CONFIG)
+            std::make_pair("ACTION_WRITE_CONFIG", ACTION_WRITE_CONFIG),
+            std::make_pair("ACTION_RESET_CONFIG", ACTION_RESET_CONFIG)
     };
 
     enum CameraMode {

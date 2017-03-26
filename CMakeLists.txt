@@ -1,5 +1,5 @@
-
 cmake_minimum_required(VERSION 2.8)
+
 
 option(GEN_TESTS "Should we build the test suite?" ON)
 option(GEN_COVERAGE "Should we build with coverage?" OFF)

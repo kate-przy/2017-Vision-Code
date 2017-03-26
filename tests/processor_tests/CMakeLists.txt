@@ -4,6 +4,7 @@ include(../../cmake/GTestFunctions.cmake)
 
 file(GLOB 2017_VISION_PROCESSOR_TESTS_SRC
         "*.cpp"
+        "*.hpp"
         ) #Find all source files in this folder
 
 #file(COPY res DESTINATION ./) #Copy the resources folder to the build

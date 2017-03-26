@@ -35,6 +35,9 @@ public:
     Type getType() {
         return thisType;
     }
+    
+    bool operator==(const StreamData data);
+    bool operator!=(const StreamData data);
 
     std::string hash(); //Hashes the current object into a sendable string
 private:
