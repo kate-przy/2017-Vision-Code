@@ -15,7 +15,6 @@
  */
 DataStreamer::DataStreamer(int port_) : sendQueue(512) {
     port = port_;
-    counter = 0;
 }
 
 /**
@@ -24,7 +23,6 @@ DataStreamer::DataStreamer(int port_) : sendQueue(512) {
  */
 void DataStreamer::addToQueue(StreamData data) {
     sendQueue.push(data);
-    counter++;
 }
 
 /**
@@ -38,12 +36,7 @@ void DataStreamer::run() {
     socket.bind("tcp://*:" + std::to_string(port)); //Connect to the socket
     StreamData latestData; //Null object to hold the latest data from the queue
     while (!boost::this_thread::interruption_requested()) { //While this thread should run
-        if (counter > 10) {
-            sendQueue.empty();
-            std::cout << "CLEARING!" << std::endl;
-        }
         while (sendQueue.pop(latestData)) { //Store the latest data from the queue into latestData
-            counter--;
             s_send(socket, latestData.hash()); //Send the latest data hashed
             Log::d(ld, "Sent Data: [" + latestData.hash() + "]");
         }
