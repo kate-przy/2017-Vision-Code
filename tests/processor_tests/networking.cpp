@@ -194,10 +194,10 @@ TEST(networking, data_streamer_operators) {
     ASSERT_TRUE(gearInvalid1 == gearInvalid2);
 
     ASSERT_TRUE(goal1 == goal2);
-    ASSERT_FALSE(goal1 == goal3);
+    ASSERT_TRUE(goal1 != goal3);
     ASSERT_TRUE(gear1 == gear2);
-    ASSERT_FALSE(gear1 == gear3);
+    ASSERT_TRUE(gear1 != gear3);
 
-    ASSERT_FALSE(goalInvalid1 == gearInvalid1); //Make sure type checking works
-    ASSERT_FALSE(goal1 == gear1);
+    ASSERT_TRUE(goalInvalid1 != gearInvalid1); //Make sure type checking works
+    ASSERT_TRUE(goal1 != gear1);
 }
