@@ -7,6 +7,7 @@
 #include <boost/thread/thread.hpp>
 #include "TestingConstants.hpp"
 #include "../../processor/src/networking/DataStreamer.hpp"
+#include "../../processor/src/networking/Streamer.hpp"
 
 
 void addStreamData(DataStreamer *streamer, StreamData data) {
@@ -200,4 +201,55 @@ TEST(networking, data_streamer_operators) {
 
     ASSERT_TRUE(goalInvalid1 != gearInvalid1); //Make sure type checking works
     ASSERT_TRUE(goal1 != gear1);
+}
+
+TEST(networking, frame_streamer_unusable) {
+    Streamer streamer;
+    boost::thread(boost::bind(&Streamer::run, &streamer)).join();
+    //This test will lock up if it fails
+}
+
+TEST(networking, frame_streamer_usable) {
+    MatProvider goalProvider;
+    MatProvider gearProvider;
+    zmq::context_t context(1);
+    zmq::socket_t socket(context, ZMQ_SUB);
+    socket.setsockopt(ZMQ_SUBSCRIBE, "", 0);
+    socket.setsockopt(ZMQ_RCVTIMEO, 10000); //Wait up to 10 seconds
+    socket.connect("tcp://127.0.0.1:" + std::to_string(TestingConstants::Networking::TEST_PORT));
+    Streamer streamer(TestingConstants::Networking::TEST_PORT, &goalProvider, &gearProvider);
+    boost::thread streamerThread(boost::bind(&Streamer::run, &streamer));
+    ASSERT_TRUE(s_recv(socket) != ""); //Ensure that we get some kind of data back
+    streamerThread.interrupt();
+    streamerThread.join();
+    socket.close();
+}
+
+TEST(networking, frame_streamer_compression) {
+    Streamer streamer(0, nullptr, nullptr);
+    ASSERT_EQ(streamer.getCompression(), 30); //Ensure that the default compression is 30
+    streamer.setCompression(0);
+    ASSERT_EQ(streamer.getCompression(), 0);
+    streamer.setCompression(100);
+    ASSERT_EQ(streamer.getCompression(), 100);
+    streamer.setCompression(110); //This is out of bounds, it should still be 100
+    ASSERT_FALSE(streamer.getCompression() > 100);
+    streamer.setCompression(-10);
+    ASSERT_FALSE(streamer.getCompression() < 0);
+}
+
+TEST(networking, frame_streamer_modes) {
+    MatProvider goalProvider;
+    MatProvider gearProvider;
+    Streamer streamer(TestingConstants::Networking::TEST_PORT, &goalProvider, &gearProvider);
+    boost::thread streamerThread(boost::bind(&Streamer::run, &streamer));
+    boost::this_thread::sleep(boost::posix_time::milliseconds(100));
+    streamer.setMode(Streamer::StreamType::OFF);
+    boost::this_thread::sleep(boost::posix_time::milliseconds(100));
+    streamer.setMode(Streamer::StreamType::GOAL);
+    boost::this_thread::sleep(boost::posix_time::milliseconds(100));
+    streamer.setMode(Streamer::StreamType::GEAR);
+    boost::this_thread::sleep(boost::posix_time::milliseconds(100));
+    streamerThread.interrupt();
+    streamerThread.join();
 }
