@@ -220,28 +220,28 @@ public class MainDialog extends JDialog {
         goalCameraProcBrightnessGroup = new LinkedControlGroup(goalCameraProcBrightnessSlider, goalCameraProcBrightnessSpinner, 0, 255, 0);
         goalCameraProcContrastGroup = new LinkedControlGroup(goalCameraProcContrastSlider, goalCameraProcContrastSpinner, 0, 255, 0);
         goalCameraProcSaturationGroup = new LinkedControlGroup(goalCameraProcSaturationSlider, goalCameraProcSaturationSpinner, 0, 255, 0);
-        goalCameraProcHueGroup = new LinkedControlGroup(goalCameraProcHueSlider, goalCameraProcHueSpinner, 0, 255, 0);
+        goalCameraProcHueGroup = new LinkedControlGroup(goalCameraProcHueSlider, goalCameraProcHueSpinner, 0, 100, 0);
         goalCameraProcExposureGroup = new LinkedControlGroup(goalCameraProcExposureSlider, goalCameraProcExposureSpinner, 0, 255, 0);
         goalCameraProcGainGroup = new LinkedControlGroup(goalCameraProcGainSlider, goalCameraProcGainSpinner, 0, 255, 0);
 
         goalCameraStreamBrightnessGroup = new LinkedControlGroup(goalCameraStreamBrightnessSlider, goalCameraStreamBrightnessSpinner, 0, 255, 0);
         goalCameraStreamContrastGroup = new LinkedControlGroup(goalCameraStreamContrastSlider, goalCameraStreamContrastSpinner, 0, 255, 0);
         goalCameraStreamSaturationGroup = new LinkedControlGroup(goalCameraStreamSaturationSlider, goalCameraStreamSaturationSpinner, 0, 255, 0);
-        goalCameraStreamHueGroup = new LinkedControlGroup(goalCameraStreamHueSlider, goalCameraStreamHueSpinner, 0, 255, 0);
+        goalCameraStreamHueGroup = new LinkedControlGroup(goalCameraStreamHueSlider, goalCameraStreamHueSpinner, 0, 100, 0);
         goalCameraStreamExposureGroup = new LinkedControlGroup(goalCameraStreamExposureSlider, goalCameraStreamExposureSpinner, 0, 255, 0);
         goalCameraStreamGainGroup = new LinkedControlGroup(goalCameraStreamGainSlider, goalCameraStreamGainSpinner, 0, 255, 0);
 
         gearCameraProcBrightnessGroup = new LinkedControlGroup(gearCameraProcBrightnessSlider, gearCameraProcBrightnessSpinner, 0, 255, 0);
         gearCameraProcContrastGroup = new LinkedControlGroup(gearCameraProcContrastSlider, gearCameraProcContrastSpinner, 0, 255, 0);
         gearCameraProcSaturationGroup = new LinkedControlGroup(gearCameraProcSaturationSlider, gearCameraProcSaturationSpinner, 0, 255, 0);
-        gearCameraProcHueGroup = new LinkedControlGroup(gearCameraProcHueSlider, gearCameraProcHueSpinner, 0, 255, 0);
+        gearCameraProcHueGroup = new LinkedControlGroup(gearCameraProcHueSlider, gearCameraProcHueSpinner, 0, 100, 0);
         gearCameraProcExposureGroup = new LinkedControlGroup(gearCameraProcExposureSlider, gearCameraProcExposureSpinner, 0, 255, 0);
         gearCameraProcGainGroup = new LinkedControlGroup(gearCameraProcGainSlider, gearCameraProcGainSpinner, 0, 255, 0);
 
         gearCameraStreamBrightnessGroup = new LinkedControlGroup(gearCameraStreamBrightnessSlider, gearCameraStreamBrightnessSpinner, 0, 255, 0);
         gearCameraStreamContrastGroup = new LinkedControlGroup(gearCameraStreamContrastSlider, gearCameraStreamContrastSpinner, 0, 255, 0);
         gearCameraStreamSaturationGroup = new LinkedControlGroup(gearCameraStreamSaturationSlider, gearCameraStreamSaturationSpinner, 0, 255, 0);
-        gearCameraStreamHueGroup = new LinkedControlGroup(gearCameraStreamHueSlider, gearCameraStreamHueSpinner, 0, 255, 0);
+        gearCameraStreamHueGroup = new LinkedControlGroup(gearCameraStreamHueSlider, gearCameraStreamHueSpinner, 0, 100, 0);
         gearCameraStreamExposureGroup = new LinkedControlGroup(gearCameraStreamExposureSlider, gearCameraStreamExposureSpinner, 0, 255, 0);
         gearCameraStreamGainGroup = new LinkedControlGroup(gearCameraStreamGainSlider, gearCameraStreamGainSpinner, 0, 255, 0);
 
