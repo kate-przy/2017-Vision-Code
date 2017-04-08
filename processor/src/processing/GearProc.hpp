@@ -9,10 +9,11 @@
 #include "../utility/Configuration.hpp"
 #include "../abstraction/MatProvider.hpp"
 #include "../networking/DataStreamer.hpp"
+#include "Processor.hpp"
 
 #include <mutex>
 
-class GearProc {
+class GearProc : public Processor {
 public:
     GearProc(Configuration config_, MatProvider *provider_, DataStreamer *streamer_);
     void run();

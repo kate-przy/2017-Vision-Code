@@ -18,10 +18,11 @@ public:
     };
     Streamer();
     Streamer(int port_, MatProvider *goalProvider_, MatProvider *gearProvider_, int initialCompression = 30);
-    void setMode(int newMode);
-    void setCompression(int compression_);
+    virtual void setMode(int newMode);
+    virtual void setCompression(int compression_);
     int getCompression();
-    void run();
+    virtual void run();
+    virtual ~Streamer() {};
 private:
     int port;
     MatProvider *goalProvider;

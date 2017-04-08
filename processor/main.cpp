@@ -21,6 +21,7 @@
 #include <unistd.h>
 #include <termios.h>
 #include <linux/v4l2-controls.h>
+#include <cstdlib>
 
 
 /**

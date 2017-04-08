@@ -24,14 +24,17 @@ public:
         SIMPLE,
         VIRTUAL
     };
+    Camera() {} //Default constructor for null init
     Camera(Configuration config_, CameraType type_); //Constructor for setting up a camera from the config
     Camera(int deviceNumber_); //Constructor for setting up a camera given a device identifier
     Camera(std::string deviceId_); //Constructor for setting up a "Camera" from a video file
-    bool setup();
     cv::VideoCapture getCapture(); //Method to get an OpenCV capture device
     MatProvider getProvider(); //Method to get a MatProvider
-    bool setProperty(int property, int value); //Method to set V4L properties on a supported camera
-    void close(); //Method to close the camera when done
+    //These methods are virtual to allow mocking of this class for unit testing
+    virtual bool setup();
+    virtual bool setProperty(int property, int value); //Method to set V4L properties on a supported camera
+    virtual void close(); //Method to close the camera when done
+    virtual ~Camera() {} //Virtual destructor for mocking
 private:
     cv::VideoCapture cap; //The capture device for use behind the scenes
     int v4lHandle = -1; //V4L2 Handle for changing settings.  Defaults to invalid

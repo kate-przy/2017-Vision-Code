@@ -16,7 +16,7 @@
 
 class Controller {
 public:
-    Controller(Configuration config_, Camera *goalCamera_, Camera *gearCamera_, GoalProc *goalProc_, GearProc *gearProc_, Streamer *streamer_, int port_);
+    Controller(Configuration config_, Camera *goalCamera_, Camera *gearCamera_, Processor *goalProc_, Processor *gearProc_, Streamer *streamer_, int port_);
     void run();
     Configuration getCurrentSettings();
 private:
@@ -39,7 +39,6 @@ private:
         MODE_STREAMER_GEAR,
         ACTION_WRITE_CONFIG,
         ACTION_RESET_CONFIG
-
     };
 
     std::map<std::string, Command> commandMapping = {
@@ -81,8 +80,8 @@ private:
     int port;
     Camera *goalCamera;
     Camera *gearCamera;
-    GoalProc *goalProc;
-    GearProc *gearProc;
+    Processor *goalProc;
+    Processor *gearProc;
     Streamer *streamer;
 
     CameraMode goalCameraMode;

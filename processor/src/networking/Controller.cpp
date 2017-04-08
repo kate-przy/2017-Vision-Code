@@ -13,7 +13,7 @@
 #include "../utility/Log.hpp"
 #include "../utility/ConfigParser.hpp"
 
-Controller::Controller(Configuration config_, Camera *goalCamera_, Camera *gearCamera_, GoalProc *goalProc_, GearProc *gearProc_, Streamer *streamer_, int port_) {
+Controller::Controller(Configuration config_, Camera *goalCamera_, Camera *gearCamera_, Processor *goalProc_, Processor *gearProc_, Streamer *streamer_, int port_) {
     config = config_;
     goalCamera = goalCamera_;
     gearCamera = gearCamera_;

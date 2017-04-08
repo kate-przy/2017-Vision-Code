@@ -9,10 +9,11 @@
 #include "../utility/Configuration.hpp"
 #include "../abstraction/MatProvider.hpp"
 #include "../networking/DataStreamer.hpp"
+#include "Processor.hpp"
 #include <opencv2/opencv.hpp>
 #include <mutex>
 
-class GoalProc {
+class GoalProc : public Processor {
 public:
     GoalProc(Configuration config_, MatProvider *provider_, DataStreamer *streamer_);
     void run();
