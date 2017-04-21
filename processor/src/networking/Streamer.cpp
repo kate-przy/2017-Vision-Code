@@ -8,6 +8,7 @@
 #include <opencv2/core/core.hpp>
 #include <boost/thread/thread.hpp>
 #include <opencv2/opencv.hpp>
+#include "../utility/Base64.hpp"
 
 /**
  * Setus up a usable streamer
@@ -85,7 +86,7 @@ void Streamer::run() {
             }
             if (!latestFrame.empty() && currentStreamType != OFF) { //If the frame isn't empty and the stream is not off
                 cv::imencode(".jpg", latestFrame, buff, cvSettings); //Encode the image with compression
-                s_send(socket, std::string(buff.begin(), buff.end())); //Send the image
+                s_send(socket, Base64::encode(std::string(buff.begin(), buff.end()))); //Send the image
                 buff.clear(); //Clear the buffer
             }
             boost::this_thread::sleep(boost::posix_time::milliseconds(30)); //Slow down the thread a bit so we aren't sending the same image all the time

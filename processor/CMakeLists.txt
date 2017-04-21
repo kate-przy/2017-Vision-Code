@@ -5,7 +5,7 @@ file(COPY res DESTINATION ./)
 file(COPY start.sh DESTINATION ./)
 file(COPY runLoop.sh DESTINATION ./)
 
-add_subdirectory(src)
+add_subdirectory(src) #Include the main source
 
 set(2017_VISION_PROCESSOR_SRC main.cpp)
 
