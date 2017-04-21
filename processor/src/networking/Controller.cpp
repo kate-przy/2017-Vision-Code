@@ -265,9 +265,12 @@ void Controller::react(ParsedCommand command) {
 
             }
         }
+    //LCOV_EXCL_START
+        //This should never run, so we exclude it from coverage
     } catch (...) { //Handle any errors gracefully
         Log::w(ld, "Invalid request of type [" + std::to_string(command.command) + "]");
     }
+    //LCOV_EXCL_STOP
 }
 
 void Controller::postAction(ParsedCommand command) {
@@ -304,9 +307,12 @@ void Controller::postAction(ParsedCommand command) {
                     streamer->setCompression(storedSettings.streamCompression);
                     break;
             }
+        //LCOV_EXCL_START
+            //This should never run, so we exclude it from coverage
         } catch (...) {
             Log::w(ld, "Error running post actions for [" + std::to_string(command.command) + "]");
         }
+        //LCOV_EXCL_STOP
     }
 }
 

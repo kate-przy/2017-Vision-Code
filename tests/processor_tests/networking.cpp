@@ -339,6 +339,8 @@ TEST(networking, controller_goal_proc_camera_settings) {
     Configuration config;
     Controller controller(config, &goalCamera, nullptr, nullptr, nullptr, nullptr, TestingConstants::Networking::TEST_PORT);
     boost::thread controllerThread(boost::bind(&Controller::run, &controller));
+    s_send(socket, "MODE_GOAL_PROC#");
+    s_recv(socket);
     std::string request = "SETTINGS_GOAL_PROC_CAMERA#";
     request += "goalProcCameraBrightness:" + std::to_string(brightness) + ",";
     request += "goalProcCameraContrast:" + std::to_string(contrast) + ",";
@@ -395,6 +397,8 @@ TEST(networking, controller_gear_proc_camera_settings) {
     Configuration config;
     Controller controller(config, nullptr, &gearCamera, nullptr, nullptr, nullptr, TestingConstants::Networking::TEST_PORT);
     boost::thread controllerThread(boost::bind(&Controller::run, &controller));
+    s_send(socket, "MODE_GEAR_PROC#");
+    s_recv(socket);
     std::string request = "SETTINGS_GEAR_PROC_CAMERA#";
     request += "gearProcCameraBrightness:" + std::to_string(brightness) + ",";
     request += "gearProcCameraContrast:" + std::to_string(contrast) + ",";
@@ -705,4 +709,27 @@ TEST(networking, controller_gear_proc_settings) {
     socket.close();
     controllerThread.interrupt();
     controllerThread.join();
+}
+
+TEST(networking, controller_stream_compression) {
+    TestingConstants::setRand();
+    int compression = TestingConstants::randInt(101);  //Generates a random int for the compression
+
+    zmq::context_t context(1);
+    zmq::socket_t socket(context, ZMQ_REQ);
+    socket.setsockopt(ZMQ_RCVTIMEO, TestingConstants::Networking::TIMEOUT);
+    socket.connect("tcp://127.0.0.1:" + std::to_string(TestingConstants::Networking::TEST_PORT));
+
+    MockStreamer streamer;
+    Configuration config;
+    Controller controller(config, nullptr, nullptr, nullptr, nullptr, &streamer, TestingConstants::Networking::TEST_PORT);
+    boost::thread controllerThread(boost::bind(&Controller::run, &controller));
+    std::string request = "SETTINGS_STREAM_COMPRESSION#streamCompression:" + std::to_string(compression);
+
+    EXPECT_CALL(streamer, setCompression(compression));
+
+    s_send(socket, request);
+    s_recv(socket);
+
+
 }
