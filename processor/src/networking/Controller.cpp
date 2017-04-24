@@ -58,9 +58,12 @@ Controller::ParsedCommand Controller::parseCommand(std::string input) {
             }
             toReturn.args = args;
         }
+    //LCOV_EXCL_START
+        //This will never happen, so we exclude it from coverage
     } else {
         toReturn.valid = false;
     }
+    //LCOV_EXCL_STOP
     return toReturn;
 }
 
