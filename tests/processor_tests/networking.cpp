@@ -789,5 +789,24 @@ TEST(networking, controller_reset_config) {
     socket.close();
     controllerThread.interrupt();
     controllerThread.join();
+}
 
+TEST(networking, controller_invalid_data) {
+    zmq::context_t context(1);
+    zmq::socket_t socket(context, ZMQ_REQ);
+    socket.setsockopt(ZMQ_RCVTIMEO, TestingConstants::Networking::TIMEOUT);
+    socket.connect("tcp://127.0.0.1:" + std::to_string(TestingConstants::Networking::TEST_PORT));
+
+    Configuration config;
+    Controller controller(config, nullptr, nullptr, nullptr, nullptr, nullptr, TestingConstants::Networking::TEST_PORT);
+    boost::thread controllerThread(boost::bind(&Controller::run, &controller));
+
+    std::string request = "INVALID_DATA";
+
+    s_send(socket, request);
+    s_recv(socket);
+
+    socket.close();
+    controllerThread.interrupt();
+    controllerThread.join();
 }
