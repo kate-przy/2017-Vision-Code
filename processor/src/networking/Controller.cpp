@@ -326,8 +326,8 @@ void Controller::run() {
     std::string response;
     while(!boost::this_thread::interruption_requested()) {
         latestRaw = s_recv(socket);
-        Log::d(ld, "Got Request: [" + latestRaw + "]");
         if (latestRaw != "") { //If there wasn't a timeout
+            Log::d(ld, "Got Request: [" + latestRaw + "]");
             lastSettings = storedSettings; //Store the last settings so we can compare
             latest = parseCommand(latestRaw); //Parse the command
             if (latest.command == PING) { //If the latest request is a ping request

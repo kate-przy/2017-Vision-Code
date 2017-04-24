@@ -25,17 +25,20 @@ private:
     std::mutex operativeLock;
     void calc();
 
-    int hLower;
-    int sLower;
-    int vLower;
-    int hUpper;
-    int sUpper;
-    int vUpper;
+    int H[2];
+    int S[2];
+    int V[2];
 
+    int width;
+    int height;
+
+    double pitchCalculation;
     double yawCalculation;
+    double horizontalDPP;
+    double verticalDPP;
+    double distanceCalculation;
 
-    double aspectLower;
-    double aspectUpper;
+    std::string ld = "GearProc";
 };
 
 

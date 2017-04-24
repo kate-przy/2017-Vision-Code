@@ -88,7 +88,6 @@ void GoalProc::run() {
 
         // Reads in the latest frame, converts it to HSV, and then filters out the colors we don't want
         latestFrame = provider->getLatestFrame(); //Get the latest frame from the camera
-        //latestFrame = cv::imread("/home/cameronearle/Documents/goalPhotos/straight/84.jpg");
         cv::cvtColor(latestFrame, hsvFrame, CV_BGR2HSV);
         cv::inRange(hsvFrame, cv::Scalar(H[0], S[0], V[0]), cv::Scalar(H[1], S[1], V[1]), rangeFrame);
 

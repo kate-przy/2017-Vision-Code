@@ -3,12 +3,11 @@
 //
 
 #include "GearProc.hpp"
-#include <boost/thread/thread.hpp>
 #include "../utility/Debug.hpp"
-#include <opencv2/opencv.hpp>
+#include "../utility/Log.hpp"
+#include <boost/thread/thread.hpp>
 
-using namespace std;
-using namespace cv;
+#include <opencv2/opencv.hpp>
 
 GearProc::GearProc(Configuration config_, MatProvider *provider_, DataStreamer *streamer_) {
     config = config_;
@@ -16,187 +15,134 @@ GearProc::GearProc(Configuration config_, MatProvider *provider_, DataStreamer *
     streamer = streamer_;
 }
 
+using namespace std;
+using namespace cv;
+
 void GearProc::subConfig(Configuration config_) {
+    Log::d(ld, "Beginning config sub");
     operativeLock.lock();
     config = config_;
     calc();
     operativeLock.unlock();
+    Log::d(ld, "Config sub complete");
 }
 
-
-//
-//  ALL GEAR PROC CODE IS CURRENTLY BROKEN
-//  THANKS, LIAM!
-//
-
 void GearProc::calc() {
-    /*
+    Log::d(ld, "Calculating values");
+    width = provider->getSize().width;  //Convenience variables to simplify calculation statements
+    height = provider->getSize().height; //Will be deleted when this method is finished
+    Log::d(ld + "-CALC", "WIDTH: " + std::to_string(width) + ", HEIGHT: " + std::to_string(height));
+
     //HSV CALCULATIONS
-    hLower = config.gearProcHBase - config.gearProcHRange;
-    sLower = config.gearProcSBase - config.gearProcSRange;
-    vLower = config.gearProcVBase - config.gearProcVRange;
-    hUpper = config.gearProcHBase + config.gearProcHRange;
-    sUpper = config.gearProcSBase + config.gearProcSRange;
-    vUpper = config.gearProcVBase + config.gearProcVRange;
+    H[0] = config.gearProcHLower;
+    H[1] = config.gearProcHUpper;
+    S[0] = config.gearProcSLower;
+    S[1] = config.gearProcSUpper;
+    V[0] = config.gearProcVLower;
+    V[1] = config.gearProcVUpper;
+    Log::d(ld + "-CALC", "H: [" + std::to_string(H[0]) + ", " + std::to_string(H[1]) + "], S: [" + std::to_string(S[0]) +
+                         ", " + std::to_string(S[1]) + "], V: [" + std::to_string(V[0]) + ", " + std::to_string(V[1]) + "]");
 
-    //YAW CALCULATIONS
-    if ((provider->getSize().width / 2) % 2 == 0) {
-        yawCalculation = (provider->getSize().width/2) * (config.gearProcFOV/provider->getSize().width);
-    } else {
-        yawCalculation = ((provider->getSize().width/2) - 0.5) * (config.gearProcFOV/provider->getSize().width);
-    }
 
-    //ASPECT CALCULATIONS
-    aspectLower = config.gearProcAspect - config.gearProcAspectRange;
-    aspectUpper = config.gearProcAspect + config.gearProcAspectRange;
-     */
+    //DISTANCE, PITCH, AND YAW CALCULATIONS
+    distanceCalculation = config.gearProcFocalLength * 10;
+    Log::d(ld + "-CALC", "DISTANCE CALCULATION: " + std::to_string(distanceCalculation));
+
+    horizontalDPP = config.gearProcFOV/width;
+    verticalDPP = config.gearProcFOV/height;
+
+    yawCalculation = (width/2) - 0.5;
+    pitchCalculation = (height/2) - 0.5;
+
+    Log::d(ld + "-CALC", "PITCH CALC: " + std::to_string(pitchCalculation) + ", YAW CALC: " + std::to_string(yawCalculation));
+    Log::d(ld, "Calculation complete!");
 }
 
 void GearProc::run() {
-    /*
-    // Initializes frames
-    Mat latestFrame,
-        grayFrame,
-        hsvFrame,
-        inRangeFrame,
-        erosionMat,
-        imageUndistorted,
-        blankFrame;
+    Log::i(ld, "Starting!");
+    calc(); //Calculate values
 
-    blankFrame = Mat::zeros(provider->getSize(), provider->getType());
+    // Contour lists
+    vector<vector<Point>> contours, goodContours;
 
+    // Debug image processing
+    Mat goodCont, drawing;
 
-    // Initializes shapes
-    Rect rect,
-         rect2,
-         selectedRect;
-         //rekt
+    // Image processing
+    Mat latestFrame, hsvFrame, rangeFrame;
 
-    Point center;
+    // Shapes and centers
+    Rect rect, rect2;
+    Point topLeft, bottomRight, center, topCenter, bottomCenter;
 
-    // Initializes contours and a blank frame
-    vector<vector<Point>> contours;
-    vector<Vec4i> hierarchy;
-    vector<int> selected;
+    double yaw, pitch, distance;
 
+    // Context checks
+    Rect bb;
+    double area;
+    double solid;
+    double ratio;
+    vector<Point> hull;
 
-
-    int w_threshold = 3;
-    int h_threshold = 3;
-
-    double yaw;
-
-    double selectedAspect;
-
-
-    // Sets up undistortion on the frame
-    FileStorage fs("res/distortion.yml", FileStorage::READ);
-    Mat cameraMatrix, dist;
-    fs["Camera_Matrix"] >> cameraMatrix;
-    fs["Distortion_Coefficients"] >> dist;
-
-    StreamData::Strafe strafe = StreamData::Strafe::CENTER; //Variable to hold the current strafe status
-    Debug::printDebugText("YAW: " + to_string(yaw) + " | STRAFE: " + to_string(strafe));
-
-    calc(); //Pre-run calculations
-
-    // Main loop to run code
     while (!boost::this_thread::interruption_requested()) {
         operativeLock.lock();
-        //start = std::clock();
-        // Resets the contours and max contours
+        // Clears out our old contour list
         contours.clear();
-        selected.clear();
 
-        // Reset the blankFrame with an empty Mat if we have debug enabled
-        Debug::runDebugOperation([this, &blankFrame]() {
-            blankFrame = Mat::zeros(provider->getSize(), provider->getType());
-        });
-
-        // Reads in the latest frame and undistorts it
+        // Reads in the latest frame, converts it to HSV, and then filters out the colors we don't want
         latestFrame = provider->getLatestFrame();
-        undistort(latestFrame, imageUndistorted, cameraMatrix, dist);
+        cv::cvtColor(latestFrame, hsvFrame, CV_BGR2HSV);
+        cv::inRange(hsvFrame, cv::Scalar(H[0], S[0], V[0]), cv::Scalar(H[1], S[1], V[1]), rangeFrame);
 
-        // Converts color from BGR to HSV, filters out unwanted colors, erodes out noise and then finds contours
-        cvtColor(imageUndistorted, hsvFrame, CV_BGR2HSV);
+        // Finds contours for our image stream
+        findContours(rangeFrame, contours, cv::RETR_LIST, cv::CHAIN_APPROX_SIMPLE);
 
-        inRange(hsvFrame, Scalar(hLower, sLower, vLower), Scalar(hUpper, sUpper, vUpper), inRangeFrame);
-
-        erode(inRangeFrame, erosionMat, Mat(), Point(-1, -1), 1, 0, 1);
-
-        findContours(erosionMat, contours, RETR_LIST, CHAIN_APPROX_SIMPLE);
-        //findContours(inRangeFrame, contours, RETR_LIST, CHAIN_APPROX_SIMPLE );
-
-        //w_threshold = 3;
-        //h_threshold = 3;
-
-        for (int i = contours.size() - 2; i < contours.size(); i++)  {
-            selectedRect = boundingRect(contours[i]);
-            // filter contours according to their bounding box
-
-            selectedAspect = selectedRect.width / selectedRect.height;
-            if (selectedAspect < aspectUpper && selectedAspect > aspectLower) {
-                selected.push_back(i);
-            }
+        // Filters the contours
+        goodContours.clear();
+        for (std::vector<cv::Point> currentContour: contours) {
+            bb = boundingRect(currentContour);
+            if (bb.width < config.gearMinWidth || bb.width > config.gearMaxWidth) continue;
+            if (bb.height < config.gearMinHeight || bb.height > config.gearMaxHeight) continue;
+            area = cv::contourArea(currentContour);
+            if (area < config.gearMinArea) continue;
+            if (arcLength(currentContour, true) < config.gearMinPerimeter) continue;
+            cv::convexHull(cv::Mat(currentContour, true), hull);
+            solid = 100 * area / cv::contourArea(hull);
+            if (solid < config.gearMinSolidity || solid > config.gearMaxSolidity) continue;
+            if (currentContour.size() < config.gearMinVertices || currentContour.size() > config.gearMaxVertices) continue;
+            ratio = (double) bb.width / (double) bb.height;
+            if (ratio < config.gearMinRatio || ratio > config.gearMaxRatio) continue;
+            goodContours.push_back(currentContour);
         }
 
-        // If we have at least two contours, find points and do math on them
-        if (selected.size() >= 2) {
-            //idx = contours.size() - 1;  // The contours we want will always be contours.size() - 1, the largest contours are biggest
-
-
-            // Finds the two rectangles for each one of the strips of the tape on the boiler
-            rect = boundingRect(contours[selected[0]]); //(const _InputArray &) adds an extra millisecond of run time
-            rect2 = boundingRect(contours[selected[1]]);
+        // If there is a goal, do processing on it
+        if (goodContours.size() >= 2) {
+            // Finds the two rectangles the goal has on it
+            rect = boundingRect(goodContours[1]);
+            rect2 = boundingRect(goodContours[0]);
 
             // Finds the top left point of the higher rectangle
-            // rectangleOne.y = rect.y;
-            // rectangleOne.x = rect.x;
+            topLeft.x = rect.x;
+            topLeft.y = rect.y;
 
             // Finds the bottom right point of the lower rectangle
-            // rectangleTwo.x = rect2.x;
-            // rectangleTwo.y = rect2.y;
+            bottomRight.x = rect2.x + rect2.width;
+            bottomRight.y = rect2.y + rect2.height;
 
-            // Finds the center of the rectangles
-            center.x = (rect.x + rect2.x) / 2;
-            center.y = (rect.y + rect2.y) / 2;
+            // Finds the center points
+            center.x = (topLeft.x + bottomRight.x) / 2;
+            center.y = (topLeft.y + bottomRight.y) / 2;
+            topCenter.x = (rect.x + (rect.x + rect.width)) / 2;
+            topCenter.y = (topLeft.y);
+            bottomCenter.x = (rect2.x + (rect2.x + rect2.width)) / 2;
+            bottomCenter.y = (bottomRight.y);
 
-            // Calculates yaw in degrees
-            // We decimal at the end is how many degrees/pixel we have
-            yaw = (center.x - yawCalculation);
+            // Calculates Yaw and Pitch in degrees
+            //yaw = ((center.x - ((width / 2) - 0.5)) * horizontalDPP);
+            //pitch = ((center.y - ((height / 2) - 0.5)) * verticalDPP);
 
-            // Draw and print expensive operations if debug is enabled
-            Debug::runDebugOperation([this, &blankFrame, &rect, &rect2, &imageUndistorted, &center, &strafe, &yaw]() {
-                rectangle(blankFrame, rect, Scalar(255, 100, 50), 1);
-                rectangle(blankFrame, rect2, Scalar(0, 0, 255), 1);
-                circle(blankFrame, Point(rect.x, rect.y), 2, Scalar(255, 204, 10), 2);
-                circle(blankFrame, Point(rect2.x, rect2.y), 2, Scalar(255, 204, 10), 2);
-                circle(imageUndistorted, center, 2, Scalar(255, 204, 10), 2);
-            });
-
-            if (abs(rect.y - rect2.y) <= 5) //Set the strafe based on our angle
-                strafe = StreamData::Strafe::CENTER;
-            else if (rect.x > 250)
-                strafe = StreamData::Strafe::RIGHT;
-            else if (rect.x < 230)
-                strafe = StreamData::Strafe::LEFT;
-            else
-                strafe = StreamData::Strafe::CENTER;
-
-            Debug::printDebugText("YAW: " + to_string(yaw) + " | STRAFE: " + to_string(strafe));
-
-            streamer->addToQueue(StreamData(0, yaw, strafe));
-
-            // Show the image if debug is enabled
-        } else {
-            streamer->addToQueue(StreamData(StreamData::Type::GEAR_DATA_INVALID));
+            // Calculate the diagonal distance from the camera to the center of the retro reflective tape
+            //distance = 10 * focalLength / (bottomCenter.y - topCenter.y);
         }
-        Debug::updateWindow("gearLatest", imageUndistorted);
-        Debug::updateWindow("gearBlank", blankFrame);
-        Debug::updateWindow("gearRange", inRangeFrame);
-        
-        operativeLock.unlock();
-        boost::this_thread::sleep(boost::posix_time::microseconds(10));
     }
-     */
 }

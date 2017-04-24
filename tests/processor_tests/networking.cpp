@@ -14,6 +14,8 @@
 #include "../../processor/src/networking/Controller.hpp"
 #include <libv4l2.h>
 #include <linux/v4l2-controls.h>
+#include <iostream>
+#include <fstream>
 
 
 void addStreamData(DataStreamer *streamer, StreamData data) {
@@ -731,5 +733,61 @@ TEST(networking, controller_stream_compression) {
     s_send(socket, request);
     s_recv(socket);
 
+    socket.close();
+    controllerThread.interrupt();
+    controllerThread.join();
+}
+
+TEST(networking, controller_write_config) {
+    zmq::context_t context(1);
+    zmq::socket_t socket(context, ZMQ_REQ);
+    socket.setsockopt(ZMQ_RCVTIMEO, TestingConstants::Networking::TIMEOUT);
+    socket.connect("tcp://127.0.0.1:" + std::to_string(TestingConstants::Networking::TEST_PORT));
+
+    Configuration config;
+    Controller controller(config, nullptr, nullptr, nullptr, nullptr, nullptr, TestingConstants::Networking::TEST_PORT);
+    boost::thread controllerThread(boost::bind(&Controller::run, &controller));
+    std::string request = "ACTION_WRITE_CONFIG#";
+
+    s_send(socket, request);
+    s_recv(socket);
+
+    ASSERT_TRUE(config == controller.getCurrentSettings()); //Ensure that any settings didn't change after the save
+    std::ifstream f("config.txt");
+    ASSERT_TRUE(f.good()); //Make sure the file is written
+    f.close();
+
+    socket.close();
+    controllerThread.interrupt();
+    controllerThread.join();
+}
+
+TEST(networking, controller_reset_config) {
+    zmq::context_t context(1);
+    zmq::socket_t socket(context, ZMQ_REQ);
+    socket.setsockopt(ZMQ_RCVTIMEO, TestingConstants::Networking::TIMEOUT);
+    socket.connect("tcp://127.0.0.1:" + std::to_string(TestingConstants::Networking::TEST_PORT));
+
+    Configuration config;
+    MockProcessor goalProc;
+    MockProcessor gearProc;
+    MockCamera goalCamera;
+    MockCamera gearCamera;
+    Controller controller(config, &goalCamera, &gearCamera, &goalProc, &gearProc, nullptr, TestingConstants::Networking::TEST_PORT);
+    boost::thread controllerThread(boost::bind(&Controller::run, &controller));
+
+    std::string request = "ACTION_RESET_CONFIG#";
+
+    EXPECT_CALL(goalProc, subConfig(::testing::_));
+    EXPECT_CALL(gearProc, subConfig(::testing::_));
+    EXPECT_CALL(goalCamera, setProperty(::testing::_, ::testing::_)).Times(::testing::AtLeast(1));
+    EXPECT_CALL(gearCamera, setProperty(::testing::_, ::testing::_)).Times(::testing::AtLeast(1));
+
+    s_send(socket, request);
+    s_recv(socket);
+
+    socket.close();
+    controllerThread.interrupt();
+    controllerThread.join();
 
 }
