@@ -12,6 +12,7 @@
 #include "../../processor/src/utility/Base64.hpp"
 #include "../../processor/src/utility/Configuration.hpp"
 #include "TestingConstants.hpp"
+#include "../../processor/src/utility/ConfigParser.hpp"
 
 vector<string> splitElements(string str, char delimiter) {
     vector<string> internal;
@@ -262,4 +263,27 @@ TEST(utility, config_operator_nequal) {
     config1.streamCompression = 0;
     config1.streamCompression = 1; //Set the two configs to have two different values for a key, this also runs the equals test
     ASSERT_TRUE(config1 != config2);
+}
+
+TEST(utility, config_parser_defaults) {
+    std::vector<std::string> args;
+    ConfigParser parser(args, "config_parser_defaults.cfg");
+    ifstream f("config_parser_defaults.cfg");
+    ASSERT_TRUE(f.good());
+    remove("config_parser_defaults.cfg");
+}
+
+TEST(utility, config_parser_read) {
+    std::vector<std::string> args;
+    ConfigParser parser(args, "res/config_parser_read.cfg");
+    Configuration config = parser.getSettings();
+    ASSERT_EQ(config.streamCompression, 50);
+}
+
+TEST(utility, config_parser_clargs) {
+    std::vector<std::string> args;
+    args.push_back("streamCompression=60");
+    ConfigParser parser(args, "res/config_parser_read.cfg");
+    Configuration config = parser.getSettings();
+    ASSERT_EQ(config.streamCompression, 60);
 }
