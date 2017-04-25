@@ -8,6 +8,7 @@ import org.zeromq.ZMQ;
 import javax.imageio.ImageIO;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.Base64;
 
 /**
  * Created by cameronearle on 2/21/17.
@@ -34,11 +35,12 @@ public class Eyes {
         ImagePanel panel = new ImagePanel(640, 480);
         panel.setScaling(ScaleOptions.ALL); //Scale in all directions
         ShowImages.showWindow(panel, "Eyes: 401", true);
+        Base64.Decoder decoder = Base64.getDecoder();
 
         while (true) {
             try {
-                panel.setBufferedImage(ImageIO.read(new ByteArrayInputStream(socket.recv())));
-            } catch (IOException e) {
+                panel.setBufferedImage(ImageIO.read(new ByteArrayInputStream(decoder.decode(socket.recv()))));
+            } catch (Exception e) {
                 e.printStackTrace();
 
             }

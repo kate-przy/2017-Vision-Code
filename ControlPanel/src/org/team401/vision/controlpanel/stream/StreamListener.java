@@ -6,6 +6,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.util.Base64;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -53,9 +54,10 @@ public class StreamListener extends Thread {
         ZMQ.Socket socket = context.socket(ZMQ.SUB);
         socket.connect("tcp://" + address + ":" + port);
         socket.subscribe("".getBytes());
+        Base64.Decoder decoder = Base64.getDecoder();
         while (!Thread.interrupted()) {
             try {
-                latest.set(ImageIO.read(new ByteArrayInputStream(socket.recv())));
+                latest.set(ImageIO.read(new ByteArrayInputStream(decoder.decode(socket.recv()))));
                 if (imageLabel != null && !freeze) {
                     imageLabel.setIcon(new ImageIcon(latest.get()));
                 }
