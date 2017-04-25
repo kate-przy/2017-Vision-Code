@@ -92,10 +92,13 @@ T ConfigParser::configFind(string key_) {
         }
     } else { //We couldn't find the value in the map
         Log::w(ld, "Couldn't find value with key [" + key_ + "], using default");
+        //LCOV_EXCL_START
+        //This exception is impossible without modifying the header to make it invalid, so we exclude it
         if (defaults.find(key_) == defaults.end()) { //This should never happen
             Log::wtfomgy(ld, "Couldn't find value with key [" + key_ + "] in DEFAULTS. This is a problem!");
             return 0;
         }
+        //LCOV_EXCL_STOP
         ofstream writeFile;
         writeFile.open(filePath, ios::app);
         writeFile << key_ << "=" << defaults[key_] << "\n"; //Write the missing value to the config as default
@@ -103,10 +106,13 @@ T ConfigParser::configFind(string key_) {
         Log::d(ld, "Wrote missing value [" + defaults[key_] + "] for key [" + key_ + "] to the config");
         try {
             return boost::lexical_cast<T>(defaults[key_]); //Return the default we just wrote
+        //LCOV_EXCL_START
+            //This exception is impossible without modifying the header to make it invalid, so we exclude it
         } catch (...) {
             Log::e(ld, "Couldn't lexically cast DEFAULT key [" + key_ + "] to class [" + typeid(T).name() + "]");
             return 0;
         }
+        //LCOV_EXCL_STOP
     }
 }
 

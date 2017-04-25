@@ -287,3 +287,11 @@ TEST(utility, config_parser_clargs) {
     Configuration config = parser.getSettings();
     ASSERT_EQ(config.streamCompression, 60);
 }
+
+TEST(utility, config_parser_invalid_type) {
+    std::vector<std::string> args;
+    args.push_back("streamCompression=team401");
+    ConfigParser parser(args, "res/config_parser_read.cfg");
+    Configuration config = parser.getSettings();
+    ASSERT_EQ(config.streamCompression, 0);
+}
