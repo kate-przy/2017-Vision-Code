@@ -1,6 +1,8 @@
 //
 // Created by cameronearle on 2/14/17.
 //
+//LCOV_EXCL_START
+//TODO Unit test gear code
 
 #include "GearProc.hpp"
 #include "../utility/Debug.hpp"
@@ -146,3 +148,4 @@ void GearProc::run() {
         }
     }
 }
+//LCOV_EXCL_STOP

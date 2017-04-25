@@ -1,6 +1,7 @@
 //
 // Created by cameronearle on 2/14/17.
 //
+//LCOV_EXCL_START
 
 #ifndef PROJECT_GEARPROC_HPP
 #define PROJECT_GEARPROC_HPP
@@ -43,3 +44,4 @@ private:
 
 
 #endif //PROJECT_GEARPROC_HPP
+//LCOV_EXCL_STOP
