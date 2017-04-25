@@ -9,6 +9,9 @@
 
 #include "gtest/gtest.h"
 #include "../../processor/src/utility/Log.hpp"
+#include "../../processor/src/utility/Base64.hpp"
+#include "../../processor/src/utility/Configuration.hpp"
+#include "TestingConstants.hpp"
 
 vector<string> splitElements(string str, char delimiter) {
     vector<string> internal;
@@ -237,4 +240,26 @@ TEST(utility, log_wtfomgy_file_test) {
     ASSERT_EQ(fromfile7, "WHY?]");
     ASSERT_EQ(fromfile8, "[ld]");
     ASSERT_EQ(fromfile9, "data");
+}
+
+TEST(utility, base64_encode) {
+    std::string toEncode = "team401";
+    std::string encoded = Base64::encode(toEncode);
+    std::string expectedEncode = "dGVhbTQwMQ==";
+    ASSERT_EQ(encoded, expectedEncode);
+}
+
+TEST(utility, base64_decode) {
+    std::string toDecode = "dGVhbTQwMQ==";
+    std::string decoded = Base64::decode(toDecode);
+    std::string expectedDecode = "team401";
+    ASSERT_EQ(decoded, expectedDecode);
+}
+
+TEST(utility, config_operator_nequal) {
+    Configuration config1;
+    Configuration config2 = config1;
+    config1.streamCompression = 0;
+    config1.streamCompression = 1; //Set the two configs to have two different values for a key, this also runs the equals test
+    ASSERT_TRUE(config1 != config2);
 }
