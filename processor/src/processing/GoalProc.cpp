@@ -2,7 +2,7 @@
 // Created by cameronearle on 2/14/17.
 //
 
-
+//LCOV_EXCL_START
 #include "GoalProc.hpp"
 #include "../utility/Debug.hpp"
 #include "../utility/Log.hpp"
@@ -188,3 +188,4 @@ void GoalProc::run() {
     }
     Log::i(ld, "Stopping!");
 }
+//LCOV_EXCL_STOP
